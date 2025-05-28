@@ -4,9 +4,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const protectedRoutes = require('./routes/protected');
 
 const app = express();
-dotenv.config(); // .env 파일 불러오기
+
+// 환경변수 설정
+dotenv.config();
 
 // 미들웨어
 app.use(express.json());
@@ -15,7 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 // 정적 파일 서비스: public 폴더 (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 테스트 라우터 연결 (우리가 곧 만들 거야!)
+// 보호된 API 라우터 연결
+app.use('/api/protected', protectedRoutes);
+
+// 테스트 라우터 연결
 const testRoutes = require('./server/routes/test');
 app.use('/api/test', testRoutes);
 
