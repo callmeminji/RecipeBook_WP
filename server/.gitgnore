@@ -1,9 +1,0 @@
-# node 관련
-node_modules/
-
-# 환경 변수 (비밀번호, DB URI 등)
-.env
-
-# 기타 로그나 임시 파일
-.DS_Store
-npm-debug.log

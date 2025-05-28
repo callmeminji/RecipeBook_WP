@@ -15,17 +15,23 @@ app.use(express.urlencoded({ extended: true }));
 // 정적 파일 서비스: public 폴더 (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 테스트 라우터 연결 (우리가 곧 만들 거야!)
+// 테스트 라우터 연결 
 const testRoutes = require('./server/routes/test');
 app.use('/api/test', testRoutes);
+
+// 인증 라우터 연결
+const authRoutes = require('./server/routes/auth');
+app.use('/api/auth', authRoutes);
+
+
 
 // DB 연결
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => console.error('❌ MongoDB connection error:', err));
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 // 서버 실행
 const PORT = process.env.PORT || 3000;
