@@ -1,0 +1,1 @@
+router.get('/users/:id/bookmarks', recipeController.getBookmarks); 

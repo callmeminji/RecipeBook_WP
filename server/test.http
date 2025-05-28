@@ -1,0 +1,30 @@
+### 테스트용 레시피 생성
+POST http://localhost:3000/api/recipes
+Content-Type: application/json
+
+{
+  "title": "김치찌개",
+  "content": "김치와 돼지고기를 넣고 끓인다",
+  "type": "korean",
+  "difficulty": "easy",
+  "cookingTime": 30
+}
+
+###
+
+### 전체 레시피 조회
+GET http://localhost:3000/api/recipes
+###
+
+### 3. 북마크 추가
+POST http://localhost:3000/api/recipes/6836b62dbabac9ceb68c86b6/bookmark
+Content-Type: application/json
+
+{
+  "userId": "사용자ID"
+}
+
+###
+
+### 4. 사용자의 북마크 목록 조회
+GET http://localhost:3000/api/users/사용자ID/bookmarks
