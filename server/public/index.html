@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeYa - Home</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="js/index.js" defer></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <div class="left">
+          <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
+        </div>
+    
+        <h1>RecipeYa</h1>
+    
+        <div class="right">
+          <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- 검색창 -->
+        <section class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search recipes..." />
+          <button class="search-button">🔍</button>
+        </section>
+      
+        <!-- 필터 + 글쓰기 버튼 -->
+        <section class="filter-bar">
+          <button class="filter-button" id="allFilterBtn">All</button>
+      
+          <select id="difficultyFilter" class="filter-select">
+            <option value="">Difficulty</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+      
+          <select id="timeFilter" class="filter-select">
+            <option value="">Time</option>
+            <option value="10">Under 10 min</option>
+            <option value="30">Under 30 min</option>
+            <option value="60">Under 60 min</option>
+          </select>
+      
+          <select id="typeFilter" class="filter-select">
+            <option value="">Type</option>
+            <option value="korean">Korean</option>
+            <option value="japanese">Japanese</option>
+            <option value="western">Western</option>
+          </select>
+      
+          <button id="newRecipeBtn" onclick="goToNewRecipe()">+ New Recipe</button>
+        </section>
+      
+      </div>
+      
+      <!-- 레시피 리스트도 같은 container 안에 -->
+      <div class="container">
+        <main class="recipe-list" id="recipeList">
+          <!-- 여기에 카드들 출력 -->
+        </main>
+      </div>
+</html>
