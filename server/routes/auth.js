@@ -1,8 +1,13 @@
+// server/routes/auth.js
+
 const express = require('express');
 const router = express.Router();
+const { signupUser, loginUser } = require('../controllers/authController');
 
-router.post('/signup', (req, res) => {
-  res.json({ message: '회원가입 요청 도착' });
-});
+// POST /api/auth/signup
+router.post('/signup', signupUser);
+
+// POST /api/auth/login
+router.post('/login', loginUser);
 
 module.exports = router;
