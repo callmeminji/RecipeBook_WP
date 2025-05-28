@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // 정적 파일 서비스: public 폴더 (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 테스트 라우터 연결 (우리가 곧 만들 거야!)
+// 테스트 라우터 연결 
 const testRoutes = require('./server/routes/test');
 app.use('/api/test', testRoutes);
 
