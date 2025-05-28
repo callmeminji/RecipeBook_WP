@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // 정적 파일 서비스
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 // 라우터 연결
 const testRoutes = require('./routes/test');
 app.use('/api/test', testRoutes);
