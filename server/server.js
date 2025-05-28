@@ -6,24 +6,21 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 const app = express();
-dotenv.config(); // .env 파일 불러오기
+dotenv.config();
 
 // 미들웨어
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 정적 파일 서비스: public 폴더 (HTML, CSS, JS)
+// 정적 파일 서비스
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 테스트 라우터 연결 
-const testRoutes = require('./server/routes/test');
+// 라우터 연결
+const testRoutes = require('./routes/test');
 app.use('/api/test', testRoutes);
 
-// 인증 라우터 연결
-const authRoutes = require('./server/routes/auth');
+const authRoutes = require('./routes/auth'); // ✅ 수정 완료
 app.use('/api/auth', authRoutes);
-
-
 
 // DB 연결
 mongoose.connect(process.env.MONGO_URI, {
@@ -36,5 +33,5 @@ mongoose.connect(process.env.MONGO_URI, {
 // 서버 실행
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

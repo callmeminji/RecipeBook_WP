@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/signup', (req, res) => {
-  res.json({ message: '회원가입 요청 도착' });
+router.get('/', (req, res) => {
+  res.json({ message: 'Test route working!' });
 });
 
 module.exports = router;
