@@ -1,6 +1,8 @@
 // controllers/authController.js
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 
 // 회원가입 컨트롤러 함수
 const signupUser = async (req, res) => {
@@ -36,7 +38,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 해당 이메일로 사용자가 존재하는지 확인
+    // 해당 이메일 사용자 존재하는지 확인
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'User not found.' });
@@ -48,8 +50,18 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials.' });
     }
 
+       // JWT 토큰 생성
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+
+
     // 로그인 성공 시 응답
-    res.status(200).json({ message: 'Login successful!' });
+    res.status(200).json({ message: 'Login successful!',
+        token
+     });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error.' });

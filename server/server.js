@@ -4,9 +4,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const protectedRoutes = require('./routes/protected');
 
 const app = express();
+
+app.use('/api/protected', protectedRoutes);
+
 dotenv.config();
+require('dotenv').config();
+
 
 // 미들웨어
 app.use(express.json());
