@@ -1,8 +1,11 @@
-// routes/user.js (새 파일 만들기)
+
+// routes/user.js
 const express = require('express');
 const router = express.Router();
 const recipeController = require('../controllers/recipeController');
+const authenticate = require('../middlewares/authMiddleware');
 
-router.get('/users/:id/bookmarks', recipeController.getBookmarks);
+// 로그인한 사용자의 북마크 목록 조회
+router.get('/me/bookmarks', authenticate, recipeController.getBookmarks);
 
 module.exports = router;
