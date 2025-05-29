@@ -80,14 +80,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3M
 GET http://localhost:3000/api/recipes/search?keyword=김치
 Authorization: Bearer <token>
 
-### 필터링 테스트: korean + easy + 30분 이하
+### 필터링 테스트1: korean + easy + 30분 이하
 GET http://localhost:3000/api/recipes/filter?difficulty=easy&type=korean&cookingTime=under30
 Content-Type: application/json
 
-### 필터링 테스트: dessert + easy + 10분 이하
+### 필터링 테스트2: dessert + easy + 10분 이하
 GET http://localhost:3000/api/recipes/filter?difficulty=easy&type=dessert&cookingTime=under10
 Content-Type: application/json
 
-### 필터링 테스트: western만 필터링
+### 필터링 테스트3: western만 필터링
 GET http://localhost:3000/api/recipes/filter?type=western
 Content-Type: application/json
