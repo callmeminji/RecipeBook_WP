@@ -24,7 +24,7 @@ Content-Type: application/json
 ### 레시피 생성
 POST http://localhost:3000/api/recipes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ5OTE3OSwiZXhwIjoxNzQ4NTAyNzc5fQ.QtQiNCI1fgbYElh-XeySDxmCeuEAemORdesL5u8V43I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
 
 {
   "title": "된장찌개",
@@ -43,11 +43,24 @@ GET http://localhost:3000/api/recipes
 
 ### 북마크 추가
 POST http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ5OTE3OSwiZXhwIjoxNzQ4NTAyNzc5fQ.QtQiNCI1fgbYElh-XeySDxmCeuEAemORdesL5u8V43I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
 
 ###
 
 ### 사용자 북마크 목록
 GET http://localhost:3000/api/users/me/bookmarks
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ5OTE3OSwiZXhwIjoxNzQ4NTAyNzc5fQ.QtQiNCI1fgbYElh-XeySDxmCeuEAemORdesL5u8V43I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
+
+### 레시피 수정
+PUT http://localhost:3000/api/recipes/68380ccc9070165c0fd8d5c5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
+
+{
+  "title": "된장찌개 (수정)",
+  "content": "된장과 야채, 두부를 넣고 끓인다",
+  "type": "korean",
+  "difficulty": "medium",
+  "cookingTime": 30
+}
 

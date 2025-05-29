@@ -10,21 +10,26 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
   type: {
-    type: String, // 예: "dessert", "korean", "snack"
+    type: String,
     required: true,
   },
   difficulty: {
-    type: String, // 예: "easy", "medium", "hard"
+    type: String,
     required: true,
   },
   cookingTime: {
-    type: Number, // 분 단위
+    type: Number,
+    required: true,
+  },
+  author: { // 작성자 정보 필드 추가
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);
