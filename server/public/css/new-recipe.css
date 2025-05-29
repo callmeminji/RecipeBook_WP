@@ -1,0 +1,82 @@
+/* 컨테이너 너비 통일 */
+.container {
+    max-width: 750px;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+  
+  /* 제목 */
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+  }
+  
+  /* 한 줄에 라벨 + 입력 필드 정렬 */
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.8rem;
+  }
+  
+  /* 왼쪽 라벨 */
+  .form-row label {
+    width: 120px;
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  
+  /* 오른쪽 입력 요소 (input, select 등) */
+  .form-row input[type="text"],
+  .form-row input[type="file"],
+  .form-row textarea {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  /* 라디오 버튼 정렬 */
+  .radio-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  /* 슬라이더 박스 */
+  .slider-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+  }
+  
+  input[type="range"] {
+    flex: 1;
+  }
+  
+  /* 제출 버튼만 오른쪽 정렬 */
+  .submit-row {
+    justify-content: flex-end;
+  }
+  
+  button[type="submit"] {
+    padding: 0.6rem 1.5rem;
+    background-color: #883929;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #c45340;
+  }
+  

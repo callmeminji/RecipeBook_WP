@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Recipe</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/new-recipe.css">
+    <script src="js/new-recipe.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="left">
+          <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
+        </div>
+    
+        <img src="assets/logo.png" alt="RecipeYa Logo" class="logo" onclick="goToHome()" />
+
+        <div class="right">
+          <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Create New Recipe!</h2>
+        
+        <form id="recipeForm">
+          
+            <div class="form-row">
+                <label for="title">Title</label>
+                <input type="text" id="title" required />
+            </div>
+    
+            <div class="form-row">
+                <label>Type</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="type" value="Korean" required /> Korean</label>
+                  <label><input type="radio" name="type" value="Japanese" /> Japanese</label>
+                  <label><input type="radio" name="type" value="Western" /> Western</label>
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <label>Difficulty</label>
+                <div class="radio-group">
+                  <label><input type="radio" name="difficulty" value="Easy" required /> Easy</label>
+                  <label><input type="radio" name="difficulty" value="Medium" /> Medium</label>
+                  <label><input type="radio" name="difficulty" value="Hard" /> Hard</label>
+                </div>
+              </div>
+    
+            <div class="form-row">
+                <label for="time">Time</label>
+                <div class="slider-box">
+                  <input type="range" id="time" min="1" max="120" value="10" oninput="timeOutput.value = this.value">
+                  <output id="timeOutput">10</output> min
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <label for="image">Image</label>
+                <input type="file" id="image" accept="image/*" />
+            </div>
+    
+            <div class="form-row">
+                <label for="description">Description</label>
+                <textarea id="description" rows="6" required></textarea>
+            </div>
+    
+            <div class="form-row submit-row">
+                <button type="submit">저장</button>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>
