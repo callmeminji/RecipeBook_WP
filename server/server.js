@@ -4,7 +4,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+
 const commentRoutes = require('./routes/comment'); // 댓글 라우터
+// 댓글 API 라우터 연결
+app.use('/api/comments', commentRoutes);
 
 // 환경변수 설정 (.env 파일 로딩)
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -15,8 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 댓글 API 라우터 연결
-app.use('/api/comments', commentRoutes);
+
 
 // 정적 파일 제공 (예: HTML, CSS, JS 등)
 app.use(express.static(path.join(__dirname, 'public')));

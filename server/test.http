@@ -95,8 +95,23 @@ Content-Type: application/json
 ### 댓글 작성 (로그인 필요)
 POST http://localhost:3000/api/comments/683724d95139df30535951d8
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwODQ4MSwiZXhwIjoxNzQ4NTEyMDgxfQ.W1qhGg4x-OfJWc_DnNbM8dIMteUAcnAkx9zwSFUG5Tc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwOTg2NiwiZXhwIjoxNzQ4NTEzNDY2fQ.EVqNvo6S4WI2OnTSaTkQQqGx1gP6HofkCyWUZRQEuf4
 
 {
   "content": "잘 보고 갑니다람쥐"
 }
+
+### 댓글 조회
+GET http://localhost:3000/api/comments/683724d95139df30535951d8
+
+### 댓글 수정
+PUT http://localhost:3000/api/comments/683827761c559749a31e88ed
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwNzAwMiwiZXhwIjoxNzQ4NTEwNjAyfQ.r3VXJBUPJDyrEBaakeS00G2UFieeG3ttM5sLYWpGtK8
+
+{
+  "content": "잘 보고 갑니다(수정됨)"
+}
+
+### 댓글 삭제
+DELETE http://localhost:3000/api/comments/683827761c559749a31e88ed
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwNzAwMiwiZXhwIjoxNzQ4NTEwNjAyfQ.r3VXJBUPJDyrEBaakeS00G2UFieeG3ttM5sLYWpGtK8
