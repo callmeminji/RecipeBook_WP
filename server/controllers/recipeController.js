@@ -42,9 +42,23 @@ exports.getRecipeById = async (req, res) => {
 // 레시피 생성
 exports.createRecipe = async (req, res) => {
   try {
+    const { title, content, type, difficulty, cookingTime } = req.body;
+
+    // cookingTimeCategory 계산
+    let cookingTimeCategory = '';
+    if (cookingTime <= 10) cookingTimeCategory = 'under10';
+    else if (cookingTime <= 30) cookingTimeCategory = 'under30';
+    else if (cookingTime <= 60) cookingTimeCategory = 'under60';
+    else cookingTimeCategory = 'over60';
+
     const recipe = new Recipe({
-      ...req.body,
-      author: req.user.userId
+      title,
+      content,
+      type,
+      difficulty,
+      cookingTime,
+      cookingTimeCategory,
+      author: req.user.userId,
     });
 
     await recipe.save();
@@ -69,7 +83,15 @@ exports.updateRecipe = async (req, res) => {
     if (content) recipe.content = content;
     if (type) recipe.type = type;
     if (difficulty) recipe.difficulty = difficulty;
-    if (cookingTime) recipe.cookingTime = cookingTime;
+    if (cookingTime) {
+      recipe.cookingTime = cookingTime;
+
+      // 수정 시에도 cookingTimeCategory 재계산
+      if (cookingTime <= 10) recipe.cookingTimeCategory = 'under10';
+      else if (cookingTime <= 30) recipe.cookingTimeCategory = 'under30';
+      else if (cookingTime <= 60) recipe.cookingTimeCategory = 'under60';
+      else recipe.cookingTimeCategory = 'over60';
+    }
 
     await recipe.save();
     res.json({ message: 'Recipe updated', recipe });
@@ -183,30 +205,9 @@ exports.filterRecipes = async (req, res) => {
     const { difficulty, type, cookingTime } = req.query;
     const filter = {};
 
-    if (difficulty) {
-      filter.difficulty = difficulty;
-    }
-
-    if (type) {
-      filter.type = type;
-    }
-
-    if (cookingTime) {
-      switch (cookingTime) {
-        case 'under10':
-          filter.cookingTime = { $lte: 10 };
-          break;
-        case 'under30':
-          filter.cookingTime = { $lte: 30 };
-          break;
-        case 'under60':
-          filter.cookingTime = { $lte: 60 };
-          break;
-        case 'more60':
-          filter.cookingTime = { $gt: 60 };
-          break;
-      }
-    }
+    if (difficulty) filter.difficulty = difficulty;
+    if (type) filter.type = type;
+    if (cookingTime) filter.cookingTimeCategory = cookingTime;
 
     const recipes = await Recipe.find(filter);
     res.json(recipes);
