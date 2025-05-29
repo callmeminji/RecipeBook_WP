@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Recipe = require('../models/Recipe');
 
-// 전체 레시피 조회 + bookmarkCount 추가
+// 전체 레시피 목록 조회 + bookmarkCount 추가
 exports.getAllRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find();
@@ -44,7 +44,7 @@ exports.createRecipe = async (req, res) => {
   try {
     const recipe = new Recipe({
       ...req.body,
-      author: req.user.userId // 작성자 정보 저장
+      author: req.user.userId
     });
 
     await recipe.save();
@@ -58,10 +58,7 @@ exports.createRecipe = async (req, res) => {
 exports.updateRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
-
+    if (!recipe) return res.status(404).json({ message: 'Recipe not found' });
     if (recipe.author.toString() !== req.user.userId) {
       return res.status(403).json({ message: 'Not authorized to update this recipe' });
     }
@@ -85,10 +82,7 @@ exports.updateRecipe = async (req, res) => {
 exports.deleteRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
-
+    if (!recipe) return res.status(404).json({ message: 'Recipe not found' });
     if (recipe.author.toString() !== req.user.userId) {
       return res.status(403).json({ message: 'Not authorized to delete this recipe' });
     }
@@ -174,11 +168,49 @@ exports.searchRecipes = async (req, res) => {
 
   try {
     const recipes = await Recipe.find({
-      title: { $regex: keyword, $options: 'i' } // i는 대소문자 구분 없음
+      title: { $regex: keyword, $options: 'i' }
     });
 
     res.json(recipes);
   } catch (err) {
     res.status(500).json({ message: 'Search failed', error: err.message });
+  }
+};
+
+// 레시피 필터링
+exports.filterRecipes = async (req, res) => {
+  try {
+    const { difficulty, type, cookingTime } = req.query;
+    const filter = {};
+
+    if (difficulty) {
+      filter.difficulty = difficulty;
+    }
+
+    if (type) {
+      filter.type = type;
+    }
+
+    if (cookingTime) {
+      switch (cookingTime) {
+        case 'under10':
+          filter.cookingTime = { $lte: 10 };
+          break;
+        case 'under30':
+          filter.cookingTime = { $lte: 30 };
+          break;
+        case 'under60':
+          filter.cookingTime = { $lte: 60 };
+          break;
+        case 'more60':
+          filter.cookingTime = { $gt: 60 };
+          break;
+      }
+    }
+
+    const recipes = await Recipe.find(filter);
+    res.json(recipes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to filter recipes' });
   }
 };

@@ -24,14 +24,14 @@ Content-Type: application/json
 ### 레시피 생성
 POST http://localhost:3000/api/recipes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwNzAwMiwiZXhwIjoxNzQ4NTEwNjAyfQ.r3VXJBUPJDyrEBaakeS00G2UFieeG3ttM5sLYWpGtK8
 
 {
-  "title": "된장찌개",
-  "content": "된장과 야채를 넣고 끓인다",
-  "type": "korean",
+  "title": "블랙 밀크티",
+  "content": "블랙티 150ml,우유 90ml넣고 스팀, 과당 0%",
+  "type": "dessert",
   "difficulty": "easy",
-  "cookingTime": 25
+  "cookingTime": 1
 }
 
 ###
@@ -79,3 +79,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3M
 ### 레시피 검색 테스트
 GET http://localhost:3000/api/recipes/search?keyword=김치
 Authorization: Bearer <token>
+
+### 필터링 테스트: korean + easy + 30분 이하
+GET http://localhost:3000/api/recipes/filter?difficulty=easy&type=korean&cookingTime=under30
+Content-Type: application/json
+
+### 필터링 테스트: dessert + easy + 10분 이하
+GET http://localhost:3000/api/recipes/filter?difficulty=easy&type=dessert&cookingTime=under10
+Content-Type: application/json
+
+### 필터링 테스트: western만 필터링
+GET http://localhost:3000/api/recipes/filter?type=western
+Content-Type: application/json
