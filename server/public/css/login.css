@@ -1,0 +1,66 @@
+.login-container {
+    max-width: 750px;
+    margin: 2rem auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: stretch;
+  }
+  
+  .form-box {
+    flex: 1;
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  
+    /* 핵심: 내부 수직 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .form-box h2 {
+    margin: 0 auto 2rem auto;
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  .form-box:nth-child(2) h2 {
+    margin-top: 1.6rem;
+    margin-bottom: 0;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  
+    /* 전체 form을 수직 중앙 정렬 */
+    flex: 1;
+    justify-content: center;
+  }
+  
+  form input {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  form button {
+    padding: 0.9rem;
+    background-color: #883929;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  form button:hover {
+    background-color: #c45340;
+  }
+  
