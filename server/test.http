@@ -24,7 +24,7 @@ Content-Type: application/json
 ### 레시피 생성
 POST http://localhost:3000/api/recipes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ0NDEzMywiZXhwIjoxNzQ4NDQ3NzMzfQ.qFTXLkXiaIh2dtzkXozb92wy2eVE9PXwS-lIbxjDB7E
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ5OTE3OSwiZXhwIjoxNzQ4NTAyNzc5fQ.QtQiNCI1fgbYElh-XeySDxmCeuEAemORdesL5u8V43I
 
 {
   "title": "된장찌개",
@@ -43,14 +43,11 @@ GET http://localhost:3000/api/recipes
 
 ### 북마크 추가
 POST http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ0NDEzMywiZXhwIjoxNzQ4NDQ3NzMzfQ.qFTXLkXiaIh2dtzkXozb92wy2eVE9PXwS-lIbxjDB7E
-
-{
-  "userId": "683723675139df30535951d3"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ5OTE3OSwiZXhwIjoxNzQ4NTAyNzc5fQ.QtQiNCI1fgbYElh-XeySDxmCeuEAemORdesL5u8V43I
 
 ###
 
 ### 사용자 북마크 목록
-GET http://localhost:3000/api/recipes/users/683723675139df30535951d3/bookmarks
+GET http://localhost:3000/api/users/me/bookmarks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ5OTE3OSwiZXhwIjoxNzQ4NTAyNzc5fQ.QtQiNCI1fgbYElh-XeySDxmCeuEAemORdesL5u8V43I
+
