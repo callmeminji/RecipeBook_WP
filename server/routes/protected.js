@@ -9,4 +9,6 @@ router.get('/', authenticate, (req, res) => {
   res.json({ message: 'You are authenticated!', user: req.user });
 });
 
+
 module.exports = router;
+

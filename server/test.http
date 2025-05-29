@@ -1,0 +1,56 @@
+### 🧪 회원가입
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "haj",
+  "email": "haj@example.com",
+  "password": "12345678"
+}
+
+###
+
+### 🔐 로그인
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "haj@example.com",
+  "password": "12345678"
+}
+
+###
+
+### 🍲 레시피 생성
+POST http://localhost:3000/api/recipes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ0NDEzMywiZXhwIjoxNzQ4NDQ3NzMzfQ.qFTXLkXiaIh2dtzkXozb92wy2eVE9PXwS-lIbxjDB7E
+
+{
+  "title": "된장찌개",
+  "content": "된장과 야채를 넣고 끓인다",
+  "type": "korean",
+  "difficulty": "easy",
+  "cookingTime": 25
+}
+
+###
+
+### 📖 전체 레시피 조회
+GET http://localhost:3000/api/recipes
+
+###
+
+### ⭐ 북마크 추가
+POST http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODQ0NDEzMywiZXhwIjoxNzQ4NDQ3NzMzfQ.qFTXLkXiaIh2dtzkXozb92wy2eVE9PXwS-lIbxjDB7E
+
+{
+  "userId": "683723675139df30535951d3"
+}
+
+###
+
+### 📚 사용자 북마크 목록
+GET http://localhost:3000/api/recipes/users/683723675139df30535951d3/bookmarks
