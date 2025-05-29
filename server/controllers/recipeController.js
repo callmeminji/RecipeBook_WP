@@ -129,6 +129,29 @@ exports.getMyRecipes = async (req, res) => {
   }
 };
 
+// 레시피 북마크 삭제
+exports.unbookmarkRecipe = async (req, res) => {
+  const userId = req.user.userId;
+  const recipeId = req.params.id;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const index = user.bookmarks.indexOf(recipeId);
+    if (index === -1) {
+      return res.status(400).json({ message: 'Recipe is not bookmarked' });
+    }
+
+    user.bookmarks.splice(index, 1);
+    await user.save();
+
+    res.json({ message: 'Bookmark removed' });
+  } catch (err) {
+    res.status(500).json({ message: 'Unbookmark failed', error: err.message });
+  }
+};
+
 
 
 

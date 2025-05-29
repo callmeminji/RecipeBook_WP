@@ -21,6 +21,10 @@ router.delete('/:id', authenticate, recipeController.deleteRecipe);
 // 레시피 북마크 추가 (로그인 필요)
 router.post('/:id/bookmark', authenticate, recipeController.bookmarkRecipe);
 
+// 레시피 북마크 삭제 (로그인 필요)
+router.delete('/:id/bookmark', authenticate, recipeController.unbookmarkRecipe);
+
 // 내가 쓴 레시피 목록 (로그인 필요)
 router.get('/my/recipes', authenticate, recipeController.getMyRecipes);
+
 module.exports = router;
