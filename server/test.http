@@ -75,3 +75,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3M
 ### 북마크 삭제
 DELETE http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
+
+### 레시피 검색 테스트
+GET http://localhost:3000/api/recipes/search?keyword=김치
+Authorization: Bearer <token>

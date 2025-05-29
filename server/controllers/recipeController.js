@@ -167,3 +167,18 @@ exports.getMyRecipes = async (req, res) => {
     res.status(500).json({ message: 'Failed to load your recipes' });
   }
 };
+
+// 레시피 제목 검색
+exports.searchRecipes = async (req, res) => {
+  const keyword = req.query.keyword || '';
+
+  try {
+    const recipes = await Recipe.find({
+      title: { $regex: keyword, $options: 'i' } // i는 대소문자 구분 없음
+    });
+
+    res.json(recipes);
+  } catch (err) {
+    res.status(500).json({ message: 'Search failed', error: err.message });
+  }
+};
