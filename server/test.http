@@ -91,3 +91,12 @@ Content-Type: application/json
 ### 필터링 테스트3: western만 필터링
 GET http://localhost:3000/api/recipes/filter?type=western
 Content-Type: application/json
+
+### 댓글 작성 (로그인 필요)
+POST http://localhost:3000/api/comments/683724d95139df30535951d8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwODQ4MSwiZXhwIjoxNzQ4NTEyMDgxfQ.W1qhGg4x-OfJWc_DnNbM8dIMteUAcnAkx9zwSFUG5Tc
+
+{
+  "content": "잘 보고 갑니다람쥐"
+}
