@@ -58,7 +58,7 @@ exports.deleteRecipe = async (req, res) => {
 };
 
 exports.bookmarkRecipe = async (req, res) => {
-  const userId = req.body.userId; // 실제 로그인 기반이면 토큰에서 가져올 수도 있음
+  const userId = req.user.userId; // JWT에서 추출
   const recipeId = req.params.id;
 
   try {
@@ -81,7 +81,7 @@ exports.bookmarkRecipe = async (req, res) => {
 
 // 북마크 목록 조회
 exports.getBookmarks = async (req, res) => {
-  const userId = req.params.id;
+  const userId = req.user.userId; // JWT에서 추출된 사용자 ID
   try {
     const user = await User.findById(userId).populate('bookmarks');
     if (!user) return res.status(404).json({ message: 'User not found' });
