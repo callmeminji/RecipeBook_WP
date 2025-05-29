@@ -63,7 +63,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3M
   "difficulty": "medium",
   "cookingTime": 30
 }
-
+vmfhsxmsms 
 ### 레시피 삭제
 DELETE http://localhost:3000/api/recipes/68380ccc9070165c0fd8d5c5
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
+
+### 내가 쓴 레시피 조회
+GET http://localhost:3000/api/recipes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwNDQ0NiwiZXhwIjoxNzQ4NTA4MDQ2fQ.FzilDKqvZpNP8oW_e4FryS2T_j7L2Ne10fP5OHsAdBY

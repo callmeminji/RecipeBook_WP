@@ -119,5 +119,16 @@ exports.getBookmarks = async (req, res) => {
   }
 };
 
+// 내가 쓴 레시피 목록 조회
+exports.getMyRecipes = async (req, res) => {
+  try {
+    const myRecipes = await Recipe.find({ author: req.user.userId });
+    res.json(myRecipes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load your recipes' });
+  }
+};
+
+
 
 
