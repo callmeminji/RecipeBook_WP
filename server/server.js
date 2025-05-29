@@ -1,8 +1,13 @@
+// server.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-dotenv.config({ path: path.join(__dirname, '.env') });
+
+dotenv.config({ path: path.join(__dirname, '.env') }); // .env 경로 명시
+
+console.log('JWT_SECRET from env:', process.env.JWT_SECRET);
 
 const app = express();
 
@@ -10,19 +15,21 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 정적 파일 서비스: public 폴더 (HTML, CSS, JS)
+// 정적 파일 서비스 (HTML, CSS, JS 포함)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 테스트 라우터 연결
-// ❌ 기존 잘못된 경로: './server/routes/test'
-// ✅ 맞는 경로로 수정 필요 (만약 test.js 있으면 아래 주석 풀어줘)
-// const testRoutes = require('./routes/test');
-// app.use('/api/test', testRoutes);
+// 라우터 연결
+const protectedRoutes = require('./routes/protected');
+app.use('/api/protected', protectedRoutes);
 
-// ✅ 레시피 라우터 연결 - 너가 만든 파일 기준
-const recipeRoutes = require('./routes/recipe');
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
+
+const recipeRoutes = require('./routes/recipe'); // 네가 만든 라우터
 app.use('/api/recipes', recipeRoutes);
 
+const userRoutes = require('./routes/user');
+app.use('/api', userRoutes); // ✅ 중요!
 // DB 연결
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -34,7 +41,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // 서버 실행
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
 
 console.log('🌱 MONGO_URI:', process.env.MONGO_URI);

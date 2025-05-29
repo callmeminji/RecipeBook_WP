@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const recipeController = require('../controllers/recipeController');
 
-router.get('/user/:id/bookmarks', recipeController.getBookmarks);
+router.get('/users/:id/bookmarks', recipeController.getBookmarks);
 
 // 전체 레시피 목록 조회
 router.get('/', recipeController.getAllRecipes);
