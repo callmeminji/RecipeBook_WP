@@ -64,3 +64,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3M
   "cookingTime": 30
 }
 
+### 레시피 삭제
+DELETE http://localhost:3000/api/recipes/68380ccc9070165c0fd8d5c5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684

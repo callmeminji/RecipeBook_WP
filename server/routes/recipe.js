@@ -15,7 +15,7 @@ router.post('/', authenticate, recipeController.createRecipe);
 // 레시피 수정 (로그인 + 작성자 본인만 가능)
 router.put('/:id', authenticate, recipeController.updateRecipe);
 
-// 레시피 삭제 (로그인 필요)
+// 레시피 삭제 (로그인 + 작성자 본인만 가능)
 router.delete('/:id', authenticate, recipeController.deleteRecipe);
 
 // 레시피 북마크 추가 (로그인 필요)

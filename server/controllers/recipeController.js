@@ -67,13 +67,22 @@ exports.updateRecipe = async (req, res) => {
 // 레시피 삭제
 exports.deleteRecipe = async (req, res) => {
   try {
-    const deleted = await Recipe.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ message: 'Recipe not found' });
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    if (recipe.author.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Not authorized to delete this recipe' });
+    }
+
+    await recipe.deleteOne();
     res.json({ message: 'Recipe deleted' });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to delete recipe' });
+    res.status(500).json({ message: 'Failed to delete recipe', error: err.message });
   }
 };
+
 
 // 레시피 북마크 추가
 exports.bookmarkRecipe = async (req, res) => {
@@ -109,3 +118,6 @@ exports.getBookmarks = async (req, res) => {
     res.status(500).json({ message: 'Failed to load bookmarks' });
   }
 };
+
+
+
