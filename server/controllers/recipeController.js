@@ -1,22 +1,39 @@
 const User = require('../models/User');
 const Recipe = require('../models/Recipe');
 
-// 전체 레시피 조회
+// 전체 레시피 조회 + bookmarkCount 추가
 exports.getAllRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find();
-    res.json(recipes);
+
+    const recipesWithBookmarkCount = await Promise.all(
+      recipes.map(async (recipe) => {
+        const count = await User.countDocuments({ bookmarks: recipe._id });
+        return {
+          ...recipe.toObject(),
+          bookmarkCount: count,
+        };
+      })
+    );
+
+    res.json(recipesWithBookmarkCount);
   } catch (err) {
     res.status(500).json({ message: 'Failed to get recipes' });
   }
 };
 
-// 레시피 하나 조회 (by ID)
+// 레시피 하나 조회 (by ID) + bookmarkCount 추가
 exports.getRecipeById = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) return res.status(404).json({ message: 'Recipe not found' });
-    res.json(recipe);
+
+    const count = await User.countDocuments({ bookmarks: recipe._id });
+
+    res.json({
+      ...recipe.toObject(),
+      bookmarkCount: count,
+    });
   } catch (err) {
     res.status(500).json({ message: 'Failed to get recipe' });
   }
@@ -83,7 +100,6 @@ exports.deleteRecipe = async (req, res) => {
   }
 };
 
-
 // 레시피 북마크 추가
 exports.bookmarkRecipe = async (req, res) => {
   const userId = req.user.userId;
@@ -103,29 +119,6 @@ exports.bookmarkRecipe = async (req, res) => {
     res.json({ message: 'Recipe bookmarked' });
   } catch (err) {
     res.status(500).json({ message: 'Bookmark failed', error: err.message });
-  }
-};
-
-// 북마크 목록 조회
-exports.getBookmarks = async (req, res) => {
-  const userId = req.user.userId;
-  try {
-    const user = await User.findById(userId).populate('bookmarks');
-    if (!user) return res.status(404).json({ message: 'User not found' });
-
-    res.json({ bookmarks: user.bookmarks });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to load bookmarks' });
-  }
-};
-
-// 내가 쓴 레시피 목록 조회
-exports.getMyRecipes = async (req, res) => {
-  try {
-    const myRecipes = await Recipe.find({ author: req.user.userId });
-    res.json(myRecipes);
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to load your recipes' });
   }
 };
 
@@ -152,6 +145,25 @@ exports.unbookmarkRecipe = async (req, res) => {
   }
 };
 
+// 북마크 목록 조회
+exports.getBookmarks = async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const user = await User.findById(userId).populate('bookmarks');
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
+    res.json({ bookmarks: user.bookmarks });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load bookmarks' });
+  }
+};
 
-
+// 내가 쓴 레시피 목록 조회
+exports.getMyRecipes = async (req, res) => {
+  try {
+    const myRecipes = await Recipe.find({ author: req.user.userId });
+    res.json(myRecipes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load your recipes' });
+  }
+};
