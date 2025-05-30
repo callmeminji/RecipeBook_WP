@@ -63,6 +63,22 @@ function goToHome() {
   }
 });
 
+document.getElementById("editBtn").addEventListener("click", () => {
+  const recipeData = {
+    title: document.getElementById("postTitle").textContent,
+    type: document.getElementById("postType").textContent,
+    difficulty: document.getElementById("postDifficulty").textContent,
+    time: parseInt(document.getElementById("postTime").textContent.replace(/\D/g, '')),
+    ingredients: document.getElementById("postIngredients").textContent,
+    instructions: document.getElementById("postInstructions").textContent
+  };
+
+  localStorage.setItem("editRecipe", JSON.stringify(recipeData));
+  window.location.href = "new-recipe.html?edit=1"; // edit 모드로 이동
+});
+
+
+
 // 샘플 댓글 데이터 (나중에 서버에서 불러올 수 있음)
 let comments = [
   { id: 1, user: "eunyoung", text: "Looks delicious!", isMine: true },
@@ -119,4 +135,41 @@ document.getElementById("commentForm").addEventListener("submit", function (e) {
 document.addEventListener("DOMContentLoaded", () => {
   renderComments();
 });
-  
+
+// Delete 버튼 누르면 모달 열기
+document.getElementById("deleteBtn").addEventListener("click", () => {
+  document.getElementById("deleteModal").style.display = "flex";
+
+  // 현재 페이지 저장해두기 (이전 페이지로 돌아가기 위해)
+  sessionStorage.setItem("previousPage", document.referrer);
+});
+
+// 취소 버튼
+function closeDeleteModal() {
+  document.getElementById("deleteModal").style.display = "none";
+}
+
+// 삭제 확정
+function confirmDelete() {
+  const postId = new URLSearchParams(window.location.search).get("id");
+
+  // 백엔드로 DELETE 요청
+  fetch(`http://localhost:5000/api/recipes/${postId}`, {
+    method: "DELETE",
+  })
+    .then(res => {
+      if (res.ok) {
+        alert("Recipe deleted.");
+
+        // 이전 페이지로 이동
+        const prev = sessionStorage.getItem("previousPage") || "index.html";
+        window.location.href = prev;
+      } else {
+        alert("Failed to delete recipe.");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Error occurred.");
+    });
+}

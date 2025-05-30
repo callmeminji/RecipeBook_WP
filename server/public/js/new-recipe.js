@@ -47,5 +47,19 @@ function goToAccount() {
       alert("Error occurred.");
     }
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const editMode = new URLSearchParams(window.location.search).get("edit");
+    if (editMode && localStorage.getItem("editRecipe")) {
+      const recipe = JSON.parse(localStorage.getItem("editRecipe"));
+      document.getElementById("title").value = recipe.title;
+      document.querySelector(`input[name="type"][value="${recipe.type}"]`).checked = true;
+      document.querySelector(`input[name="difficulty"][value="${recipe.difficulty}"]`).checked = true;
+      document.getElementById("time").value = recipe.time;
+      document.getElementById("timeOutput").value = recipe.time;
+      document.getElementById("ingredients").value = recipe.ingredients;
+      document.getElementById("instructions").value = recipe.instructions;
+    }
+  });
   
   
