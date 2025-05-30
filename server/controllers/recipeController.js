@@ -220,10 +220,11 @@ exports.getBookmarks = async (req, res) => {
 // 내가 작성한 레시피 목록 조회
 exports.getMyRecipes = async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = new mongoose.Types.ObjectId(req.user.userId); 
     const recipes = await Recipe.find({ author: userId });
     res.json(recipes);
   } catch (err) {
+    console.error('[GET MY RECIPES ERROR]', err);
     res.status(500).json({ message: 'Failed to get my recipes' });
   }
 };

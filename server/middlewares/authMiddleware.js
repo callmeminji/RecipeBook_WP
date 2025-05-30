@@ -22,7 +22,8 @@ const authenticate = (req, res, next) => {
 
     // 토큰 검증 후 사용자 정보 저장
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // 이후 라우터에서 req.user로 사용자 정보 접근 가능
+    req.user = { userId: decoded._id, ...decoded }; 
+    //req.user = decoded; // 이후 라우터에서 req.user로 사용자 정보 접근 가능
     next(); // 다음 미들웨어로 이동
   } catch (err) {
     console.error('[JWT VERIFY ERROR]', err.message);
