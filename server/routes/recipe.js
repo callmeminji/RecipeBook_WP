@@ -3,10 +3,16 @@ const router = express.Router();
 const recipeController = require('../controllers/recipeController');
 const authenticate = require('../middlewares/authMiddleware');
 
-// 전체 레시피 목록 조회
+// 레시피 필터링 (공개)
+router.get('/filter', recipeController.filterRecipes);
+
+// 전체 레시피 목록 조회 (공개)
 router.get('/', recipeController.getAllRecipes);
 
-// 단일 레시피 조회
+// 레시피 제목 검색 (공개)
+router.get('/search', recipeController.searchRecipes);
+
+// 단일 레시피 조회 (공개)
 router.get('/:id', recipeController.getRecipeById);
 
 // 레시피 생성 (로그인 필요)

@@ -1,22 +1,39 @@
 const User = require('../models/User');
 const Recipe = require('../models/Recipe');
 
-// 전체 레시피 조회
+// 전체 레시피 목록 조회 + bookmarkCount 추가
 exports.getAllRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find();
-    res.json(recipes);
+
+    const recipesWithBookmarkCount = await Promise.all(
+      recipes.map(async (recipe) => {
+        const count = await User.countDocuments({ bookmarks: recipe._id });
+        return {
+          ...recipe.toObject(),
+          bookmarkCount: count,
+        };
+      })
+    );
+
+    res.json(recipesWithBookmarkCount);
   } catch (err) {
     res.status(500).json({ message: 'Failed to get recipes' });
   }
 };
 
-// 레시피 하나 조회 (by ID)
+// 레시피 하나 조회 (by ID) + bookmarkCount 추가
 exports.getRecipeById = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) return res.status(404).json({ message: 'Recipe not found' });
-    res.json(recipe);
+
+    const count = await User.countDocuments({ bookmarks: recipe._id });
+
+    res.json({
+      ...recipe.toObject(),
+      bookmarkCount: count,
+    });
   } catch (err) {
     res.status(500).json({ message: 'Failed to get recipe' });
   }
@@ -25,9 +42,23 @@ exports.getRecipeById = async (req, res) => {
 // 레시피 생성
 exports.createRecipe = async (req, res) => {
   try {
+    const { title, content, type, difficulty, cookingTime } = req.body;
+
+    // cookingTimeCategory 계산
+    let cookingTimeCategory = '';
+    if (cookingTime <= 10) cookingTimeCategory = 'under10';
+    else if (cookingTime <= 30) cookingTimeCategory = 'under30';
+    else if (cookingTime <= 60) cookingTimeCategory = 'under60';
+    else cookingTimeCategory = 'over60';
+
     const recipe = new Recipe({
-      ...req.body,
-      author: req.user.userId // 작성자 정보 저장
+      title,
+      content,
+      type,
+      difficulty,
+      cookingTime,
+      cookingTimeCategory,
+      author: req.user.userId,
     });
 
     await recipe.save();
@@ -41,10 +72,7 @@ exports.createRecipe = async (req, res) => {
 exports.updateRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
-
+    if (!recipe) return res.status(404).json({ message: 'Recipe not found' });
     if (recipe.author.toString() !== req.user.userId) {
       return res.status(403).json({ message: 'Not authorized to update this recipe' });
     }
@@ -55,7 +83,15 @@ exports.updateRecipe = async (req, res) => {
     if (content) recipe.content = content;
     if (type) recipe.type = type;
     if (difficulty) recipe.difficulty = difficulty;
-    if (cookingTime) recipe.cookingTime = cookingTime;
+    if (cookingTime) {
+      recipe.cookingTime = cookingTime;
+
+      // 수정 시에도 cookingTimeCategory 재계산
+      if (cookingTime <= 10) recipe.cookingTimeCategory = 'under10';
+      else if (cookingTime <= 30) recipe.cookingTimeCategory = 'under30';
+      else if (cookingTime <= 60) recipe.cookingTimeCategory = 'under60';
+      else recipe.cookingTimeCategory = 'over60';
+    }
 
     await recipe.save();
     res.json({ message: 'Recipe updated', recipe });
@@ -68,10 +104,7 @@ exports.updateRecipe = async (req, res) => {
 exports.deleteRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) {
-      return res.status(404).json({ message: 'Recipe not found' });
-    }
-
+    if (!recipe) return res.status(404).json({ message: 'Recipe not found' });
     if (recipe.author.toString() !== req.user.userId) {
       return res.status(403).json({ message: 'Not authorized to delete this recipe' });
     }
@@ -82,7 +115,6 @@ exports.deleteRecipe = async (req, res) => {
     res.status(500).json({ message: 'Failed to delete recipe', error: err.message });
   }
 };
-
 
 // 레시피 북마크 추가
 exports.bookmarkRecipe = async (req, res) => {
@@ -103,29 +135,6 @@ exports.bookmarkRecipe = async (req, res) => {
     res.json({ message: 'Recipe bookmarked' });
   } catch (err) {
     res.status(500).json({ message: 'Bookmark failed', error: err.message });
-  }
-};
-
-// 북마크 목록 조회
-exports.getBookmarks = async (req, res) => {
-  const userId = req.user.userId;
-  try {
-    const user = await User.findById(userId).populate('bookmarks');
-    if (!user) return res.status(404).json({ message: 'User not found' });
-
-    res.json({ bookmarks: user.bookmarks });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to load bookmarks' });
-  }
-};
-
-// 내가 쓴 레시피 목록 조회
-exports.getMyRecipes = async (req, res) => {
-  try {
-    const myRecipes = await Recipe.find({ author: req.user.userId });
-    res.json(myRecipes);
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to load your recipes' });
   }
 };
 
@@ -152,6 +161,57 @@ exports.unbookmarkRecipe = async (req, res) => {
   }
 };
 
+// 북마크 목록 조회
+exports.getBookmarks = async (req, res) => {
+  const userId = req.user.userId;
+  try {
+    const user = await User.findById(userId).populate('bookmarks');
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
+    res.json({ bookmarks: user.bookmarks });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load bookmarks' });
+  }
+};
 
+// 내가 쓴 레시피 목록 조회
+exports.getMyRecipes = async (req, res) => {
+  try {
+    const myRecipes = await Recipe.find({ author: req.user.userId });
+    res.json(myRecipes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to load your recipes' });
+  }
+};
 
+// 레시피 제목 검색
+exports.searchRecipes = async (req, res) => {
+  const keyword = req.query.keyword || '';
+
+  try {
+    const recipes = await Recipe.find({
+      title: { $regex: keyword, $options: 'i' }
+    });
+
+    res.json(recipes);
+  } catch (err) {
+    res.status(500).json({ message: 'Search failed', error: err.message });
+  }
+};
+
+// 레시피 필터링
+exports.filterRecipes = async (req, res) => {
+  try {
+    const { difficulty, type, cookingTime } = req.query;
+    const filter = {};
+
+    if (difficulty) filter.difficulty = difficulty;
+    if (type) filter.type = type;
+    if (cookingTime) filter.cookingTimeCategory = cookingTime;
+
+    const recipes = await Recipe.find(filter);
+    res.json(recipes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to filter recipes' });
+  }
+};
