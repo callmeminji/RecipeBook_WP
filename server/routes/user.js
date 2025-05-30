@@ -11,4 +11,7 @@ router.get('/me/profile', authenticate, userController.getProfile);
 // 로그인한 사용자의 북마크 목록 조회
 router.get('/me/bookmarks', authenticate, recipeController.getBookmarks);
 
+// 로그인한 사용자가 작성한 레시피 목록 조회
+router.get('/me/recipes', authenticate, recipeController.getMyRecipes);
+
 module.exports = router;
