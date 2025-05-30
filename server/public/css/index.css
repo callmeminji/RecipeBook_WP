@@ -1,11 +1,11 @@
-/* 🔲 공통 컨테이너 (검색/필터/카드 모두 같은 폭) */
+/* 공통 컨테이너 (검색/필터/카드 모두 같은 폭) */
 .container {
   max-width: 750px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-/* 🔍 검색 바 */
+/* 검색 바 */
 .search-bar {
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@
   font-weight: bold;
 }
 
-/* 🎛️ 필터 바 */
+/* 필터 바 */
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
@@ -45,7 +45,7 @@
   font-size: 1rem;
   border-radius: 6px;
   border: 1px solid #ccc;
-  /* ✅ 폭 고정 */
+  /* 폭 고정 */
   width: 140px;
   text-align: center;
 }
@@ -58,7 +58,7 @@
   height: 44px;
 }
 
-/* 📃 레시피 리스트 */
+/* 레시피 리스트 */
 /* .recipe-list {
   display: flex;
   flex-direction: column;
