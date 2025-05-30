@@ -3,12 +3,16 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 // 회원가입 컨트롤러 함수
 const signupUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
+    console.log('DEBUG signup data:', req.body);
+
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: '모든 항목(username, email, password)을 입력해주세요.' });
+    }
     // 이메일 중복 체크
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -37,31 +41,41 @@ const signupUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("로그인 요청:", email, password);//
+    
+
+    if (!email || !password) {
+      return res.status(400).json({ message: '이메일과 비밀번호를 입력해주세요.' });
+    }
 
     // 해당 이메일 사용자 존재하는지 확인
     const user = await User.findOne({ email });
+    console.log("로그인 시도 유저:", user);
     if (!user) {
+      console.log("이메일 없음");
       return res.status(400).json({ message: 'User not found.' });
     }
 
     // 입력한 비밀번호가 암호화된 비밀번호와 일치하는지 확인
     const isMatch = await bcrypt.compare(password, user.password);
+    
     if (!isMatch) {
+      console.log("비밀번호 틀림");
       return res.status(400).json({ message: 'Invalid credentials.' });
     }
 
-       // JWT 토큰 생성
+    // JWT 토큰 생성
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-
     // 로그인 성공 시 응답
-    res.status(200).json({ message: 'Login successful!',
-        token
-     });
+    res.status(200).json({
+      message: 'Login successful!',
+      token,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error.' });

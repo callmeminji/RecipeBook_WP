@@ -1,0 +1,167 @@
+### 회원가입
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "mj",
+  "email": "mj@example.com",
+  "password": "123456789"
+}
+
+###
+
+### 로그인
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{ 
+  "email": "mj@example.com",
+  "password": "123456789"
+}
+###eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
+###
+
+### 레시피 생성 (이미지 포함, 사진 1장만 업로드 가능)
+POST http://localhost:3000/api/recipes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+
+--MyBoundary
+Content-Disposition: form-data; name="title"
+
+dumpling
+--MyBoundary
+Content-Disposition: form-data; name="content"
+
+Add ham and steam
+--MyBoundary
+Content-Disposition: form-data; name="type"
+
+korean
+--MyBoundary
+Content-Disposition: form-data; name="difficulty"
+
+hard
+--MyBoundary
+Content-Disposition: form-data; name="cookingTime"
+
+50
+--MyBoundary
+Content-Disposition: form-data; name="ingredients"
+
+[{"name":"meat","quantity":"500g"},{"name":"pepper","quantity":"3스푼"}]
+
+--MyBoundary
+Content-Disposition: form-data; name="image"; filename="budae.jpg"
+Content-Type: image/jpeg
+
+<바이너리 이미지 데이터>
+--MyBoundary--
+
+### 683954c656e3f51e17baa888
+
+
+
+### 전체 레시피 조회
+GET http://localhost:3000/api/recipes
+
+###
+
+### 북마크 추가(저자 아이디)
+POST http://localhost:3000/api/recipes/6839532356e3f51e17baa863/bookmark
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
+
+###
+
+### 사용자 북마크 목록
+GET http://localhost:3000/api/users/me/bookmarks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
+
+### 레시피 수정
+PUT http://localhost:3000/api/recipes/6839b2e65bc22deb9589fe3a
+Content-Type: multipart/form-data; boundary=MyBoundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
+
+
+--MyBoundary
+Content-Disposition: form-data; name="title"
+
+소갈비찜
+--MyBoundary
+Content-Disposition: form-data; name="content"
+
+소갈비를 간장 양념에 재운 후 부드럽게 익혀주세요.
+--MyBoundary
+Content-Disposition: form-data; name="type"
+
+korean
+--MyBoundary
+Content-Disposition: form-data; name="difficulty"
+
+hard
+--MyBoundary
+Content-Disposition: form-data; name="cookingTime"
+
+90
+--MyBoundary
+Content-Disposition: form-data; name="ingredients"
+
+[{"name":"소갈비","quantity":"500g"},{"name":"간장","quantity":"100ml"},{"name":"설탕","quantity":"2큰술"},{"name":"마늘","quantity":"5쪽"}]
+--MyBoundary--
+
+ 
+### 레시피 삭제
+DELETE http://localhost:3000/api/recipes/68399f258defb2d7cdf94e4e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+
+### 내가 쓴 레시피 조회 -> 다른 사용자까지 나옴옴
+GET http://localhost:3000/api/recipes/me/recipes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+
+### 북마크 삭제
+DELETE http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+
+### 레시피 검색 테스트
+GET http://localhost:3000/api/recipes/search?keyword=김치
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+### 필터링 테스트1: korean + easy + 30분 이하
+GET http://localhost:3000/api/recipes/filter?difficulty=easy&type=korean&cookingTime=under30
+Content-Type: application/json
+
+### 필터링 테스트2: dessert + easy + 10분 이하
+GET http://localhost:3000/api/recipes/filter?difficulty=easy&type=dessert&cookingTime=under10
+Content-Type: application/json
+
+### 필터링 테스트3: western만 필터링
+GET http://localhost:3000/api/recipes/filter?type=western
+Content-Type: application/json
+
+### 댓글 작성 (로그인 필요)
+POST http://localhost:3000/api/comments/6839547056e3f51e17baa869
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+
+{
+  "content": "잘 보고 갑니다람쥐"
+}
+### 683956d256e3f51e17baa8e6
+### 댓글 조회
+GET http://localhost:3000/api/comments/683724d95139df30535951d8
+
+### 댓글 수정
+PUT http://localhost:3000/api/comments/683956d256e3f51e17baa8e6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+{
+  "content": "잘 보고 갑니다"
+}
+
+### 댓글 삭제
+DELETE http://localhost:3000/api/comments/683956d256e3f51e17baa8e6
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+
+### 프로필 정보 조회
+GET http://localhost:3000/api/users/me/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE

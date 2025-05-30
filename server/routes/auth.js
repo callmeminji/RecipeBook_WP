@@ -1,13 +1,11 @@
-// server/routes/auth.js
-
 const express = require('express');
 const router = express.Router();
 const { signupUser, loginUser } = require('../controllers/authController');
 
-// POST /api/auth/signup
+// 회원가입
 router.post('/signup', signupUser);
 
-// POST /api/auth/login
+// 로그인
 router.post('/login', loginUser);
 
 module.exports = router;
