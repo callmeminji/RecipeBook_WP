@@ -13,6 +13,23 @@ function goToHome() {
   function getCurrentPageURL() {
     return encodeURIComponent(window.location.pathname + window.location.search);
   }
+
+  function showLoginPrompt(redirectTarget) {
+    const modal = document.getElementById("loginPromptModal");
+    modal.style.display = "flex";
+    modal.dataset.redirect = redirectTarget;
+  }
+  
+  function closeLoginModal() {
+    document.getElementById("loginPromptModal").style.display = "none";
+  }
+  
+  function goToLogin() {
+    const modal = document.getElementById("loginPromptModal");
+    const redirect = modal.dataset.redirect || "index.html";
+    window.location.href = `login.html?redirect=${encodeURIComponent(redirect)}`;
+  }
+  
   
   document.addEventListener("DOMContentLoaded", () => {
     const postId = new URLSearchParams(window.location.search).get("id");
@@ -30,8 +47,7 @@ function goToHome() {
   const bookmark = document.getElementById("bookmarkIcon");
   bookmark.addEventListener("click", () => {
     if (!isLoggedIn()) {
-      const redirectURL = getCurrentPageURL();
-      window.location.href = `login.html?redirect=${redirectURL}`;
+      showLoginPrompt(getCurrentPageURL());
       return;
     }
 
