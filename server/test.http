@@ -3,9 +3,9 @@ POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
-  "username": "haj",
-  "email": "haj@example.com",
-  "password": "12345678"
+  "username": "mj",
+  "email": "mj@example.com",
+  "password": "123456789"
 }
 
 ###
@@ -14,25 +14,47 @@ Content-Type: application/json
 POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
-{
-  "email": "haj@example.com",
-  "password": "12345678"
+{ 
+  "email": "mj@example.com",
+  "password": "123456789"
 }
-
+###eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 ###
 
-### 레시피 생성
+### 레시피 생성 (이미지 포함, 사진 1장만 업로드 가능)
 POST http://localhost:3000/api/recipes
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
+Content-Type: multipart/form-data; boundary=MyBoundary
 
-{
-  "title": "블랙 밀크티",
-  "content": "블랙티 150ml,우유 90ml넣고 스팀, 과당 0%",
-  "type": "dessert",
-  "difficulty": "easy",
-  "cookingTime": 1
-}
+
+--MyBoundary
+Content-Disposition: form-data; name="title"
+
+갈비찜
+--MyBoundary
+Content-Disposition: form-data; name="content"
+
+갈비를 양념해 푹 삶는다
+--MyBoundary
+Content-Disposition: form-data; name="type"
+
+korean
+--MyBoundary
+Content-Disposition: form-data; name="difficulty"
+
+hard
+--MyBoundary
+Content-Disposition: form-data; name="cookingTime"
+
+50
+--MyBoundary
+Content-Disposition: form-data; name="ingredients"
+
+[{"name":"소갈비","quantity":"500g"},{"name":"간장","quantity":"3스푼"}]
+--MyBoundary--
+
+### 683954c656e3f51e17baa888
+
 
 ###
 
@@ -42,41 +64,62 @@ GET http://localhost:3000/api/recipes
 ###
 
 ### 북마크 추가
-POST http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+POST http://localhost:3000/api/recipes/683954c656e3f51e17baa888/bookmark
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 ###
 
 ### 사용자 북마크 목록
 GET http://localhost:3000/api/users/me/bookmarks
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 ### 레시피 수정
-PUT http://localhost:3000/api/recipes/68393e349b231b8c15b89d80
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+PUT http://localhost:3000/api/recipes/683954c656e3f51e17baa888
+Content-Type: multipart/form-data; boundary=MyBoundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
-{
-   "title": "New title",
-  "ingredients": "Egg, Milk",
-  "instructions": "Mix and bake"
-}
+--MyBoundary
+Content-Disposition: form-data; name="title"
+
+소갈비찜
+--MyBoundary
+Content-Disposition: form-data; name="content"
+
+소갈비를 간장 양념에 재운 후 부드럽게 익혀주세요.
+--MyBoundary
+Content-Disposition: form-data; name="type"
+
+korean
+--MyBoundary
+Content-Disposition: form-data; name="difficulty"
+
+hard
+--MyBoundary
+Content-Disposition: form-data; name="cookingTime"
+
+90
+--MyBoundary
+Content-Disposition: form-data; name="ingredients"
+
+[{"name":"소갈비","quantity":"500g"},{"name":"간장","quantity":"100ml"},{"name":"설탕","quantity":"2큰술"},{"name":"마늘","quantity":"5쪽"}]
+--MyBoundary--
+
  
 ### 레시피 삭제
-DELETE http://localhost:3000/api/recipes/68393e349b231b8c15b89d80
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+DELETE http://localhost:3000/api/recipes/683954c656e3f51e17baa888
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 ### 내가 쓴 레시피 조회
 GET http://localhost:3000/api/recipes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 ### 북마크 삭제
 DELETE http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODUwMzMzOCwiZXhwIjoxNzQ4NTA2OTM4fQ.ro-TlRp10wvYfhrJ5BLh-DUsuQ9M2cW6CDF430BW684
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 ### 레시피 검색 테스트
 GET http://localhost:3000/api/recipes/search?keyword=김치
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 ### 필터링 테스트1: korean + easy + 30분 이하
 GET http://localhost:3000/api/recipes/filter?difficulty=easy&type=korean&cookingTime=under30
@@ -93,7 +136,7 @@ Content-Type: application/json
 ### 댓글 작성 (로그인 필요)
 POST http://localhost:3000/api/comments/683724d95139df30535951d8
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 {
   "content": "잘 보고 갑니다람쥐"
@@ -105,7 +148,7 @@ GET http://localhost:3000/api/comments/683724d95139df30535951d8
 ### 댓글 수정
 PUT http://localhost:3000/api/comments/68393ed59b231b8c15b89d86
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
 {
   "content": "잘 보고 갑니다"
@@ -113,4 +156,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3M
 
 ### 댓글 삭제
 DELETE http://localhost:3000/api/comments/68393ed59b231b8c15b89d86
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM3MjM2NzUxMzlkZjMwNTM1OTUxZDMiLCJlbWFpbCI6ImhhakBleGFtcGxlLmNvbSIsImlhdCI6MTc0ODU4MTQ5NSwiZXhwIjoxNzQ4NTg1MDk1fQ.4wFz4uj-D-tLIBb_sMSgWLeOlzd5gTLA6Ixo8l5hj_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY

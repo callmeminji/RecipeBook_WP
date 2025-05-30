@@ -16,6 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // 정적 파일 제공 (예: HTML, CSS, JS 등)
 app.use(express.static(path.join(__dirname, 'public')));
+// 정적 이미지 제공
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // 라우터 파일 불러오기
 const commentRoutes = require('./routes/comment');
