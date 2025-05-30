@@ -102,17 +102,34 @@ const sampleRecipes = [
 
 
 // 계정/홈/글쓰기 페이지 이동 함수
-function goToAccount() {
-  window.location.href = "account.html";
-}
-
 function goToNewRecipe() {
-  window.location.href = "new-recipe.html";
+  const user = sessionStorage.getItem("user");
+  if (!user) {
+    const redirect = encodeURIComponent("new-recipe.html");
+    window.location.href = `login.html?redirect=${redirect}`;
+  } else {
+    window.location.href = "new-recipe.html";
+  }
 }
 
 function goToHome() {
   window.location.href = "index.html";
 }
+
+function goToLogin() {
+  const redirect = encodeURIComponent(window.location.href);
+  window.location.href = `login.html?redirect=${redirect}`;
+}
+
+function goToAccount() {
+  const user = sessionStorage.getItem("user");
+  if (!user) {
+    goToLogin();  // 로그인 안 되어 있으면 로그인하러 보내기
+  } else {
+    window.location.href = "account.html";
+  }
+}
+
 
 // 레시피 로딩
 async function loadRecipes() {
