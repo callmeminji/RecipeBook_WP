@@ -28,6 +28,7 @@
   border-radius: 6px;
   color: white;
   font-weight: bold;
+  cursor: pointer;
 }
 
 /* 필터 바 */
@@ -48,6 +49,7 @@
   /* 폭 고정 */
   width: 140px;
   text-align: center;
+  cursor: pointer;
 }
 
 #newRecipeBtn {
@@ -56,6 +58,7 @@
   border: none;
   font-weight: bold;
   height: 44px;
+  cursor: pointer;
 }
 
 /* 레시피 리스트 */
