@@ -167,3 +167,22 @@
     cursor: pointer;
   }
   
+  .edit-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  .save-edit {
+    padding: 0.4rem 1rem;
+    background-color: #f57c00;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  } 
+  
