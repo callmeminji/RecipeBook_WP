@@ -109,7 +109,7 @@ Content-Disposition: form-data; name="ingredients"
 DELETE http://localhost:3000/api/recipes/683954c656e3f51e17baa888
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
-### 내가 쓴 레시피 조회
+### 내가 쓴 레시피 조회 -> 다른 사용자까지 나옴옴
 GET http://localhost:3000/api/recipes
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
@@ -141,12 +141,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5N
 {
   "content": "잘 보고 갑니다람쥐"
 }
-
+### 683956d256e3f51e17baa8e6
 ### 댓글 조회
 GET http://localhost:3000/api/comments/683724d95139df30535951d8
 
 ### 댓글 수정
-PUT http://localhost:3000/api/comments/68393ed59b231b8c15b89d86
+PUT http://localhost:3000/api/comments/683956d256e3f51e17baa8e6
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
 
@@ -155,5 +155,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5N
 }
 
 ### 댓글 삭제
-DELETE http://localhost:3000/api/comments/68393ed59b231b8c15b89d86
+DELETE http://localhost:3000/api/comments/683956d256e3f51e17baa8e6
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NTg3MzI2LCJleHAiOjE3NDg1OTA5MjZ9.2M7ac0tnbaYfhf2bQ6Rz-iIuoDFNoeKfK-BWr-e5mSY
