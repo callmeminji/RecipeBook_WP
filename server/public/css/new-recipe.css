@@ -33,7 +33,7 @@
     flex: 1;
     padding: 0.6rem 1rem;
     border-radius: 6px;
-    border: 1px solid #ccc;
+    border: 1px solid #030303;
     font-size: 1rem;
   }
   
@@ -44,8 +44,9 @@
   /* 라디오 버튼 정렬 */
   .radio-group {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: wrap;      /* 줄바꿈 허용 */
+    gap: 0.75rem;         /* 버튼 간격 조정 */
+    max-width: 500px;
   }
   
   /* 슬라이더 박스 */

@@ -12,7 +12,10 @@ function goToAccount() {
     const formData = new FormData();
     formData.append("title", document.getElementById("title").value);
     formData.append("time", document.getElementById("time").value);
-    formData.append("description", document.getElementById("description").value);
+    
+    // 아래 2줄로 나눠 저장
+    formData.append("ingredients", document.getElementById("ingredients").value);
+    formData.append("instructions", document.getElementById("instructions").value);
   
     const type = document.querySelector("input[name='type']:checked");
     const difficulty = document.querySelector("input[name='difficulty']:checked");
@@ -26,13 +29,16 @@ function goToAccount() {
   
     try {
       const res = await fetch("http://localhost:5000/api/recipes", {
-        method: "POST",
-        body: formData
-      });
+      method: "POST",
+      body: formData
+    });
   
-      if (res.ok) {
+      const data = await res.json();  // ⭐ 서버 응답을 JSON으로 파싱
+  
+      if (res.ok && data.recipeId) {
         alert("Recipe submitted!");
-        window.location.href = "index.html";
+        // ⭐ 바로 post 페이지로 이동
+        window.location.href = `post.html?id=${data.recipeId}`;
       } else {
         alert("Submission failed.");
       }
@@ -41,4 +47,5 @@ function goToAccount() {
       alert("Error occurred.");
     }
   });
+  
   
