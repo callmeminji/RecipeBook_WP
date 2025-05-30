@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeYa - Login & Register</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <script src="js/account.js" defer></script>
+</head>
+<body>
+    
+    <header>
+        <div class="left">
+          <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
+        </div>
+    
+        <img src="assets/logo.png" alt="RecipeYa Logo" class="logo" onclick="goToHome()" />
+
+        <div class="right">
+          <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
+        </div>
+    </header>
+    
+    <div class="login-container">
+        <!-- 회원가입 -->
+        <section class="form-box">
+          <h2>Sign Up</h2>
+          <form id="signupForm">
+            <input type="text" id="signupUsername" placeholder="User Name" required />
+            <input type="email" id="signupEmail" placeholder="Email" required />
+            <input type="password" id="signupPassword" placeholder="Password" required />
+            <button type="submit">Register</button>
+          </form>
+        </section>
+    
+        <!-- 로그인 -->
+        <section class="form-box">
+          <h2>Log In</h2>
+          <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email" required />
+            <input type="password" id="loginPassword" placeholder="Password" required />
+            <button type="submit">Log In</button>
+          </form>
+        </section>
+    </div>
+
+</body>
+</html>
