@@ -62,4 +62,61 @@ function goToHome() {
     document.getElementById("actionButtons").style.display = "flex";
   }
 });
+
+// 샘플 댓글 데이터 (나중에 서버에서 불러올 수 있음)
+let comments = [
+  { id: 1, user: "eunyoung", text: "Looks delicious!", isMine: true },
+  { id: 2, user: "minji", text: "I'll try this recipe!", isMine: false }
+];
+
+// 댓글 렌더링 함수
+function renderComments() {
+  const container = document.getElementById("commentList");
+  container.innerHTML = "";
+
+  comments.forEach(comment => {
+    const item = document.createElement("div");
+    item.className = "comment-item";
+
+    item.innerHTML = `
+      <div class="comment-header">
+        <img src="assets/user-icon.png" class="comment-user-icon" />
+        <span class="comment-user-id">${comment.user}</span>
+        ${comment.isMine ? `
+          <div class="comment-actions">
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </div>
+        ` : ""}
+      </div>
+      <p class="comment-text">${comment.text}</p>
+    `;
+
+    container.appendChild(item);
+  });
+}
+
+// 댓글 등록 버튼 이벤트
+document.getElementById("commentForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const input = document.getElementById("commentInput");
+  const newComment = input.value.trim();
+
+  if (newComment) {
+    comments.unshift({
+      id: Date.now(),
+      user: "eunyoung",  // 실제 로그인된 유저로 대체
+      text: newComment,
+      isMine: true
+    });
+
+    input.value = "";
+    renderComments();
+  }
+});
+
+// 초기 실행
+document.addEventListener("DOMContentLoaded", () => {
+  renderComments();
+});
   

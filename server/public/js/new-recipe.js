@@ -33,11 +33,11 @@ function goToAccount() {
       body: formData
     });
   
-      const data = await res.json();  // ⭐ 서버 응답을 JSON으로 파싱
+      const data = await res.json();  // 서버 응답을 JSON으로 파싱
   
       if (res.ok && data.recipeId) {
         alert("Recipe submitted!");
-        // ⭐ 바로 post 페이지로 이동
+        // 바로 post 페이지로 이동
         window.location.href = `post.html?id=${data.recipeId}`;
       } else {
         alert("Submission failed.");

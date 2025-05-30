@@ -93,3 +93,77 @@
     white-space: pre-wrap; /* 줄바꿈 유지용 */
   }
   
+  .comment-section {
+    max-width: 750px;
+    margin: 3rem auto 5rem;  /* 아래 공간 확보 */
+    padding-top: 2rem;
+    border-top: 1px solid #ccc;
+  }
+  
+  .comment-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    margin-bottom: 0.5rem;
+  }
+  
+  .comment-form button {
+    float: right;
+    padding: 0.4rem 1.2rem;
+    background: #f57c00;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .comment-list {
+    margin-top: 5rem;
+    margin-left: 1.25rem;
+  }
+  
+  .comment-item {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+  }
+
+  .comment-text {
+    padding-left: 0.5rem; /* 아이콘 + 이름 공간 확보 */
+    padding-top: 0.7rem;
+    margin-top: 0.5rem;
+  }
+  
+  .comment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .comment-user-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 1rem;
+  }
+  
+  .comment-user-id {
+    font-weight: bold;
+    font-size: 17px;
+    margin-right: auto;
+  }
+  
+  .comment-actions button {
+    margin-left: 0.5rem;
+    background: transparent;
+    border: none;
+    color: #f57c00;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

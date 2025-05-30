@@ -22,7 +22,7 @@
         </div>
     </header>
 
-    <!-- ✅ post.html (수정 반영 버전) -->
+    <!-- post.html (수정 반영 버전) -->
 <main class="post-container">
     <!-- 상단: 제목 + 아이콘/버튼 -->
     <div class="post-header">
@@ -61,6 +61,21 @@
       <p id="postInstructions">1. Stir-fry kimchi. 2. Add pork. 3. Add tofu.</p>
     </section>
   </main>
+
+  <!-- 댓글 리스트 영역 -->
+  <section class="comment-section">
+    <h3>Comments</h3>
+
+  <form id="commentForm" class="comment-form">
+    <textarea id="commentInput" placeholder="Write your comment..." required></textarea>
+    <button type="submit">Post</button>
+  </form>
+  
+    <div id="commentList" class="comment-list"></div>
+  </section>
+  
+</section>
+
 
   <!-- 로그인 필요 알림 모달 -->
   <div id="loginPromptModal" class="modal" style="display: none;">
