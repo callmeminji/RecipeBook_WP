@@ -20,7 +20,7 @@ router.post('/:id/bookmark', authenticate, recipeController.bookmarkRecipe);
 router.delete('/:id/bookmark', authenticate, recipeController.unbookmarkRecipe);
 
 // 내가 작성한 레시피 목록 조회 (로그인 필요)
-router.get('/me', authenticate, recipeController.getMyRecipes);
+router.get('/me/recipes', authenticate, recipeController.getMyRecipes);
 
 // 레시피 필터링 (공개)
 router.get('/filter', recipeController.filterRecipes);

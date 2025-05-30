@@ -249,11 +249,15 @@ exports.getBookmarks = async (req, res) => {
 // 내가 작성한 레시피 목록 조회
 exports.getMyRecipes = async (req, res) => {
   try {
-    const userId = new mongoose.Types.ObjectID(req.user.userId); 
-    const recipes = await Recipe.find({ author: userId });
+    console.log('[REQ.USER]', req.user);
+    // const userId = new mongoose.Types.ObjectID(req.user.userId); 
+    const userId = req.user.userId;
+    const recipes = await Recipe.find({ author: req.user.userId });
+    
+    console.log('[RECIPE COUNT]', recipes.length);
     res.json(recipes);
   } catch (err) {
-    // console.error('[GET MY RECIPES ERROR]', err);
+    console.error('[GET MY RECIPES ERROR]', err);
     res.status(500).json({ message: 'Failed to get my recipes' });
   }
 };

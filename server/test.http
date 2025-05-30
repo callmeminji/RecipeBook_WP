@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ### 레시피 생성 (이미지 포함, 사진 1장만 업로드 가능)
 POST http://localhost:3000/api/recipes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA5MTM0LCJleHAiOjE3NDg2MTI3MzR9.IR4s2C24AIF0MhpyrM0nGAa9mruK3qUgnq6JNc6RRMI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
 Content-Type: multipart/form-data; boundary=MyBoundary
 
 
@@ -68,20 +68,22 @@ GET http://localhost:3000/api/recipes
 
 ###
 
-### 북마크 추가
-POST http://localhost:3000/api/recipes/6839a570a0a57c0f6c7a6ea8/bookmark
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+### 북마크 추가(저자 아이디)
+POST http://localhost:3000/api/recipes/6839532356e3f51e17baa863/bookmark
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
 
 ###
 
 ### 사용자 북마크 목록
 GET http://localhost:3000/api/users/me/bookmarks
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
 
 ### 레시피 수정
-PUT http://localhost:3000/api/recipes/68399f258defb2d7cdf94e4e
+PUT http://localhost:3000/api/recipes/6839b2e65bc22deb9589fe3a
 Content-Type: multipart/form-data; boundary=MyBoundary
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjExNzk2LCJleHAiOjE3NDg2MTUzOTZ9.jG7AZtqniX4ms73NMFriHhMsVaJqCQm0PaKK47WXv58
+
+
 --MyBoundary
 Content-Disposition: form-data; name="title"
 
@@ -114,8 +116,8 @@ DELETE http://localhost:3000/api/recipes/68399f258defb2d7cdf94e4e
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
 
 ### 내가 쓴 레시피 조회 -> 다른 사용자까지 나옴옴
-GET http://localhost:3000/api/recipes
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA5MTM0LCJleHAiOjE3NDg2MTI3MzR9.IR4s2C24AIF0MhpyrM0nGAa9mruK3qUgnq6JNc6RRMI
+GET http://localhost:3000/api/recipes/me/recipes
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM5NTMyMzU2ZTNmNTFlMTdiYWE4NjMiLCJlbWFpbCI6Im1qQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQ4NjA4MjIxLCJleHAiOjE3NDg2MTE4MjF9.BuVskb92VJCucSwjRxF5V7mbS77wUT6PKM8N7Qkd5UE
 
 ### 북마크 삭제
 DELETE http://localhost:3000/api/recipes/683724d95139df30535951d8/bookmark
