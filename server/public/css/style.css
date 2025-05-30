@@ -1,0 +1,109 @@
+/* 기본 배경 및 폰트 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #efebea;
+  }
+  
+/* 헤더 */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #efebea;
+    padding: 2.1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+/* 로고 텍스트 (가운데) */
+/* header h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #212121;
+  } */
+
+  header img.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 65px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+  
+/* 아이콘들 */
+header img.icon {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+  }
+  
+/* 아이콘 위치 */
+header .left,
+header .right {
+    z-index: 1;
+  }
+
+body {
+    
+}
+  
+/* 공통 버튼
+button {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #f57c00;
+    color: white;
+    font-weight: bold;
+  }
+  
+/* input 필드 공통 */
+/* input, select {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  } */
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .modal-content button {
+    margin: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #f57c00;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  

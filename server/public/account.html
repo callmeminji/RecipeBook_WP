@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeYa - Account</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/account.css" />
+    <script src="js/account.js" defer></script>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <div class="left">
+          <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
+        </div>
+    
+        <img src="assets/logo.png" alt="RecipeYa Logo" class="logo" onclick="goToHome()" />
+
+        <div class="right">
+          <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
+        </div>
+    </header>
+
+    <main class="account-container">
+        <img src="assets/user-icon.png" class="profile-icon" />
+        <h2 id="userId">User ID</h2>
+    
+        <button class="logout-btn" onclick="logout()">Log Out</button>
+    
+        <div class="button-group">
+          <button onclick="goToFavorites()">❤️ Favorites</button>
+          <button onclick="goToMyRecipes()">📄 My Recipes</button>
+        </div>
+      </main>
+</body>
+</html>

@@ -1,0 +1,47 @@
+.account-container {
+    max-width: 500px;
+    margin: 3rem auto;
+    text-align: center;
+  }
+  
+  .profile-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+  }
+  
+  #userId {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    color: #444;
+  }
+  
+  .logout-btn {
+    padding: 0.6rem 1.2rem;
+    background-color: #883929;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+    cursor: pointer;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .button-group button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: #f5d4d4;
+    cursor: pointer;
+    width: 170px; /* 고정 너비 설정 */   
+    text-align: center;
+  }
+  
