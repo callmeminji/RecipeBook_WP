@@ -1,62 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RecipeYa - Recipe Post</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/post.css" />
-    <script src="js/post.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RecipeYa - Recipe Post</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/post.css" />
+  <script src="js/post.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="left">
-          <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
-        </div>
-    
-        <img src="assets/logo.png" alt="RecipeYa Logo" class="logo" onclick="goToHome()" />
+  <header>
+    <div class="left">
+      <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
+    </div>
 
-        <div class="right">
-          <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
-        </div>
-    </header>
+    <img src="assets/logo.png" alt="RecipeYa Logo" class="logo" onclick="goToHome()" />
 
-    <!-- post.html (수정 반영 버전) -->
-<main class="post-container">
+    <div class="right">
+      <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
+    </div>
+  </header>
+
+  <main class="post-container">
     <!-- 상단: 제목 + 아이콘/버튼 -->
     <div class="post-header">
       <h2 class="post-title" id="postTitle">Recipe Title</h2>
       <div class="bookmark-and-actions">
-
         <div class="actions-vertical">
-          <button id="editBtn">✏️ Edit</button>
-          <button id="deleteBtn">🗑 Delete</button>
+          <button id="editBtn" type="button">✏️ Edit</button>
+          <button id="deleteBtn" type="button">🗑 Delete</button>
         </div>
-      
         <div class="bookmark-group">
           <img src="assets/bookmark-icon.png" class="bookmark-icon" id="bookmarkIcon" />
-          <span class="bookmark-count" id="bookmarkCount">12</span>
+          <span class="bookmark-count" id="bookmarkCount">0</span>
         </div>
-      
       </div>
     </div>
-  
+
     <!-- 중간: 이미지 + 정보 -->
     <section class="post-body">
       <img src="assets/default.jpg" alt="Recipe" class="post-image" id="postImage" />
       <div class="info-table">
         <p><strong>Type:</strong> <span id="postType">Korean</span></p>
         <p><strong>Difficulty:</strong> <span id="postDifficulty">Easy</span></p>
-        <p><strong>Time:</strong> <span id="postTime">Under 10</span></p>
+        <p><strong>Time:</strong> <span id="postTime">10 min</span></p>
       </div>
     </section>
-  
+
     <!-- 하단: 재료 / 방법 -->
     <section class="post-content">
       <h3>Ingredients</h3>
       <p id="postIngredients">- Kimchi - Pork - Tofu</p>
-  
+
       <h3>Instructions</h3>
       <p id="postInstructions">1. Stir-fry kimchi. 2. Add pork. 3. Add tofu.</p>
     </section>
@@ -66,23 +62,20 @@
   <section class="comment-section">
     <h3>Comments</h3>
 
-  <form id="commentForm" class="comment-form">
-    <textarea id="commentInput" placeholder="Write your comment..." required></textarea>
-    <button type="submit">Post</button>
-  </form>
-  
+    <form id="commentForm" class="comment-form">
+      <textarea id="commentInput" placeholder="Write your comment..." required></textarea>
+      <button type="submit">Post</button>
+    </form>
+
     <div id="commentList" class="comment-list"></div>
   </section>
-  
-</section>
-
 
   <!-- 로그인 필요 알림 모달 -->
   <div id="loginPromptModal" class="modal" style="display: none;">
     <div class="modal-content">
       <p>You need to log in to use this feature.</p>
-      <button onclick="goToLogin()">Go to Login</button>
-      <button onclick="closeLoginModal()">Close</button>
+      <button onclick="goToLogin()" type="button">Go to Login</button>
+      <button onclick="closeLoginModal()" type="button">Close</button>
     </div>
   </div>
 
@@ -90,8 +83,8 @@
   <div id="deleteModal" class="modal" style="display: none;">
     <div class="modal-content">
       <p>Are you sure you want to delete this recipe?</p>
-      <button onclick="confirmDelete()">Yes, Delete</button>
-      <button onclick="closeDeleteModal()">Cancel</button>
+      <button onclick="confirmDelete()" type="button">Yes, Delete</button>
+      <button onclick="closeDeleteModal()" type="button">Cancel</button>
     </div>
   </div>
 
@@ -99,11 +92,9 @@
   <div id="commentDeleteModal" class="modal" style="display: none;">
     <div class="modal-content">
       <p>Do you really want to delete this comment?</p>
-      <button onclick="confirmCommentDelete()">Yes</button>
-      <button onclick="closeCommentDeleteModal()">Cancel</button>
+      <button onclick="confirmCommentDelete()" type="button">Yes</button>
+      <button onclick="closeCommentDeleteModal()" type="button">Cancel</button>
     </div>
   </div>
-
-  
 </body>
 </html>

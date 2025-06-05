@@ -65,7 +65,8 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       }
 
       sessionStorage.setItem("user", JSON.stringify(data.user));
-
+        sessionStorage.setItem("token", data.token);
+        
       // 리디렉션
       window.location.href = redirectTo;
     } else {
