@@ -6,6 +6,7 @@ function goToHome() {
 const params = new URLSearchParams(window.location.search);
 const redirectTo = params.get("redirect") || "index.html";
 
+// 모달 열고 닫는 함수
 function showModal(id) {
   document.getElementById(id).style.display = "flex";
 }
@@ -13,7 +14,6 @@ function showModal(id) {
 function closeModal(id) {
   document.getElementById(id).style.display = "none";
 }
-
 
 // 회원가입 처리
 document.getElementById("signupForm").addEventListener("submit", async (e) => {
@@ -23,34 +23,24 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("signupPassword").value;
 
   try {
-    const res = await fetch("http://localhost:5000/api/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password })
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password }),
     });
 
-fetch('/api/auth/signup', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ username, email, password }),
-})
-  .then((res) => {
     if (res.status === 409) {
-      showModal("signupExistsModal"); // 중복 이메일
+      showModal("signupExistsModal"); // 이미 존재하는 계정
     } else if (res.ok) {
-      showModal("signupSuccessModal"); // 성공
+      showModal("signupSuccessModal"); // 회원가입 성공
     } else {
       alert("Signup failed.");
     }
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error(err);
     alert("Something went wrong.");
-  });
-
-
+  }
+});
 
 // 로그인 처리
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -58,48 +48,31 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
 
+  console.log(" 로그인:", { email, password });
+
   try {
-    const res = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
     });
 
-<<<<<<< HEAD
-  fetch('/api/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error('로그인 실패');
-      return res.json();
-    })
-    .then((data) => {
-      if (!data.user) throw new Error('사용자 정보가 없습니다.');
-      sessionStorage.setItem('user', JSON.stringify(data.user));
-      window.location.href = redirectTo;
-    })
-    .catch((err) => {
-      alert('로그인 실패: ' + err.message);
-      console.error(err);
-    });
-=======
     if (res.ok) {
       const data = await res.json();
-      sessionStorage.setItem("user", JSON.stringify(data));
-      
-      // 이전 페이지로 리디렉션
-      const redirect = new URLSearchParams(window.location.search).get("redirect") || "index.html";
-      window.location.href = redirect;
+
+      if (!data.user) {
+        throw new Error("사용자 정보가 없습니다.");
+      }
+
+      sessionStorage.setItem("user", JSON.stringify(data.user));
+
+      // 리디렉션
+      window.location.href = redirectTo;
     } else {
-      showModal("loginFailedModal");
+      showModal("loginFailedModal"); // 로그인 실패 시 모달
     }
   } catch (err) {
     console.error(err);
     alert("Something went wrong.");
   }
->>>>>>> 2bff4d5e96e779ddbd610496bb10b048e8e4e086
 });
