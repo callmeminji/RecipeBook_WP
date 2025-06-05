@@ -15,9 +15,25 @@ document.getElementById("signupForm").addEventListener("submit", (e) => {
 
   console.log("📬 회원가입:", { username, email, password });
 
-  // TODO: fetch로 서버에 POST 요청
-  alert("회원가입 완료! 로그인 해주세요.");
-  location.reload(); // 새로고침하여 로그인 탭으로 전환
+  fetch('/api/auth/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, email, password }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error('회원가입 실패');
+      return res.json();
+    })
+    .then((data) => {
+      alert('회원가입 성공! 로그인 해주세요.');
+      location.reload(); // 새로고침하여 로그인 탭으로 전환
+    })
+    .catch((err) => {
+      alert('회원가입 중 오류 발생');
+      console.error(err);
+    });
 });
 
 // 로그인 처리
@@ -28,9 +44,24 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
 
   console.log("🔐 로그인:", { email, password });
 
-  // 로그인 성공한 것처럼 세션 저장 (나중에 서버 연동 예정)
-  sessionStorage.setItem("user", JSON.stringify({ email }));
-
-  // 이전 페이지로 리디렉션
-  window.location.href = redirectTo;
+  fetch('/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error('로그인 실패');
+      return res.json();
+    })
+    .then((data) => {
+      if (!data.user) throw new Error('사용자 정보가 없습니다.');
+      sessionStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = redirectTo;
+    })
+    .catch((err) => {
+      alert('로그인 실패: ' + err.message);
+      console.error(err);
+    });
 });
