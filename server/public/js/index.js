@@ -78,7 +78,8 @@ async function loadRecipes() {
   list.innerHTML = ""; // 기존 내용 초기화
 
   try {
-    const res = await fetch("http://localhost:5000/api/recipes");
+    const res = await fetch("/api/recipes");
+
     const recipes = await res.json();
 
     recipes.forEach(recipe => {
