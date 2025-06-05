@@ -3,7 +3,6 @@ const Recipe = require('../models/Recipe');
 const fs = require('fs');
 const mongoose = require('mongoose');
 
-
 // 전체 레시피 목록 조회 (bookmarkCount 포함)
 exports.getAllRecipes = async (req, res) => {
   try {
@@ -19,6 +18,7 @@ exports.getAllRecipes = async (req, res) => {
     );
     res.json(recipesWithBookmarkCount);
   } catch (err) {
+    console.error('[GET ALL ERROR]', err);
     res.status(500).json({ message: 'Failed to get recipes' });
   }
 };
@@ -32,6 +32,7 @@ exports.getRecipeById = async (req, res) => {
     const count = await User.countDocuments({ bookmarks: recipe._id });
     res.json({ ...recipe.toObject(), bookmarkCount: count });
   } catch (err) {
+    console.error('[GET BY ID ERROR]', err);
     res.status(500).json({ message: 'Failed to get recipe' });
   }
 };
@@ -39,15 +40,11 @@ exports.getRecipeById = async (req, res) => {
 // 레시피 생성
 exports.createRecipe = async (req, res) => {
   try {
-    const { title, content, type, difficulty, cookingTime } = req.body;
+    const { title, instructions: content, type, difficulty, cookingTime } = req.body;
     let ingredients = req.body.ingredients;
 
     if (typeof ingredients === 'string') {
-      try {
-        ingredients = JSON.parse(ingredients);
-      } catch (parseErr) {
-        return res.status(400).json({ message: 'Invalid JSON format for ingredients' });
-      }
+      ingredients = ingredients.split('\n').map((i) => i.trim()).filter(Boolean);
     }
 
     if (!Array.isArray(ingredients)) {
@@ -88,7 +85,7 @@ exports.createRecipe = async (req, res) => {
     });
 
     await recipe.save();
-    res.status(201).json({ message: 'Recipe created successfully', recipe });
+    res.status(201).json({ message: 'Recipe created successfully', recipeId: recipe._id });
   } catch (err) {
     console.error('[CREATE ERROR]', err);
     res.status(400).json({ message: 'Failed to create recipe', error: err.message });
@@ -98,15 +95,11 @@ exports.createRecipe = async (req, res) => {
 // 레시피 수정
 exports.updateRecipe = async (req, res) => {
   try {
-    const { title, content, type, difficulty, cookingTime } = req.body;
+    const { title, instructions: content, type, difficulty, cookingTime } = req.body;
     let ingredients = req.body.ingredients;
 
     if (typeof ingredients === 'string') {
-      try {
-        ingredients = JSON.parse(ingredients);
-      } catch (err) {
-        return res.status(400).json({ message: 'Invalid JSON for ingredients' });
-      }
+      ingredients = ingredients.split('\n').map((i) => i.trim()).filter(Boolean);
     }
 
     if (!Array.isArray(ingredients)) {
@@ -169,6 +162,7 @@ exports.deleteRecipe = async (req, res) => {
 
     res.json({ message: 'Recipe deleted successfully' });
   } catch (err) {
+    console.error('[DELETE ERROR]', err);
     res.status(500).json({ message: 'Failed to delete recipe', error: err.message });
   }
 };
@@ -185,6 +179,7 @@ exports.bookmarkRecipe = async (req, res) => {
 
     res.status(200).json({ message: 'Recipe bookmarked' });
   } catch (err) {
+    console.error('[BOOKMARK ERROR]', err);
     res.status(500).json({ message: 'Failed to bookmark recipe' });
   }
 };
@@ -201,60 +196,15 @@ exports.unbookmarkRecipe = async (req, res) => {
 
     res.status(200).json({ message: 'Bookmark removed' });
   } catch (err) {
+    console.error('[UNBOOKMARK ERROR]', err);
     res.status(500).json({ message: 'Failed to remove bookmark' });
   }
 };
 
-// 레시피 필터링 (타입, 난이도, 시간카테고리)
-exports.filterRecipes = async (req, res) => {
-  try {
-    const { type, difficulty, cookingTimeCategory } = req.query;
-    const filter = {};
-    if (type) filter.type = type;
-    if (difficulty) filter.difficulty = difficulty;
-    if (cookingTimeCategory) filter.cookingTimeCategory = cookingTimeCategory;
-
-    const recipes = await Recipe.find(filter);
-    res.json(recipes);
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to filter recipes' });
-  }
-};
-
-// 제목으로 레시피 검색
-exports.searchRecipes = async (req, res) => {
-  try {
-    const keyword = req.query.keyword || '';
-    const recipes = await Recipe.find({ title: new RegExp(keyword, 'i') });
-    res.json(recipes);
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to search recipes' });
-  }
-};
-
-// 북마크 목록 조회
-exports.getBookmarks = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.userId).populate('bookmarks');
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.json({ bookmarks: user.bookmarks });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to load bookmarks' });
-  }
-};
-
-
 // 내가 작성한 레시피 목록 조회
 exports.getMyRecipes = async (req, res) => {
   try {
-    console.log('[REQ.USER]', req.user);
-    // const userId = new mongoose.Types.ObjectID(req.user.userId); 
-    const userId = req.user.userId;
     const recipes = await Recipe.find({ author: req.user.userId });
-    
-    console.log('[RECIPE COUNT]', recipes.length);
     res.json(recipes);
   } catch (err) {
     console.error('[GET MY RECIPES ERROR]', err);
@@ -274,6 +224,7 @@ exports.filterRecipes = async (req, res) => {
     const recipes = await Recipe.find(filter);
     res.json(recipes);
   } catch (err) {
+    console.error('[FILTER ERROR]', err);
     res.status(500).json({ message: 'Failed to filter recipes' });
   }
 };
@@ -285,6 +236,21 @@ exports.searchRecipes = async (req, res) => {
     const recipes = await Recipe.find({ title: new RegExp(keyword, 'i') });
     res.json(recipes);
   } catch (err) {
-    res.status(500).json({ message: 'Unbookmark failed', error: err.message });
+    console.error('[SEARCH ERROR]', err);
+    res.status(500).json({ message: 'Failed to search recipes', error: err.message });
+  }
+};
+
+// 북마크 목록 조회
+exports.getBookmarks = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).populate('bookmarks');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({ bookmarks: user.bookmarks });
+  } catch (err) {
+    console.error('[GET BOOKMARKS ERROR]', err);
+    res.status(500).json({ message: 'Failed to load bookmarks' });
   }
 };
