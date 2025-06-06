@@ -5,7 +5,8 @@ const fs = require('fs');
 // 전체 레시피 목록 조회 (bookmarkCount 포함)
 exports.getAllRecipes = async (req, res) => {
   try {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.find().sort({ createdAt: -1 }); // 최신순 정렬
+
     const recipesWithBookmarkCount = await Promise.all(
       recipes.map(async (recipe) => {
         const count = await User.countDocuments({ bookmarks: recipe._id });

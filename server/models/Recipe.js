@@ -12,7 +12,7 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
   ingredients: {
-    type: [String], // ← 여기를 문자열 배열로 변경
+    type: [String],
     required: true,
     validate: v => Array.isArray(v) && v.length > 0
   },
@@ -20,11 +20,7 @@ const recipeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  }
+}, { timestamps: true }); // 자동으로 createdAt, updatedAt 생성됨
 
 module.exports = mongoose.model('Recipe', recipeSchema);

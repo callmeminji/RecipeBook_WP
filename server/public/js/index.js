@@ -119,3 +119,56 @@ document.addEventListener("DOMContentLoaded", () => {
     searchBtn.addEventListener("click", searchRecipes);
   }
 });
+//필터 이벤트 연결
+document.getElementById("typeFilter").addEventListener("change", applyFilter);
+document.getElementById("difficultyFilter").addEventListener("change", applyFilter);
+document.getElementById("timeFilter").addEventListener("change", applyFilter);
+document.getElementById("allFilterBtn").addEventListener("click", loadRecipes);
+
+
+//필터링
+async function applyFilter() {
+  const type = document.getElementById("typeFilter").value;
+  const difficulty = document.getElementById("difficultyFilter").value;
+  const time = document.getElementById("timeFilter").value;
+
+  const params = new URLSearchParams();
+  if (type) params.append("type", type);
+  if (difficulty) params.append("difficulty", difficulty);
+  if (time) params.append("cookingTimeCategory", time); // time이 아니라 cookingTimeCategory로 보내야 함!
+
+  try {
+    const res = await fetch(`/api/recipes/filter?${params.toString()}`);
+    const recipes = await res.json();
+
+    const list = document.getElementById("recipeList");
+    list.innerHTML = "";
+
+    recipes.forEach(recipe => {
+      const card = document.createElement("div");
+      card.classList.add("recipe-card");
+
+      card.innerHTML = `
+        <img src="${recipe.imageUrl || 'assets/default.jpg'}" alt="${recipe.title}" class="recipe-image">
+        <div class="info">
+          <h3>${recipe.title}</h3>
+          <p class="meta">
+            ⭐ ${recipe.difficulty} &nbsp;&nbsp;
+            ⏱ ${recipe.cookingTime} min &nbsp;&nbsp;
+            🍽 ${recipe.type}
+          </p>
+        </div>
+      `;
+
+      card.onclick = () => {
+        window.location.href = `post.html?id=${recipe._id}`;
+      };
+
+      list.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error("Filter failed:", err);
+  }
+}
+
