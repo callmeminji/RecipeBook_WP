@@ -6,66 +6,53 @@ function goToAccount() {
   window.location.href = "account.html";
 }
 
-function isLoggedIn() {
-  return sessionStorage.getItem("user") !== null;
-}
-
-function getToken() {
-  return sessionStorage.getItem("token");
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!isLoggedIn()) {
-    alert("You must be logged in to view your recipes.");
-    window.location.href = "login.html?redirect=account.html";
+  const token = sessionStorage.getItem("token");
+  const list = document.getElementById("myRecipeList");
+
+  if (!token) {
+    alert("로그인이 필요합니다.");
+    window.location.href = "login.html";
     return;
   }
 
-  const list = document.getElementById("myRecipeList");
-  list.innerHTML = "";
-
   try {
-    const res = await fetch("/api/recipes/me/recipes", {
+    const res = await fetch("/api/users/me/recipes", {
       headers: {
-        Authorization: "Bearer " + getToken(),
+        Authorization: "Bearer " + token,
       },
     });
 
     if (!res.ok) {
-      throw new Error("Failed to load your recipes");
+      throw new Error("서버 응답 실패");
     }
 
-    const myRecipes = await res.json();
+    const recipes = await res.json();
 
-    if (myRecipes.length === 0) {
-      list.innerHTML = "<p>You haven't created any recipes yet.</p>";
+    if (recipes.length === 0) {
+      list.innerHTML = "<p>작성한 레시피가 없습니다.</p>";
       return;
     }
 
-    myRecipes.forEach(recipe => {
+    recipes.forEach((recipe) => {
       const card = document.createElement("div");
       card.className = "recipe-card";
-
       card.innerHTML = `
-        <img src="${recipe.image ? `/uploads/${recipe.image}` : 'assets/default.jpg'}" alt="${recipe.title}" class="recipe-image">
+        <img src="${recipe.image ? "/uploads/" + recipe.image : "assets/default.jpg"}" alt="${recipe.title}" class="recipe-image">
         <div class="info">
           <h3>${recipe.title}</h3>
           <p class="meta">
-             ${recipe.difficulty} &nbsp;&nbsp;
-             ${recipe.cookingTime} min &nbsp;&nbsp;
-             ${recipe.type}
+            ⭐ ${recipe.difficulty} &nbsp;&nbsp; ⏱ ${recipe.cookingTime} min &nbsp;&nbsp; 🍽 ${recipe.type}
           </p>
         </div>
       `;
-
       card.onclick = () => {
         window.location.href = `post.html?id=${recipe._id}`;
       };
-
       list.appendChild(card);
     });
   } catch (err) {
-    console.error(err);
-    list.innerHTML = "<p> Failed to load recipes. Please try again later.</p>";
+    console.error("내 레시피 불러오기 실패:", err);
+    list.innerHTML = "<p>레시피를 불러오는 중 오류가 발생했습니다.</p>";
   }
 });

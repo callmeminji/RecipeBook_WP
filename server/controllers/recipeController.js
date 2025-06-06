@@ -38,23 +38,35 @@ exports.getRecipeById = async (req, res) => {
 };
 
 // 레시피 생성
+// 레시피 생성
 exports.createRecipe = async (req, res) => {
   try {
-    const { title, instructions: content, type, difficulty, cookingTime } = req.body;
+    const { title, instructions, type, difficulty, cookingTime } = req.body;
+
+    // 재료 보정 처리
     let ingredients = req.body.ingredients;
+    if (!ingredients) ingredients = [];
+    else if (typeof ingredients === 'string') ingredients = [ingredients]; // 단일 항목일 경우 문자열 → 배열
+    else if (!Array.isArray(ingredients)) ingredients = [String(ingredients)];
 
-    if (typeof ingredients === 'string') {
-      ingredients = ingredients.split('\n').map((i) => i.trim()).filter(Boolean);
-    }
-
-    if (!Array.isArray(ingredients)) {
-      return res.status(400).json({ message: 'Ingredients must be an array' });
-    }
-
-    const imagePath = req.file ? req.file.filename : null;
-
-    if (!title || !content || !type || !difficulty || !cookingTime || ingredients.length === 0) {
-      return res.status(400).json({ message: 'Missing required fields' });
+    // 필수 값 검증
+    if (
+      !title ||
+      !instructions ||
+      !type ||
+      !difficulty ||
+      !cookingTime ||
+      ingredients.length === 0
+    ) {
+      console.error('[VALIDATION ERROR]', {
+        title,
+        instructions,
+        type,
+        difficulty,
+        cookingTime,
+        ingredients
+      });
+      return res.status(400).json({ message: 'Missing or invalid required fields' });
     }
 
     const cookingTimeNumber = Number(cookingTime);
@@ -72,9 +84,12 @@ exports.createRecipe = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: user not found in request' });
     }
 
+    // 이미지 업로드 확인
+    const imagePath = req.file ? req.file.filename : null;
+
     const recipe = new Recipe({
       title,
-      content,
+      content: instructions,
       type,
       difficulty,
       cookingTime: cookingTimeNumber,
@@ -85,26 +100,30 @@ exports.createRecipe = async (req, res) => {
     });
 
     await recipe.save();
-    res.status(201).json({ message: 'Recipe created successfully', recipeId: recipe._id });
+
+    console.log('[CREATE SUCCESS] Recipe ID:', recipe._id);
+    res.status(201).json({
+      message: 'Recipe created successfully',
+      recipeId: recipe._id
+    });
   } catch (err) {
     console.error('[CREATE ERROR]', err);
-    res.status(400).json({ message: 'Failed to create recipe', error: err.message });
+    res.status(500).json({
+      message: 'Failed to create recipe',
+      error: err.message
+    });
   }
 };
+
 
 // 레시피 수정
 exports.updateRecipe = async (req, res) => {
   try {
-    const { title, instructions: content, type, difficulty, cookingTime } = req.body;
+    const { title, content, type, difficulty, cookingTime } = req.body;
     let ingredients = req.body.ingredients;
 
-    if (typeof ingredients === 'string') {
-      ingredients = ingredients.split('\n').map((i) => i.trim()).filter(Boolean);
-    }
-
-    if (!Array.isArray(ingredients)) {
-      return res.status(400).json({ message: 'Ingredients must be an array' });
-    }
+    if (!ingredients) ingredients = [];
+    if (!Array.isArray(ingredients)) ingredients = [ingredients];
 
     const cookingTimeNumber = Number(cookingTime);
     if (isNaN(cookingTimeNumber)) {
