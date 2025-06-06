@@ -123,12 +123,15 @@ async function loadRecipeDetail() {
     document.getElementById("bookmarkCount").textContent = recipe.bookmarkCount || "0";
   
   
-   const currentUser = JSON.parse(sessionStorage.getItem("user"));
-    if (!currentUser || currentUser._id !== recipe.author) {
-      // 작성자가 아니면 수정/삭제 버튼 숨기기
-      document.getElementById("editBtn").style.display = "none";
-      document.getElementById("deleteBtn").style.display = "none";
-    }
+const currentUser = JSON.parse(sessionStorage.getItem("user"));
+const authorId = typeof recipe.author === "string" ? recipe.author : recipe.author._id;
+//본인이  쓴 글 아니면
+if (!currentUser || currentUser._id !== authorId) {
+  document.getElementById("editBtn").style.display = "none";
+  document.getElementById("deleteBtn").style.display = "none";
+}
+
+
   
   } catch (err) {
     console.error(err);
