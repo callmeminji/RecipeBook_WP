@@ -35,24 +35,62 @@ function goToLogin() {
   window.location.href = `login.html?redirect=${redirect}`;
 }
 
-
 let pendingDeleteCommentId = null;
 let currentRecipeId = null;
+
+const bookmark = document.getElementById("bookmarkIcon");
+
+// 하트 이미지 상태에 따라 바꿔주는 함수
+function setBookmarkIcon(isActive) {
+  bookmark.src = isActive ? "assets/filledheart.png" : "assets/emptyheart.png";
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   currentRecipeId = new URLSearchParams(window.location.search).get("id");
 
   loadRecipeDetail();
   loadComments();
+bookmark.addEventListener("click", async () => {
+  if (!isLoggedIn()) {
+    showLoginPrompt(getCurrentPageURL());
+    return;
+  }
+  const isActive = bookmark.classList.contains("active");
+  const token = sessionStorage.getItem("token");
 
-  const bookmark = document.getElementById("bookmarkIcon");
-  bookmark.addEventListener("click", () => {
-    if (!isLoggedIn()) {
-      showLoginPrompt(getCurrentPageURL());
-      return;
+  try {
+    let res;
+    if (!isActive) {
+      res = await fetch(`/api/recipes/${currentRecipeId}/bookmark`, {
+        method: "POST",
+        headers: { Authorization: "Bearer " + token }
+      });
+    } else {
+      res = await fetch(`/api/recipes/${currentRecipeId}/bookmark`, {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token }
+      });
     }
-    bookmark.classList.toggle("active");
-  });
+    if (res.ok) {
+      // 서버에서 최신 북마크 상태 받아와서 바로 반영
+      const data = await res.json();
+      setBookmarkIcon(data.isBookmarked);  // ← 바로 UI 반영
+      document.getElementById("bookmarkCount").textContent = data.bookmarkCount;
+      if (data.isBookmarked) {
+        bookmark.classList.add("active");
+      } else {
+        bookmark.classList.remove("active");
+      }
+    } else {
+      alert("북마크 처리 실패");
+    }
+  } catch (err) {
+    console.error("Bookmark error:", err);
+    alert("북마크 처리 중 오류 발생");
+  }
+});
+
+
 
   document.getElementById("editBtn").addEventListener("click", () => {
     const recipeData = {
@@ -109,7 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadRecipeDetail() {
   try {
-    const res = await fetch(`/api/recipes/${currentRecipeId}`);
+    const token = sessionStorage.getItem("token");
+    const headers = token ? { Authorization: "Bearer " + token } : {};
+    const res = await fetch(`/api/recipes/${currentRecipeId}`, { headers });
     if (!res.ok) throw new Error("Recipe not found");
     const recipe = await res.json();
 
@@ -121,18 +161,22 @@ async function loadRecipeDetail() {
     document.getElementById("postInstructions").textContent = recipe.instructions;
     document.getElementById("postImage").src = recipe.image ? `/uploads/${recipe.image}` : "assets/default.jpg";
     document.getElementById("bookmarkCount").textContent = recipe.bookmarkCount || "0";
-  
-  
-const currentUser = JSON.parse(sessionStorage.getItem("user"));
-const authorId = typeof recipe.author === "string" ? recipe.author : recipe.author._id;
-//본인이  쓴 글 아니면
-if (!currentUser || currentUser._id !== authorId) {
-  document.getElementById("editBtn").style.display = "none";
-  document.getElementById("deleteBtn").style.display = "none";
-}
 
+    // 북마크 하트 이미지 상태 동기화
+    if (recipe.isBookmarked) {
+      bookmark.classList.add("active");
+      setBookmarkIcon(true);
+    } else {
+      bookmark.classList.remove("active");
+      setBookmarkIcon(false);
+    }
 
-  
+    const currentUser = JSON.parse(sessionStorage.getItem("user"));
+    const authorId = typeof recipe.author === "string" ? recipe.author : recipe.author._id;
+    if (!currentUser || currentUser._id !== authorId) {
+      document.getElementById("editBtn").style.display = "none";
+      document.getElementById("deleteBtn").style.display = "none";
+    }
   } catch (err) {
     console.error(err);
     alert("Failed to load recipe.");

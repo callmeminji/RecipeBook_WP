@@ -3,6 +3,7 @@ const router = express.Router();
 const recipeController = require('../controllers/recipeController');
 const authenticate = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/uploadMiddleware');
+const authOptional = require('../middlewares/authOptional');
 
 // 레시피 생성 (로그인 필요, 이미지 1장 업로드 가능)
 router.post('/', authenticate, upload.single('image'), recipeController.createRecipe);
@@ -29,7 +30,9 @@ router.get('/filter', recipeController.filterRecipes);
 router.get('/search', recipeController.searchRecipes);
 
 // 단일 레시피 조회 (공개)
-router.get('/:id', recipeController.getRecipeById);
+router.get('/:id', authOptional, recipeController.getRecipeById);
+
+
 
 // 전체 레시피 목록 조회 (공개)
 router.get('/', recipeController.getAllRecipes);
