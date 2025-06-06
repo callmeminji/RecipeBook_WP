@@ -32,8 +32,9 @@ function closeLoginModal() {
 function goToLogin() {
   const modal = document.getElementById("loginPromptModal");
   const redirect = modal.dataset.redirect || "index.html";
-  window.location.href = `login.html?redirect=${encodeURIComponent(redirect)}`;
+  window.location.href = `login.html?redirect=${redirect}`;
 }
+
 
 let pendingDeleteCommentId = null;
 let currentRecipeId = null;
@@ -44,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadRecipeDetail();
   loadComments();
 
-  // 북마크 버튼
   const bookmark = document.getElementById("bookmarkIcon");
   bookmark.addEventListener("click", () => {
     if (!isLoggedIn()) {
@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     bookmark.classList.toggle("active");
   });
 
-  // 수정 버튼
   document.getElementById("editBtn").addEventListener("click", () => {
     const recipeData = {
       title: document.getElementById("postTitle").textContent,
@@ -68,13 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = `new-recipe.html?edit=1&id=${currentRecipeId}`;
   });
 
-  // 삭제 버튼
   document.getElementById("deleteBtn").addEventListener("click", () => {
     document.getElementById("deleteModal").style.display = "flex";
     sessionStorage.setItem("previousPage", document.referrer);
   });
 
-  // 댓글 등록
   document.getElementById("commentForm").addEventListener("submit", async function (e) {
     e.preventDefault();
     if (!isLoggedIn()) {
@@ -124,6 +121,15 @@ async function loadRecipeDetail() {
     document.getElementById("postInstructions").textContent = recipe.instructions;
     document.getElementById("postImage").src = recipe.image ? `/uploads/${recipe.image}` : "assets/default.jpg";
     document.getElementById("bookmarkCount").textContent = recipe.bookmarkCount || "0";
+  
+  
+   const currentUser = JSON.parse(sessionStorage.getItem("user"));
+    if (!currentUser || currentUser._id !== recipe.author) {
+      // 작성자가 아니면 수정/삭제 버튼 숨기기
+      document.getElementById("editBtn").style.display = "none";
+      document.getElementById("deleteBtn").style.display = "none";
+    }
+  
   } catch (err) {
     console.error(err);
     alert("Failed to load recipe.");
@@ -169,7 +175,6 @@ function renderComments(comments) {
 }
 
 document.addEventListener("click", function (e) {
-  // Edit
   if (e.target.classList.contains("edit-btn")) {
     const item = e.target.closest(".comment-item");
     const commentTextEl = item.querySelector(".comment-text");
@@ -191,7 +196,6 @@ document.addEventListener("click", function (e) {
     commentTextEl.after(textarea, saveBtn);
   }
 
-  // Save Edit
   if (e.target.classList.contains("save-edit-btn")) {
     const item = e.target.closest(".comment-item");
     const commentId = item.dataset.commentId;
@@ -224,7 +228,6 @@ document.addEventListener("click", function (e) {
       });
   }
 
-  // Delete
   if (e.target.classList.contains("delete-btn")) {
     const item = e.target.closest(".comment-item");
     pendingDeleteCommentId = item.dataset.commentId;

@@ -4,7 +4,8 @@ function goToHome() {
 
 // 리디렉션 주소 가져오기
 const params = new URLSearchParams(window.location.search);
-const redirectTo = params.get("redirect") || "index.html";
+const redirectRaw = params.get("redirect");
+const redirectTo = redirectRaw ? decodeURIComponent(redirectRaw) : "index.html";
 
 // 모달 열고 닫는 함수
 function showModal(id) {
@@ -37,8 +38,8 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
       alert("Signup failed.");
     }
   } catch (err) {
-    console.error(err);
-    alert("Something went wrong.");
+    console.error("Signup error:", err);
+    alert("Something went wrong during signup.");
   }
 });
 
@@ -47,8 +48,6 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
-
-  console.log(" 로그인:", { email, password });
 
   try {
     const res = await fetch('/api/auth/login', {
@@ -60,20 +59,21 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     if (res.ok) {
       const data = await res.json();
 
-      if (!data.user) {
-        throw new Error("사용자 정보가 없습니다.");
+      if (!data.user || !data.token) {
+        throw new Error("로그인 응답에 사용자 정보 또는 토큰이 없습니다.");
       }
 
+      // 세션에 저장
       sessionStorage.setItem("user", JSON.stringify(data.user));
-        sessionStorage.setItem("token", data.token);
-        
-      // 리디렉션
+      sessionStorage.setItem("token", data.token);
+
+      // 리디렉션 이동
       window.location.href = redirectTo;
     } else {
       showModal("loginFailedModal"); // 로그인 실패 시 모달
     }
   } catch (err) {
-    console.error(err);
-    alert("Something went wrong.");
+    console.error("Login error:", err);
+    alert("Something went wrong during login.");
   }
 });
