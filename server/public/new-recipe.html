@@ -1,87 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Recipe</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/new-recipe.css">
-    <script src="js/new-recipe.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Recipe</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/new-recipe.css" />
+  <script src="js/new-recipe.js" defer></script>
 </head>
 <body>
-
-    <header>
-        <div class="left">
-          <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
-        </div>
-    
-        <img src="assets/logo.png" alt="RecipeYa Logo" class="logo" onclick="goToHome()" />
-
-        <div class="right">
-          <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
-        </div>
-    </header>
-
-    <div class="container">
-        <h2>Create New Recipe!</h2>
-        
-        <form id="recipeForm">
-          
-            <div class="form-row">
-                <label for="title">Title</label>
-                <input type="text" id="title" required placeholder="Your recipe name!"/>
-            </div>
-    
-            <div class="form-row">
-                <label>Type</label>
-                <div class="radio-group">
-                  <label><input type="radio" name="type" value="Korean" required /> Korean</label>
-                  <label><input type="radio" name="type" value="Asian" /> Asian</label>
-                  <label><input type="radio" name="type" value="Western" /> Western</label>
-                  <label><input type="radio" name="type" value="Desert" /> Desert</label>
-                  <label><input type="radio" name="type" value="Others" /> Others</label>
-                </div>
-            </div>
-    
-            <div class="form-row">
-                <label>Difficulty</label>
-                <div class="radio-group">
-                  <label><input type="radio" name="difficulty" value="Easy" required /> Easy</label>
-                  <label><input type="radio" name="difficulty" value="Medium" /> Medium</label>
-                  <label><input type="radio" name="difficulty" value="Hard" /> Hard</label>
-                </div>
-              </div>
-    
-            <div class="form-row">
-                <label for="time">Time</label>
-                <div class="slider-box">
-                  <input type="range" id="time" min="1" max="120" value="10" oninput="timeOutput.value = this.value">
-                  <output id="timeOutput">10</output> min
-                </div>
-            </div>
-    
-            <div class="form-row">
-                <label for="image">Image</label>
-                <input type="file" id="image" accept="image/*" />
-            </div>
-    
-            <div class="form-row">
-                <label for="ingredients">Ingredients</label>
-                <textarea id="ingredients" rows="4" required placeholder="ex) sugar: 1 spoon"></textarea>
-            </div>
-          
-            <div class="form-row">
-                <label for="instructions">Instructions</label>
-                <textarea id="instructions" rows="6" required placeholder="1. start!"></textarea>
-            </div>
-          
-    
-            <div class="form-row submit-row">
-                <button type="submit">Save</button>
-            </div>
-        </form>
+  <header>
+    <div class="left">
+      <img src="assets/home-icon.png" alt="Home" class="icon" onclick="goToHome()" />
     </div>
-    
+
+    <img src="assets/logo.png" alt="RecipeYa Logo" class="logo" onclick="goToHome()" />
+
+    <div class="right">
+      <img src="assets/user-icon.png" alt="Account" class="icon" onclick="goToAccount()" />
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Create New Recipe!</h2>
+
+    <form id="recipeForm" enctype="multipart/form-data">
+      <!-- 제목 -->
+      <div class="form-row">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required placeholder="Your recipe name!" />
+      </div>
+
+      <!-- 타입 -->
+      <div class="form-row">
+        <label>Type</label>
+        <div class="radio-group">
+          <label><input type="radio" name="type" value="Korean" required /> Korean</label>
+          <label><input type="radio" name="type" value="Asian" /> Asian</label>
+          <label><input type="radio" name="type" value="Western" /> Western</label>
+          <label><input type="radio" name="type" value="Desert" /> Desert</label>
+          <label><input type="radio" name="type" value="Others" /> Others</label>
+        </div>
+      </div>
+
+      <!-- 난이도 -->
+      <div class="form-row">
+        <label>Difficulty</label>
+        <div class="radio-group">
+          <label><input type="radio" name="difficulty" value="Easy" required /> Easy</label>
+          <label><input type="radio" name="difficulty" value="Medium" /> Medium</label>
+          <label><input type="radio" name="difficulty" value="Hard" /> Hard</label>
+        </div>
+      </div>
+
+      <!-- 조리 시간 -->
+      <div class="form-row">
+        <label for="time">Time</label>
+        <div class="slider-box">
+          <input type="range" id="time" name="cookingTime" min="1" max="120" value="10" oninput="timeOutput.value = this.value" />
+          <output id="timeOutput">10</output> min
+        </div>
+      </div>
+
+      <!-- 이미지 업로드 -->
+      <div class="form-row">
+        <label for="image">Image</label>
+        <input type="file" id="image" name="image" accept="image/*" />
+      </div>
+
+      <!-- 재료 -->
+      <div class="form-row">
+        <label for="ingredients">Ingredients</label>
+        <textarea id="ingredients" name="ingredients" rows="4" required placeholder="ex) sugar: 1 spoon"></textarea>
+      </div>
+
+      <!-- 조리 순서 -->
+      <div class="form-row">
+        <label for="instructions">Instructions</label>
+        <textarea id="instructions" name="instructions" rows="6" required placeholder="1. start!"></textarea>
+      </div>
+
+      <!-- 저장 버튼 -->
+      <div class="form-row submit-row">
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
