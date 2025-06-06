@@ -23,7 +23,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("signupPassword").value;
 
   try {
-    const res = await fetch("http://localhost:5000/api/signup", {
+    const res = await fetch("http://localhost:3000/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password })
@@ -50,7 +50,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("loginPassword").value;
 
   try {
-    const res = await fetch("http://localhost:5000/api/login", {
+    const res = await fetch("http://localhost:3000/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -58,9 +58,9 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
     if (res.ok) {
       const data = await res.json();
-      sessionStorage.setItem("user", JSON.stringify(data));
-      
-      // 이전 페이지로 리디렉션
+      sessionStorage.setItem("token", data.token); // 토큰 저장
+    
+      // 로그인 성공 시 리디렉션
       const redirect = new URLSearchParams(window.location.search).get("redirect") || "index.html";
       window.location.href = redirect;
     } else {

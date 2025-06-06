@@ -16,7 +16,7 @@ const signupUser = async (req, res) => {
     // 이메일 중복 체크
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'Email already registered.' });
+      return res.status(409).json({ message: 'Email already registered.' });
     }
 
     // 비밀번호 암호화
