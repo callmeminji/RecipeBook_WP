@@ -24,18 +24,24 @@ exports.getAllRecipes = async (req, res) => {
 };
 
 // 단일 레시피 조회 (bookmarkCount 포함)
+// 단일 레시피 조회 (bookmarkCount 포함)
 exports.getRecipeById = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) return res.status(404).json({ message: 'Recipe not found' });
 
     const count = await User.countDocuments({ bookmarks: recipe._id });
-    res.json({ ...recipe.toObject(), bookmarkCount: count });
+    res.json({
+      ...recipe.toObject(),
+      instructions: recipe.content,    // 여기 한 줄 추가
+      bookmarkCount: count
+    });
   } catch (err) {
     console.error('[GET BY ID ERROR]', err);
     res.status(500).json({ message: 'Failed to get recipe' });
   }
 };
+
 
 // 레시피 생성
 // 레시피 생성
