@@ -1,14 +1,14 @@
 const User = require('../models/User');
 const Recipe = require('../models/Recipe');
 
-// 🔧 재사용 가능한 헬퍼 함수 (ingredients 처리용)
+// 헬퍼 함수
 const normalizeIngredients = (ingredients) => {
   if (!ingredients) return [];
   if (!Array.isArray(ingredients)) return [ingredients];
   return ingredients;
 };
 
-// 전체 레시피 목록 조회 (bookmarkCount 포함)
+// 전체 레시피 목록
 exports.getAllRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find().sort({ createdAt: -1 });
@@ -18,6 +18,7 @@ exports.getAllRecipes = async (req, res) => {
         return {
           ...recipe.toObject(),
           bookmarkCount: count,
+          imageUrl: recipe.image ? `/uploads/${recipe.image}` : null,
         };
       })
     );
@@ -28,7 +29,7 @@ exports.getAllRecipes = async (req, res) => {
   }
 };
 
-// 단일 레시피 조회 (bookmarkCount, isBookmarked 포함)
+// 단일 레시피 조회
 exports.getRecipeById = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
@@ -48,7 +49,8 @@ exports.getRecipeById = async (req, res) => {
       ...recipe.toObject(),
       instructions: recipe.content,
       bookmarkCount: count,
-      isBookmarked
+      isBookmarked,
+      imageUrl: recipe.image ? `/uploads/${recipe.image}` : null,
     });
   } catch (err) {
     console.error('[GET BY ID ERROR]', err);
@@ -94,7 +96,8 @@ exports.createRecipe = async (req, res) => {
     await recipe.save();
     res.status(201).json({
       message: 'Recipe created successfully',
-      recipeId: recipe._id
+      recipeId: recipe._id,
+      imageUrl: recipe.image ? `/uploads/${recipe.image}` : null
     });
   } catch (err) {
     console.error('[CREATE ERROR]', err);
@@ -143,7 +146,13 @@ exports.updateRecipe = async (req, res) => {
       return res.status(404).json({ message: 'Recipe not found or not authorized' });
     }
 
-    res.json({ message: 'Recipe updated successfully', recipe: updated });
+    res.json({
+      message: 'Recipe updated successfully',
+      recipe: {
+        ...updated.toObject(),
+        imageUrl: updated.image ? `/uploads/${updated.image}` : null
+      }
+    });
   } catch (err) {
     console.error('[UPDATE ERROR]', err);
     res.status(500).json({ message: 'Failed to update recipe', error: err.message });
@@ -205,7 +214,7 @@ exports.unbookmarkRecipe = async (req, res) => {
   }
 };
 
-// 레시피 필터링
+// 필터링
 exports.filterRecipes = async (req, res) => {
   try {
     const { type, difficulty, cookingTimeCategory } = req.query;
@@ -221,46 +230,65 @@ exports.filterRecipes = async (req, res) => {
     }
 
     const recipes = await Recipe.find(filter);
-    res.json(recipes);
+    const withImages = recipes.map(r => ({
+      ...r.toObject(),
+      imageUrl: r.image ? `/uploads/${r.image}` : null
+    }));
+
+    res.json(withImages);
   } catch (err) {
     console.error('[FILTER ERROR]', err);
     res.status(500).json({ message: 'Failed to filter recipes' });
   }
 };
 
-// 북마크 목록 조회
+// 내 북마크 조회
 exports.getBookmarks = async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).populate('bookmarks');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    res.json({ bookmarks: user.bookmarks });
+
+    const bookmarks = user.bookmarks.map(r => ({
+      ...r.toObject(),
+      imageUrl: r.image ? `/uploads/${r.image}` : null
+    }));
+
+    res.json({ bookmarks });
   } catch (err) {
     console.error('[GET BOOKMARKS ERROR]', err);
     res.status(500).json({ message: 'Failed to load bookmarks' });
   }
 };
 
-// 레시피 제목 검색
+// 검색
 exports.searchRecipes = async (req, res) => {
   try {
     const keyword = req.query.keyword || '';
     const recipes = await Recipe.find({ title: new RegExp(keyword, 'i') });
-    res.json(recipes);
+    const withImages = recipes.map(r => ({
+      ...r.toObject(),
+      imageUrl: r.image ? `/uploads/${r.image}` : null
+    }));
+    res.json(withImages);
   } catch (err) {
     console.error('[SEARCH ERROR]', err);
     res.status(500).json({ message: 'Failed to search recipes', error: err.message });
   }
 };
 
+// 내 레시피
 exports.getMyRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find({ author: req.user.userId }).sort({ createdAt: -1 });
-    res.json(recipes);
+    const withImages = recipes.map(r => ({
+      ...r.toObject(),
+      imageUrl: r.image ? `/uploads/${r.image}` : null
+    }));
+    res.json(withImages);
   } catch (err) {
     console.error('[MY RECIPES ERROR]', err);
     res.status(500).json({ message: 'Failed to load my recipes' });
   }
 };
-

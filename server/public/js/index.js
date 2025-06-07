@@ -41,8 +41,10 @@ function createRecipeCard(recipe) {
   const card = document.createElement("div");
   card.classList.add("recipe-card");
 
+  const imageUrl = recipe.image ? `/uploads/${recipe.image}` : 'assets/default.jpg';
+
   card.innerHTML = `
-    <img src="${recipe.imageUrl || 'assets/default.jpg'}" alt="${recipe.title}" class="recipe-image">
+    <img src="${imageUrl}" alt="${recipe.title}" class="recipe-image">
     <div class="info">
       <h3>${recipe.title}</h3>
       <p class="meta">
@@ -59,6 +61,7 @@ function createRecipeCard(recipe) {
 
   return card;
 }
+
 
 // 전체 레시피 목록 불러오기
 async function loadRecipes() {
