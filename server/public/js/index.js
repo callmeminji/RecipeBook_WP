@@ -105,10 +105,54 @@ async function loadRecipes() {
 }
 
 //  검색 버튼 동작 (아직 구현 예정)
-function searchRecipes() {
-  const keyword = document.getElementById("searchInput").value;
-  alert(`Search for: ${keyword} (기능 미구현)`);
+async function searchRecipes() {
+  const keyword = document.getElementById("searchInput").value.trim();
+  const list = document.getElementById("recipeList");
+  list.innerHTML = "";
+
+  if (!keyword) {
+    loadRecipes(); // 검색어 없으면 전체 로드
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/recipes/search?keyword=${encodeURIComponent(keyword)}`);
+    const recipes = await res.json();
+
+    if (recipes.length === 0) {
+      list.innerHTML = "<p class='error-msg'> 일치하는 레시피가 없습니다.</p>";
+      return;
+    }
+
+    recipes.forEach(recipe => {
+      const card = document.createElement("div");
+      card.classList.add("recipe-card");
+
+      card.innerHTML = `
+        <img src="${recipe.image || 'assets/default.jpg'}" alt="${recipe.title}" class="recipe-image">
+        <div class="info">
+          <h3>${recipe.title}</h3>
+          <p class="meta">
+            ⭐ ${recipe.difficulty} &nbsp;&nbsp;
+            ⏱ ${recipe.cookingTime} min &nbsp;&nbsp;
+            🍽 ${recipe.type}
+          </p>
+        </div>
+      `;
+
+      card.onclick = () => {
+        window.location.href = `post.html?id=${recipe._id}`;
+      };
+
+      list.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error("검색 실패:", err);
+    list.innerHTML = "<p class='error-msg'> 검색 중 오류가 발생했습니다.</p>";
+  }
 }
+
 
 //  이벤트 리스너 등록
 document.addEventListener("DOMContentLoaded", () => {
