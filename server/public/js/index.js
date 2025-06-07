@@ -41,7 +41,7 @@ function createRecipeCard(recipe) {
   const card = document.createElement("div");
   card.classList.add("recipe-card");
 
-  const imageUrl = recipe.image ? `/uploads/${recipe.image}` : 'assets/default.jpg';
+  const imageUrl = recipe.image ? `/uploads/${recipe.image}` : 'assets/default.png';
 
   card.innerHTML = `
     <img src="${imageUrl}" alt="${recipe.title}" class="recipe-image">
