@@ -23,13 +23,20 @@
 }
 
 .search-button {
-  padding: 0.7rem 1rem;
+  padding: 0.6rem;
   background-color: #883929;
   border: none;
   border-radius: 12px;
-  font-size: 1rem;
-  color: white;
-  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button img.search-icon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
 }
 
 /* 필터 바 */
@@ -82,6 +89,7 @@
   align-items: center;
   gap: 0.8rem;
   position: relative;
+  padding-top: 2rem;
 }
 
 .recipe-image {
@@ -98,12 +106,11 @@
 .recipe-title-box {
   position: absolute;
   top: -12px;
-  /* left: 50%; */
+  transform: translateX(-15%);
   /* transform: translateX(-100%); */
   color: white;
   background: linear-gradient(to top, #883929 60%);
   padding: 0.3rem 0.8rem;
-  /* border-radius: 8px; */
   font-size: 1.2rem;
   font-weight: 500;
   z-index: 2;
@@ -154,6 +161,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: medium;
 }
 
 .recipe-info-item::before {

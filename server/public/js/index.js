@@ -44,14 +44,14 @@ function createRecipeCard(recipe) {
   const imageUrl = recipe.image ? `/uploads/${recipe.image}` : 'assets/default.png';
 
   card.innerHTML = `
-    <img src="${imageUrl}" alt="${recipe.title}" class="recipe-image">
-    <div class="info">
-      <h3>${recipe.title}</h3>
-      <p class="meta">
-        ⭐ ${recipe.difficulty} &nbsp;&nbsp;
-        ⏱ ${recipe.cookingTime} min &nbsp;&nbsp;
-        🍽 ${recipe.type}
-      </p>
+    <div class="recipe-image-wrapper">
+      <div class="recipe-title-box">${recipe.title}</div>
+      <img src="${recipe.imageUrl || 'assets/default.jpg'}" alt="${recipe.title}" class="recipe-image">
+    </div>
+    <div class="recipe-info-list">
+      <div class="recipe-info-item">${recipe.type || "Unknown"}</div>
+      <div class="recipe-info-item">${recipe.time ? `${recipe.time} min` : "Time unknown"}</div>
+      <div class="recipe-info-item">${recipe.difficulty || "N/A"}</div>
     </div>
   `;
 

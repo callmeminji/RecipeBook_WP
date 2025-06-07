@@ -12,7 +12,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #efebea;
+    background-color: #faf5f3;
     padding: 3rem 2rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     position: sticky;
