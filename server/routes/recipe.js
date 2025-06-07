@@ -32,8 +32,6 @@ router.get('/search', recipeController.searchRecipes);
 // 단일 레시피 조회 (공개)
 router.get('/:id', authOptional, recipeController.getRecipeById);
 
-
-
 // 전체 레시피 목록 조회 (공개)
 router.get('/', recipeController.getAllRecipes);
 
