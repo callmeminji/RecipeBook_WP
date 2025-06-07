@@ -67,16 +67,29 @@ document.getElementById("recipeForm").addEventListener("submit", async function 
 
 document.addEventListener("DOMContentLoaded", () => {
   const editMode = new URLSearchParams(window.location.search).get("edit");
+  const timeSlider = document.getElementById("time");
+  const timeOutput = document.getElementById("timeOutput");
+
+  // 슬라이더 변화 시 "60+" 표시
+  timeSlider.addEventListener("input", () => {
+    const value = parseInt(timeSlider.value, 10);
+    timeOutput.innerText = value === 60 ? "60+ min" : `${value} min`;
+  });
+
+  // 수정 모드면 기존 값 적용
   if (editMode && localStorage.getItem("editRecipe")) {
     const recipe = JSON.parse(localStorage.getItem("editRecipe"));
     document.getElementById("title").value = recipe.title;
     document.querySelector(`input[name="type"][value="${recipe.type}"]`).checked = true;
     document.querySelector(`input[name="difficulty"][value="${recipe.difficulty}"]`).checked = true;
-    document.getElementById("time").value = recipe.time;
-    document.getElementById("timeOutput").value = recipe.time;
+    timeSlider.value = recipe.time;
+    timeOutput.innerText = recipe.time === 60 ? "60+ min" : `${recipe.time} min`;
     document.getElementById("ingredients").value = Array.isArray(recipe.ingredients)
       ? recipe.ingredients.join("\n")
       : recipe.ingredients;
     document.getElementById("instructions").value = recipe.instructions;
+  } else {
+    // 기본값 초기 출력
+    timeOutput.innerText = `${timeSlider.value} min`;
   }
 });

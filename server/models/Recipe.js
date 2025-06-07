@@ -16,6 +16,10 @@ const recipeSchema = new mongoose.Schema({
     required: true,
     validate: v => Array.isArray(v) && v.length > 0
   },
+  image: {
+    type: String,
+    default: null, // 없을 경우 기본 null
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

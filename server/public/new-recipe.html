@@ -53,15 +53,16 @@
           <label><input type="radio" name="difficulty" value="Hard" /> Hard</label>
         </div>
       </div>
-
+      
       <!-- 조리 시간 -->
-      <div class="form-row">
-        <label for="time">Time</label>
-        <div class="slider-box">
-          <input type="range" id="time" name="cookingTime" min="1" max="120" value="10" oninput="timeOutput.value = this.value" />
-          <output id="timeOutput">10</output> min
-        </div>
-      </div>
+<div class="form-row">
+  <label for="time">Time</label>
+  <div class="slider-box">
+    <input type="range" id="time" name="cookingTime" min="1" max="60" value="10" />
+    <output id="timeOutput">10 min</output>
+  </div>
+</div>
+
 
       <!-- 이미지 업로드 -->
       <div class="form-row">
