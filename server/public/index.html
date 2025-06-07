@@ -41,13 +41,12 @@
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
-      
-          <select id="timeFilter" class="filter-select">
-            <option value="">Time</option>
-            <option value="10">Under 10 min</option>
-            <option value="30">Under 30 min</option>
-            <option value="60">Under 60 min</option>
-          </select>
+          <!-- 필터링 range-->
+          <div class="time-slider-container">
+        <label for="timeSlider">Time</label>
+        <input type="range" id="timeSlider" min="0" max="4" step="1" value="0">
+        <span id="timeLabel">All</span>
+        </div>
       
           <select id="typeFilter" class="filter-select">
             <option value="">Type</option>
