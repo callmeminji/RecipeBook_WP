@@ -42,19 +42,24 @@
     <section class="post-body">
       <img src="assets/default.jpg" alt="Recipe" class="post-image" id="postImage" />
       <div class="info-table">
-        <p><strong>Type:</strong> <span id="postType">Korean</span></p>
-        <p><strong>Difficulty:</strong> <span id="postDifficulty">Easy</span></p>
-        <p><strong>Time:</strong> <span id="postTime">10 min</span></p>
-      </div>
+        <div class="info-label">🍽️ Type:</div>
+        <div class="info-value" id="postType">Dessert</div>
+      
+        <div class="info-label">⭐ Difficulty:</div>
+        <div class="info-value" id="postDifficulty">Easy</div>
+      
+        <div class="info-label">⏱️ Time:</div>
+        <div class="info-value" id="postTime">10 min</div>
+      </div>      
     </section>
 
     <!-- 하단: 재료 / 방법 -->
     <section class="post-content">
       <h3>Ingredients</h3>
-      <p id="postIngredients">- Kimchi - Pork - Tofu</p>
+      <p id="postIngredients"></p>
 
       <h3>Instructions</h3>
-      <p id="postInstructions">1. Stir-fry kimchi. 2. Add pork. 3. Add tofu.</p>
+      <p id="postInstructions"></p>
     </section>
   </main>
 
@@ -96,5 +101,16 @@
       <button onclick="closeCommentDeleteModal()" type="button">Cancel</button>
     </div>
   </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>&copy; 2025 RecipeYa 🍴 All rights reserved.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="account.html">My Page</a>
+        <a href="https://github.com/callmeminji/RecipeBook_WP" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

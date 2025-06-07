@@ -38,12 +38,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       const card = document.createElement("div");
       card.className = "recipe-card";
       card.innerHTML = `
-        <img src="${recipe.image ? "/uploads/" + recipe.image : "assets/default.jpg"}" alt="${recipe.title}" class="recipe-image">
-        <div class="info">
-          <h3>${recipe.title}</h3>
-          <p class="meta">
-            ⭐ ${recipe.difficulty} &nbsp;&nbsp; ⏱ ${recipe.cookingTime} min &nbsp;&nbsp; 🍽 ${recipe.type}
-          </p>
+        <div class="recipe-image-wrapper">
+          <div class="recipe-title-box">${recipe.title}</div>
+          <img src="${recipe.imageUrl || 'assets/default.jpg'}" alt="${recipe.title}" class="recipe-image">
+        </div>
+        <div class="recipe-info-list">
+          <div class="recipe-info-item"><span class="emoji">🍽</span><span>${recipe.type || "Unknown"}</span></div>
+          <div class="recipe-info-item"><span class="emoji">⏱</span><span>${recipe.time ? `${recipe.time} min` : "Time unknown"}</span></div>
+          <div class="recipe-info-item"><span class="emoji">⭐</span><span>${recipe.difficulty || "N/A"}</span></div>
         </div>
       `;
       card.onclick = () => {

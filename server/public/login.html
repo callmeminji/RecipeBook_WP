@@ -7,8 +7,7 @@
     <title>RecipeYa - Login & Register</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/login.css" />
-    
-
+    <script src="js/login.js" defer></script>
 </head>
 <body>
     
@@ -24,7 +23,8 @@
         </div>
     </header>
     
-    <div class="login-container">
+    <main>
+      <div class="login-container">
         <!-- 회원가입 -->
         <section class="form-box">
           <h2>Sign Up</h2>
@@ -45,34 +45,42 @@
             <button type="submit">Log In</button>
           </form>
         </section>
-    </div>
+      </div>
 
-<!-- 회원가입 성공 모달 -->
-<div id="signupSuccessModal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <p> Signup successful! Please log in.</p>
-    <button onclick="closeModal('signupSuccessModal')">Close</button>
-  </div>
-</div>
+      <!-- 회원가입 성공 모달 -->
+      <div id="signupSuccessModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <p> Signup successful! Please log in.</p>
+          <button onclick="closeModal('signupSuccessModal')">Close</button>
+        </div>
+      </div>
 
-<!-- 이미 존재하는 계정 모달 -->
-<div id="signupExistsModal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <p> Account already exists.</p>
-    <button onclick="closeModal('signupExistsModal')">Close</button>
-  </div>
-</div>
+      <!-- 이미 존재하는 계정 모달 -->
+      <div id="signupExistsModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <p> Account already exists.</p>
+          <button onclick="closeModal('signupExistsModal')">Close</button>
+        </div>
+      </div>
 
-<!-- 로그인 실패 모달 -->
-<div id="loginFailedModal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <p> Login failed. Please check your credentials.</p>
-    <button onclick="closeModal('loginFailedModal')">Close</button>
-  </div>
-</div>
+      <!-- 로그인 실패 모달 -->
+      <div id="loginFailedModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <p> Login failed. Please check your credentials.</p>
+          <button onclick="closeModal('loginFailedModal')">Close</button>
+        </div>
+      </div>
+    </main>
 
-
-<script src="js/login.js" defer></script>
-
+    <footer class="site-footer">
+      <div class="footer-container">
+        <p>&copy; 2025 RecipeYa 🍴 All rights reserved.</p>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="account.html">My Page</a>
+          <a href="https://github.com/callmeminji/RecipeBook_WP" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </footer>
 </body>
 </html>

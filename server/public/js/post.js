@@ -240,7 +240,11 @@ document.addEventListener("click", function (e) {
     saveBtn.className = "save-edit-btn";
     saveBtn.textContent = "Save";
 
-    commentTextEl.after(textarea, saveBtn);
+    const wrapper = document.createElement("div");
+    wrapper.className = "save-edit-wrapper";  // 이 클래스는 아래 CSS에서 정의함
+    wrapper.appendChild(saveBtn);
+
+    commentTextEl.after(textarea, wrapper);
   }
 
   if (e.target.classList.contains("save-edit-btn")) {
