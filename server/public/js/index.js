@@ -49,9 +49,9 @@ function createRecipeCard(recipe) {
       <img src="${recipe.imageUrl || 'assets/default.jpg'}" alt="${recipe.title}" class="recipe-image">
     </div>
     <div class="recipe-info-list">
-      <div class="recipe-info-item">${recipe.type || "Unknown"}</div>
-      <div class="recipe-info-item">${recipe.time ? `${recipe.time} min` : "Time unknown"}</div>
-      <div class="recipe-info-item">${recipe.difficulty || "N/A"}</div>
+      <div class="recipe-info-item"><span class="emoji">🍽</span><span>${recipe.type || "Unknown"}</span></div>
+      <div class="recipe-info-item"><span class="emoji">⏱</span><span>${recipe.time ? `${recipe.time} min` : "Time unknown"}</span></div>
+      <div class="recipe-info-item"><span class="emoji">⭐</span><span>${recipe.difficulty || "N/A"}</span></div>
     </div>
   `;
 
@@ -130,6 +130,9 @@ async function applyFilter() {
     const list = document.getElementById("recipeList");
     list.innerHTML = "";
 
+    // All 버튼 active 해제
+    document.getElementById("allFilterBtn").classList.remove("active");
+
     recipes.forEach(recipe => {
       list.appendChild(createRecipeCard(recipe));
     });
@@ -158,5 +161,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("allFilterBtn").addEventListener("click", (e) => {
     e.preventDefault();
     loadRecipes();
+
+    // All 버튼 active 클래스 추가
+    const allBtn = document.getElementById("allFilterBtn");
+    allBtn.classList.add("active");
+
+    // select 필터 초기화
+    document.getElementById("typeFilter").value = "";
+    document.getElementById("difficultyFilter").value = "";
+    document.getElementById("timeFilter").value = "";
   });
 });
