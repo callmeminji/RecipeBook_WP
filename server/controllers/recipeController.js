@@ -225,42 +225,36 @@ exports.unbookmarkRecipe = async (req, res) => {
 };
 
 
-// 내가 작성한 레시피 목록 조회
-exports.getMyRecipes = async (req, res) => {
-  try {
-    const recipes = await Recipe.find({ author: req.user.userId });
-    res.json(recipes);
-  } catch (err) {
-    console.error('[GET MY RECIPES ERROR]', err);
-    res.status(500).json({ message: 'Failed to get my recipes' });
-  }
-};
-
 // 레시피 필터링 (타입, 난이도, 시간카테고리)
 exports.filterRecipes = async (req, res) => {
   try {
     const { type, difficulty, cookingTimeCategory } = req.query;
     const filter = {};
+
+    // 타입 필터링
     if (type) filter.type = type;
+
+    // 난이도 필터링
     if (difficulty) filter.difficulty = difficulty;
-    if (cookingTimeCategory) filter.cookingTimeCategory = cookingTimeCategory;
+
+    // 조리 시간 필터링
+    if (cookingTimeCategory) {
+      if (cookingTimeCategory === "under10") {
+        filter.cookingTime = { $lte: 10 };
+      } else if (cookingTimeCategory === "under30") {
+        filter.cookingTime = { $lte: 30 };
+      } else if (cookingTimeCategory === "under60") {
+        filter.cookingTime = { $lte: 60 };
+      } else if (cookingTimeCategory === "over60") {
+        filter.cookingTime = { $gt: 60 };
+      }
+    }
+
     const recipes = await Recipe.find(filter);
     res.json(recipes);
   } catch (err) {
     console.error('[FILTER ERROR]', err);
     res.status(500).json({ message: 'Failed to filter recipes' });
-  }
-};
-
-// 제목으로 레시피 검색
-exports.searchRecipes = async (req, res) => {
-  try {
-    const keyword = req.query.keyword || '';
-    const recipes = await Recipe.find({ title: new RegExp(keyword, 'i') });
-    res.json(recipes);
-  } catch (err) {
-    console.error('[SEARCH ERROR]', err);
-    res.status(500).json({ message: 'Failed to search recipes', error: err.message });
   }
 };
 
@@ -275,5 +269,17 @@ exports.getBookmarks = async (req, res) => {
   } catch (err) {
     console.error('[GET BOOKMARKS ERROR]', err);
     res.status(500).json({ message: 'Failed to load bookmarks' });
+  }
+};
+
+// 제목으로 레시피 검색
+exports.searchRecipes = async (req, res) => {
+  try {
+    const keyword = req.query.keyword || '';
+    const recipes = await Recipe.find({ title: new RegExp(keyword, 'i') });
+    res.json(recipes);
+  } catch (err) {
+    console.error('[SEARCH ERROR]', err);
+    res.status(500).json({ message: 'Failed to search recipes', error: err.message });
   }
 };
