@@ -1,23 +1,38 @@
 function goToHome() {
-    window.location.href = "index.html";
+  window.location.href = "index.html";
+}
+
+function goToFavorites() {
+  window.location.href = "favorites.html";
+}
+
+function goToMyRecipes() {
+  window.location.href = "my-recipes.html";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const userIdElement = document.getElementById("userId");
+
+  // 로그인 안 되어 있으면 로그인 페이지로 리디렉션
+  if (!user) {
+    alert("로그인이 필요합니다.");
+    window.location.href = "login.html";
+    return;
   }
-  
-  function logout() {
-    // 나중에 토큰 삭제 등의 로직 추가 가능
-    alert("You have been logged out.");
-    window.location.href = "index.html";
+
+  // 사용자 이메일 or 이름 표시
+  if (userIdElement) {
+    userIdElement.textContent = user.email || user.username || "사용자";
   }
-  
-  function goToFavorites() {
-    window.location.href = "favorites.html";
+
+  // 로그아웃 버튼 이벤트
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      sessionStorage.clear();  // user + token 모두 제거
+      alert("You have been logged out.");
+      window.location.href = "index.html";
+    });
   }
-  
-  function goToMyRecipes() {
-    window.location.href = "my-recipes.html";
-  }
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    const userId = "eunyoung"; // 나중에 로그인 상태에서 받아온 값으로 대체
-    document.getElementById("userId").textContent = userId;
-  });
-  
+});

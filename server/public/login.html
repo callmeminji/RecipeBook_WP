@@ -7,7 +7,8 @@
     <title>RecipeYa - Login & Register</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/login.css" />
-    <script src="js/account.js" defer></script>
+    
+
 </head>
 <body>
     
@@ -46,29 +47,32 @@
         </section>
     </div>
 
-    <!-- 회원가입 성공 모달 -->
-    <div id="signupSuccessModal" class="modal" style="display: none;">
-      <div class="modal-content">
-        <p>🎉 Signup successful! Please log in.</p>
-        <button onclick="closeModal('signupSuccessModal')">Close</button>
-      </div>
-    </div>
+<!-- 회원가입 성공 모달 -->
+<div id="signupSuccessModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <p> Signup successful! Please log in.</p>
+    <button onclick="closeModal('signupSuccessModal')">Close</button>
+  </div>
+</div>
 
-    <!-- 이미 존재하는 계정 모달 -->
-    <div id="signupExistsModal" class="modal" style="display: none;">
-      <div class="modal-content">
-        <p>⚠️ Account already exists.</p>
-        <button onclick="closeModal('signupExistsModal')">Close</button>
-      </div>
-    </div>
+<!-- 이미 존재하는 계정 모달 -->
+<div id="signupExistsModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <p> Account already exists.</p>
+    <button onclick="closeModal('signupExistsModal')">Close</button>
+  </div>
+</div>
 
-    <!-- 로그인 실패 모달 -->
-    <div id="loginFailedModal" class="modal" style="display: none;">
-      <div class="modal-content">
-        <p>❌ Login failed. Please check your credentials.</p>
-        <button onclick="closeModal('loginFailedModal')">Close</button>
-      </div>
-    </div>
+<!-- 로그인 실패 모달 -->
+<div id="loginFailedModal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <p> Login failed. Please check your credentials.</p>
+    <button onclick="closeModal('loginFailedModal')">Close</button>
+  </div>
+</div>
+
+
+<script src="js/login.js" defer></script>
 
 </body>
 </html>
