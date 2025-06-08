@@ -23,13 +23,20 @@
 }
 
 .search-button {
-  padding: 0.7rem 1rem;
+  padding: 0.6rem;
   background-color: #883929;
   border: none;
   border-radius: 12px;
-  font-size: 1rem;
-  color: white;
-  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button img.search-icon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
 }
 
 /* 필터 바 */
@@ -39,6 +46,19 @@
   align-items: center;
   gap: 0.75rem;
   margin: 0 0 2.5rem;
+}
+
+#allFilterBtn {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+  transition: background-color 0.2s;
+}
+
+#allFilterBtn.active {
+  background-color: #e0e0e0; /* 눌렸을 때 회색 */
+  color: black;
+  font-weight: bold;
 }
 
 .filter-bar select,
@@ -82,6 +102,7 @@
   align-items: center;
   gap: 0.8rem;
   position: relative;
+  padding-top: 2rem;
 }
 
 .recipe-image {
@@ -98,12 +119,11 @@
 .recipe-title-box {
   position: absolute;
   top: -12px;
-  /* left: 50%; */
+  transform: translateX(-15%);
   /* transform: translateX(-100%); */
   color: white;
   background: linear-gradient(to top, #883929 60%);
   padding: 0.3rem 0.8rem;
-  /* border-radius: 8px; */
   font-size: 1.2rem;
   font-weight: 500;
   z-index: 2;
@@ -133,8 +153,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.4rem;
-  font-size: 0.85rem;
+  gap: 0.5rem;
+  font-size: 2rem;
   color: black;
   margin-top: 0.5rem;
   width: 100%;
@@ -153,11 +173,20 @@
 .recipe-info-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.recipe-info-item .emoji {
+  display: inline-block;
+  width: 24px; /* 고정 너비로 맞춰 정렬됨 */
+  text-align: center;
+  font-size: 1.1rem;
 }
 
 .recipe-info-item::before {
-  content: "";
+  content: none;
   display: inline-block;
   width: 40px;
   height: 1px;

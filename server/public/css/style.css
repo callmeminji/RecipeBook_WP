@@ -12,7 +12,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #efebea;
+    background-color: #faf5f3;
     padding: 3rem 2rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     position: sticky;
@@ -58,19 +58,54 @@ header .right {
   
   .modal-content {
     background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
+    padding: 3rem;
+    border-radius: 12px;
     text-align: center;
+    font-size: 1.2rem;
   }
   .modal-content button {
     margin: 0.5rem;
     padding: 0.6rem 1.2rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     border-radius: 6px;
     border: none;
-    background-color: #f57c00;
+    background-color: #883929;
     color: white;
     font-weight: bold;
     cursor: pointer;
   }
+  
+
+  .site-footer {
+    background-color: #f6f2f0;
+    padding: 1.5rem 1rem;
+    margin-top: 4rem;
+    font-size: 0.95rem;
+    color: #555;
+    text-align: center;
+    border-top: 1px solid #ddd;
+  }
+  
+  .footer-container {
+    max-width: 850px;
+    margin: 0 auto;
+  }
+  
+  .footer-links {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .footer-links a {
+    color: #883929;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
   

@@ -1,6 +1,6 @@
 /* 컨테이너 너비 통일 */
 .container {
-    max-width: 750px;
+    max-width: 850px;
     margin: 2rem auto;
     padding: 1rem;
   }
@@ -8,23 +8,28 @@
   /* 제목 */
   h2 {
     text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.8rem;
+    margin-bottom: 2.4rem;
+    font-size: 2.2rem;
   }
   
   /* 한 줄에 라벨 + 입력 필드 정렬 */
   .form-row {
     display: flex;
     align-items: center;
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
   }
   
   /* 왼쪽 라벨 */
   .form-row label {
     width: 120px;
-    font-weight: bold;
     margin-right: 1rem;
+    font-size: 1.2rem;
   }
+
+  .form-row > label {
+    font-weight: bold;
+  }
+  
   
   /* 오른쪽 입력 요소 (input, select 등) */
   .form-row input[type="text"],
@@ -34,7 +39,7 @@
     padding: 0.6rem 1rem;
     border-radius: 6px;
     border: 1px solid #030303;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   
   textarea {
@@ -42,12 +47,44 @@
   }
   
   /* 라디오 버튼 정렬 */
-  .radio-group {
+  /* .radio-group {
     display: flex;
-    flex-wrap: wrap;      /* 줄바꿈 허용 */
-    gap: 0.75rem;         /* 버튼 간격 조정 */
+    flex-wrap: wrap;
+    gap: 1.3rem;         
     max-width: 500px;
-  }
+  } */
+
+  /* 기본 라디오 버튼 숨기기 */
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+/* 커스텀 라벨 버튼 */
+.radio-group label {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* 호버 시 살짝 진하게 */
+.radio-group label:hover {
+  background-color: #f5f5f5;
+  border-color: #bbb;
+}
+
+/* 선택된 라디오의 label만 스타일 적용 */
+.radio-group input[type="radio"]:checked + label {
+  background-color: #883929;
+  color: white;
+  border-color: #883929;
+  font-weight: bold;
+}
   
   /* 슬라이더 박스 */
   .slider-box {
@@ -58,6 +95,10 @@
   }
   
   input[type="range"] {
+    accent-color: #883929;  /* 슬라이더 색상 변경 (버튼 + 진행바 둘 다 바뀜) */
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
     flex: 1;
   }
   
@@ -73,7 +114,7 @@
     border: none;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
   }
   
