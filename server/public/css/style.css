@@ -1,128 +1,110 @@
 /* 기본 배경 및 폰트 */
-html, body {
+body {
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  background-color: #ffffff;
 }
 
-main {
-  flex: 1;
-}
 
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-  }
-
-  
 /* 헤더 */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #faf5f3;
-    padding: 3rem 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #faf5f3;
+  padding: 3rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 
-  header img.logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 90px;
-    object-fit: contain;
-    cursor: pointer;
-  }
-  
+
+header img.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 90px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
 /* 아이콘들 */
 header img.icon {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-  }
-  
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
 /* 아이콘 위치 */
 header .left,
 header .right {
-    z-index: 1;
-  }
-  
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  }
-  
-  .modal-content {
-    background-color: white;
-    padding: 3rem;
-    border-radius: 12px;
-    text-align: center;
-    font-size: 1.2rem;
-  }
-  .modal-content button {
-    margin: 0.5rem;
-    padding: 0.6rem 1.2rem;
-    font-size: 1.1rem;
-    border-radius: 6px;
-    border: none;
-    background-color: #883929;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
+  z-index: 1;
+}
 
-  .site-footer {
-    background-color: #f6f2f0;
-    padding: 1.5rem 1rem;
-    margin-top: auto;
-    font-size: 0.95rem;
-    color: #555;
-    text-align: center;
-    border-top: 1px solid #ddd;
-  }
-  
-  .footer-container {
-    max-width: 850px;
-    margin: 0 auto;
-  }
-  
-  .footer-links {
-    margin-top: 0.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-  
-  .footer-links a {
-    color: #883929;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  
-  .footer-links a:hover {
-    text-decoration: underline;
-  }
-  .account-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-  }
-  
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.modal-content button {
+  margin: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #883929;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+.site-footer {
+  background-color: #f6f2f0;
+  padding: 1.5rem 1rem;
+  margin-top: 4rem;
+  font-size: 0.95rem;
+  color: #555;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+.footer-container {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #883929;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
