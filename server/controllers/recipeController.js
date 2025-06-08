@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const Recipe = require('../models/Recipe');
 
+const BASE_URL = process.env.BASE_URL || 'https://recipeya.onrender.com';
+
 // 헬퍼 함수
 const normalizeIngredients = (ingredients) => {
   if (!ingredients) return [];
@@ -12,19 +14,13 @@ const normalizeIngredients = (ingredients) => {
 exports.getAllRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find().sort({ createdAt: -1 });
-    const recipesWithBookmarkCount = await Promise.all(
-      recipes.map(async (recipe) => {
-        const count = await User.countDocuments({ bookmarks: recipe._id });
-        return {
-          ...recipe.toObject(),
-          bookmarkCount: count,
-          imageUrl: recipe.image ? `/uploads/${recipe.image}` : null,
-        };
-      })
-    );
-    res.json(recipesWithBookmarkCount);
+    const formattedRecipes = recipes.map(recipe => ({
+      ...recipe.toObject(),
+      imageUrl: recipe.image ? `${BASE_URL}/uploads/${recipe.image}` : null
+    }));
+    res.json(formattedRecipes);
   } catch (err) {
-    console.error('[GET ALL ERROR]', err);
+    console.error('[GET ALL ERROR]', err.message);
     res.status(500).json({ message: 'Failed to get recipes' });
   }
 };
@@ -50,7 +46,7 @@ exports.getRecipeById = async (req, res) => {
       instructions: recipe.content,
       bookmarkCount: count,
       isBookmarked,
-      imageUrl: recipe.image ? `/uploads/${recipe.image}` : null,
+      imageUrl: recipe.image ? `${BASE_URL}/uploads/${recipe.image}` : null,
     });
   } catch (err) {
     console.error('[GET BY ID ERROR]', err);
@@ -97,7 +93,7 @@ exports.createRecipe = async (req, res) => {
     res.status(201).json({
       message: 'Recipe created successfully',
       recipeId: recipe._id,
-      imageUrl: recipe.image ? `/uploads/${recipe.image}` : null
+      imageUrl: recipe.image ? `${BASE_URL}/uploads/${recipe.image}` : null
     });
   } catch (err) {
     console.error('[CREATE ERROR]', err);
@@ -150,7 +146,7 @@ exports.updateRecipe = async (req, res) => {
       message: 'Recipe updated successfully',
       recipe: {
         ...updated.toObject(),
-        imageUrl: updated.image ? `/uploads/${updated.image}` : null
+        imageUrl: updated.image ? `${BASE_URL}/uploads/${updated.image}` : null
       }
     });
   } catch (err) {
@@ -232,7 +228,7 @@ exports.filterRecipes = async (req, res) => {
     const recipes = await Recipe.find(filter);
     const withImages = recipes.map(r => ({
       ...r.toObject(),
-      imageUrl: r.image ? `/uploads/${r.image}` : null
+      imageUrl: r.image ? `${BASE_URL}/uploads/${r.image}` : null
     }));
 
     res.json(withImages);
@@ -252,7 +248,7 @@ exports.getBookmarks = async (req, res) => {
 
     const bookmarks = user.bookmarks.map(r => ({
       ...r.toObject(),
-      imageUrl: r.image ? `/uploads/${r.image}` : null
+      imageUrl: r.image ? `${BASE_URL}/uploads/${r.image}` : null
     }));
 
     res.json({ bookmarks });
@@ -269,7 +265,7 @@ exports.searchRecipes = async (req, res) => {
     const recipes = await Recipe.find({ title: new RegExp(keyword, 'i') });
     const withImages = recipes.map(r => ({
       ...r.toObject(),
-      imageUrl: r.image ? `/uploads/${r.image}` : null
+      imageUrl: r.image ? `${BASE_URL}/uploads/${r.image}` : null
     }));
     res.json(withImages);
   } catch (err) {
@@ -284,7 +280,7 @@ exports.getMyRecipes = async (req, res) => {
     const recipes = await Recipe.find({ author: req.user.userId }).sort({ createdAt: -1 });
     const withImages = recipes.map(r => ({
       ...r.toObject(),
-      imageUrl: r.image ? `/uploads/${r.image}` : null
+      imageUrl: r.image ? `${BASE_URL}/uploads/${r.image}` : null
     }));
     res.json(withImages);
   } catch (err) {
