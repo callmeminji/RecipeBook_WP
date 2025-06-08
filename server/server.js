@@ -30,7 +30,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // 7. 정적 파일 제공 (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+
 
 // 8. 라우터 경로 설정
 app.use('/api/comments', commentRoutes);
