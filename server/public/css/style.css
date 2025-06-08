@@ -4,7 +4,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ffffff;
-    padding-bottom: 100px;  /* 푸터 높이보다 살짝 여유있게 */
   }
 
   
@@ -78,20 +77,14 @@ header .right {
   
 
   .site-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* 필요시 추가 */
     background-color: #f6f2f0;
-    padding: 1.2rem 1rem;
+    padding: 1.5rem 1rem;
+    margin-top: 4rem;
     font-size: 0.95rem;
     color: #555;
     text-align: center;
     border-top: 1px solid #ddd;
-    /* margin-top: 0.5rem; */
   }
-  
   
   .footer-container {
     max-width: 850px;
@@ -114,4 +107,5 @@ header .right {
   .footer-links a:hover {
     text-decoration: underline;
   }
+
   
