@@ -4,7 +4,8 @@ const path = require('path');
 const fs = require('fs');
 
 // 업로드 폴더 경로 설정
-const uploadDir = 'uploads';
+const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
+
 
 // uploads 폴더가 없으면 새로 생성
 if (!fs.existsSync(uploadDir)) {
