@@ -1,4 +1,16 @@
 /* 기본 배경 및 폰트 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -79,7 +91,7 @@ header .right {
   .site-footer {
     background-color: #f6f2f0;
     padding: 1.5rem 1rem;
-    margin-top: 4rem;
+    margin-top: auto;
     font-size: 0.95rem;
     color: #555;
     text-align: center;
@@ -107,5 +119,10 @@ header .right {
   .footer-links a:hover {
     text-decoration: underline;
   }
-
+  .account-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+  }
   
