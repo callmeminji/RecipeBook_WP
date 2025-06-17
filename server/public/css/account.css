@@ -45,3 +45,39 @@
     text-align: center;
   }
   /*일단 오키*/
+
+  @media (max-width: 600px) {
+  .account-container {
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .profile-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 0.8rem;
+  }
+
+  #userId {
+    font-size: 1rem;
+  }
+
+  .logout-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .button-group button {
+    width: 100%;
+    max-width: 300px;
+    font-size: 0.95rem;
+    padding: 0.7rem 1rem;
+  }
+}

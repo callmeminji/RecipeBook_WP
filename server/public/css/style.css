@@ -126,3 +126,42 @@ header .right {
 .footer-links a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 600px) {
+  /* 헤더 조정 */
+  header {
+    flex-direction: row;
+    padding: 1.7rem 1rem;
+  }
+
+  header img.logo {
+    height: 60px;
+  }
+
+  header img.icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* 모달 폰트 및 버튼 크기 축소 */
+  .modal-content {
+    padding: 2rem;
+    font-size: 1rem;
+  }
+
+  .modal-content button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  /* 푸터 글자 크기 축소 및 패딩 조절 */
+  .site-footer {
+    font-size: 0.85rem;
+    padding: 1rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

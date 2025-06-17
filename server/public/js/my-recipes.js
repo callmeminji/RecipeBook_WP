@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="recipe-info-item"><span class="emoji">⏱</span><span>${recipe.time ? `${recipe.time} min` : "Time unknown"}</span></div>
           <div class="recipe-info-item"><span class="emoji">⭐</span><span>${recipe.difficulty || "N/A"}</span></div>
         </div>
-        <button class="edit-button">✏️ 수정</button>
+        <button class="edit-button">✏️edit</button>
       `;
 
       // 수정 버튼 기능 추가
