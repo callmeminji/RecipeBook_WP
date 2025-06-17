@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
   loadRecipeDetail();
   loadComments();
 
+  document.getElementById("deleteBtn").addEventListener("click", () => {
+    document.getElementById("deleteModal").style.display = "flex";
+  });
+
   bookmark.addEventListener("click", async () => {
     if (!isLoggedIn()) {
       showLoginPrompt(getCurrentPageURL());
@@ -145,6 +149,20 @@ async function loadRecipeDetail() {
     if (!res.ok) throw new Error("Recipe not found");
     const recipe = await res.json();
 
+    console.log("🔥 레시피 전체:", recipe);
+    console.log("🔥 image:", recipe.image);
+    console.log("🔥 imageUrl:", recipe.imageUrl);
+
+    const imageElement = document.getElementById("postImage");
+
+if (recipe.imageUrl) {
+  imageElement.src = recipe.imageUrl;
+} else if (recipe.image) {
+  imageElement.src = `/uploads/${recipe.image}`;
+} else {
+  imageElement.src = "assets/default.jpg";
+}
+
     document.getElementById("postTitle").textContent = recipe.title;
     document.getElementById("postType").textContent = recipe.type;
     document.getElementById("postDifficulty").textContent = recipe.difficulty;
@@ -154,7 +172,9 @@ async function loadRecipeDetail() {
     : "Time unknown";
     document.getElementById("postIngredients").textContent = Array.isArray(recipe.ingredients) ? recipe.ingredients.join(", ") : recipe.ingredients;
     document.getElementById("postInstructions").textContent = recipe.instructions;
-    document.getElementById("postImage").src = recipe.image ? `/uploads/${recipe.image}` : "assets/default.jpg";
+    // document.getElementById("postImage").src = recipe.image ? `/uploads/${recipe.image}` : "assets/default.jpg";
+    document.getElementById("postImage").src = recipe.imageUrl || "assets/default.jpg";
+
     document.getElementById("bookmarkCount").textContent = recipe.bookmarkCount || "0";
 
     setBookmarkIcon(recipe.isBookmarked);
