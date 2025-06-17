@@ -101,12 +101,22 @@ form.addEventListener("submit", async function (e) {
     return;
   }
 
+  // ✅ 여기가 중요!
   const editMode = new URLSearchParams(window.location.search).get("edit");
   const editRecipe = localStorage.getItem("editRecipe");
 
   let url = `${BASE_URL}/api/recipes`;
   let method = "POST";
   let targetId = null;
+
+  if (editMode && editRecipe) {
+    const recipe = JSON.parse(editRecipe);
+    if (recipe._id) {
+      url = `${BASE_URL}/api/recipes/${recipe._id}`;
+      method = "PUT"; // ✅ 수정이면 PUT
+      targetId = recipe._id;
+    }
+  }
 
   try {
     const res = await fetch(url, {
