@@ -14,27 +14,43 @@ document.addEventListener("DOMContentLoaded", () => {
   const editMode = new URLSearchParams(window.location.search).get("edit");
   const editRecipe = localStorage.getItem("editRecipe");
 
-  if (editMode && editRecipe) {
-    const recipe = JSON.parse(editRecipe);
-    document.getElementById("title").value = recipe.title || "";
-    document.getElementById("time").value = recipe.cookingTime || recipe.time || "";
-    document.getElementById("instructions").value = recipe.instructions || recipe.content || "";
+    if (editMode && editRecipe) {
+  const recipe = JSON.parse(editRecipe);
+  document.getElementById("title").value = recipe.title || "";
+  document.getElementById("time").value = recipe.cookingTime || recipe.time || "";
+  document.getElementById("instructions").value = recipe.instructions || recipe.content || "";
 
-    const ing = recipe.ingredients;
-    document.getElementById("ingredients").value =
-      Array.isArray(ing) ? ing.join("\n") : (typeof ing === "string" ? ing : "");
+  const ing = recipe.ingredients;
+  document.getElementById("ingredients").value =
+    Array.isArray(ing) ? ing.join("\n") : (typeof ing === "string" ? ing : "");
 
-    // 라디오 버튼은 소문자 비교로 안전하게 체크
-    if (recipe.type) {
-      const typeRadio = document.querySelector(`input[name='type'][value='${recipe.type.toLowerCase()}']`);
-      if (typeRadio) typeRadio.checked = true;
-    }
-
-    if (recipe.difficulty) {
-      const diffRadio = document.querySelector(`input[name='difficulty'][value='${recipe.difficulty.toLowerCase()}']`);
-      if (diffRadio) diffRadio.checked = true;
-    }
+  //  Type 라디오 버튼 체크
+  if (recipe.type) {
+    const typeRadios = document.querySelectorAll("input[name='type']");
+    typeRadios.forEach(radio => {
+      if (radio.value.toLowerCase() === recipe.type.toLowerCase()) {
+        radio.checked = true;
+      }
+    });
   }
+
+  //  Difficulty 라디오 버튼 체크
+  if (recipe.difficulty) {
+    const diffRadios = document.querySelectorAll("input[name='difficulty']");
+    diffRadios.forEach(radio => {
+      if (radio.value.toLowerCase() === recipe.difficulty.toLowerCase()) {
+        radio.checked = true;
+      }
+    });
+  }
+
+  //  이미지 미리보기 (선택사항)
+  if (recipe.imageUrl) {
+    const preview = document.getElementById("imagePreview");
+    if (preview) preview.src = recipe.imageUrl;
+  }
+}
+
   // 슬라이더 값 실시간 표시
 const timeInput = document.getElementById("time");
 const timeOutput = document.getElementById("timeOutput");
@@ -91,43 +107,6 @@ form.addEventListener("submit", async function (e) {
   let url = `${BASE_URL}/api/recipes`;
   let method = "POST";
   let targetId = null;
-
-  if (editMode && editRecipe) {
-  const recipe = JSON.parse(editRecipe);
-  document.getElementById("title").value = recipe.title || "";
-  document.getElementById("time").value = recipe.cookingTime || recipe.time || "";
-  document.getElementById("instructions").value = recipe.instructions || recipe.content || "";
-
-  const ing = recipe.ingredients;
-  document.getElementById("ingredients").value =
-    Array.isArray(ing) ? ing.join("\n") : (typeof ing === "string" ? ing : "");
-
-  //  Type 라디오 버튼 체크
-  if (recipe.type) {
-    const typeRadios = document.querySelectorAll("input[name='type']");
-    typeRadios.forEach(radio => {
-      if (radio.value.toLowerCase() === recipe.type.toLowerCase()) {
-        radio.checked = true;
-      }
-    });
-  }
-
-  //  Difficulty 라디오 버튼 체크
-  if (recipe.difficulty) {
-    const diffRadios = document.querySelectorAll("input[name='difficulty']");
-    diffRadios.forEach(radio => {
-      if (radio.value.toLowerCase() === recipe.difficulty.toLowerCase()) {
-        radio.checked = true;
-      }
-    });
-  }
-
-  //  이미지 미리보기 (선택사항)
-  if (recipe.imageUrl) {
-    const preview = document.getElementById("imagePreview");
-    if (preview) preview.src = recipe.imageUrl;
-  }
-}
 
   try {
     const res = await fetch(url, {
