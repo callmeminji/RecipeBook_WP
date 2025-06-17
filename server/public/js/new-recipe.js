@@ -16,13 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ingredients").value =
       Array.isArray(ing) ? ing.join("\n") : (typeof ing === "string" ? ing : "");
 
+    // ✅ 라디오 버튼은 소문자 비교로 안전하게 체크
     if (recipe.type) {
-      const typeRadio = document.querySelector(`input[name='type'][value='${recipe.type}']`);
+      const typeRadio = document.querySelector(`input[name='type'][value='${recipe.type.toLowerCase()}']`);
       if (typeRadio) typeRadio.checked = true;
     }
 
     if (recipe.difficulty) {
-      const diffRadio = document.querySelector(`input[name='difficulty'][value='${recipe.difficulty}']`);
+      const diffRadio = document.querySelector(`input[name='difficulty'][value='${recipe.difficulty.toLowerCase()}']`);
       if (diffRadio) diffRadio.checked = true;
     }
   }
@@ -36,7 +37,7 @@ form.addEventListener("submit", async function (e) {
   const formData = new FormData();
   formData.append("title", document.getElementById("title").value);
   formData.append("cookingTime", document.getElementById("time").value);
-  formData.append("content", document.getElementById("instructions").value); // 👈 변경된 필드명
+  formData.append("content", document.getElementById("instructions").value); // 👈 content는 서버에서 instructions로 저장됨
 
   const type = document.querySelector("input[name='type']:checked");
   const difficulty = document.querySelector("input[name='difficulty']:checked");
