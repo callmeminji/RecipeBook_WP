@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cookingTime: parseInt(document.getElementById("postTime").textContent.replace(/\D/g, '')),
       ingredients: ingredientsArray,
       content: document.getElementById("postInstructions").textContent,
+        imageUrl: document.getElementById("postImage")?.src || "",
     };
 
     localStorage.setItem("editRecipe", JSON.stringify(recipeData));
