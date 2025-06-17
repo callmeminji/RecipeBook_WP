@@ -293,3 +293,87 @@
   }
   
   
+@media (max-width: 600px) {
+  /* 제목 */
+  .post-title {
+    font-size: 1.6rem;
+    word-break: break-word;
+  }
+
+  /* 상단 버튼들 */
+  .bookmark-and-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+
+  .actions-vertical button {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    width: 100%;
+  }
+
+  /* 이미지 */
+  .post-image {
+    width: 100%;
+    height: auto;
+  }
+
+.info-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .info-label {
+    font-size: 1rem;
+    gap: 0.5rem;
+  }
+
+  /* 댓글 섹션 여백 조정 */
+  .comment-section {
+    padding: 0 1rem;
+    margin: 3rem auto 4rem;
+  }
+
+  /* 댓글 입력 */
+  .comment-form textarea {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.6rem;
+    box-sizing: border-box;
+  }
+
+  .comment-form button {
+    width: 100%;
+    float: none;
+    font-size: 1rem;
+    padding: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  /* 댓글 리스트 정렬 */
+  .comment-list {
+    margin: 2rem 0 0 0;
+    padding: 0;
+  }
+
+  .comment-text {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .comment-user-id {
+    font-size: 1rem;
+  }
+
+  .save-edit-btn {
+    width: 100%;
+    padding: 0.6rem;
+  }
+
+  .post-content h3 {
+    font-size: 1.3rem;
+  }
+}

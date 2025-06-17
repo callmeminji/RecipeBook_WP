@@ -122,3 +122,65 @@
     background-color: #c45340;
   }
   
+
+@media (max-width: 600px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .form-row label {
+    width: auto;
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  .form-row input[type="text"],
+  .form-row input[type="file"],
+  .form-row textarea {
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .radio-group label {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .slider-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  input[type="range"] {
+    height: 8px;
+  }
+
+  .submit-row {
+    justify-content: center;
+  }
+
+  button[type="submit"] {
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+    width: 100%;
+    max-width: 100px;
+    margin: 0 auto;
+  }
+}
