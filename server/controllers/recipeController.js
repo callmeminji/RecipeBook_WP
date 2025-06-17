@@ -228,7 +228,7 @@ exports.filterRecipes = async (req, res) => {
       else if (cookingTimeCategory === "over60") filter.cookingTime = { $gt: 60 };
     }
 
-    const recipes = await Recipe.find(filter);
+    const recipes = await Recipe.find(filter).sort({ createdAt: -1 });
     const withImages = recipes.map(r => ({
       ...r.toObject(),
       imageUrl: r.image ? `${BASE_URL}/uploads/${r.image}` : null
