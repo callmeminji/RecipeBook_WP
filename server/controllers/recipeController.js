@@ -230,7 +230,8 @@ exports.filterRecipes = async (req, res) => {
 
     const recipes = await Recipe.find(filter).sort({ createdAt: -1 });
     const withImages = recipes.map(r => ({
-      ...r.toObject(),
+      ...r.toObject(), 
+      createdAt: r.createdAt, // 최신순
       imageUrl: r.image ? `${BASE_URL}/uploads/${r.image}` : null
     }));
 
