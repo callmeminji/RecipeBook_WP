@@ -221,8 +221,8 @@ exports.filterRecipes = async (req, res) => {
   try {
     const { type, difficulty, cookingTimeCategory } = req.query;
     const filter = {};
-    if (type) filter.type = type;
-    if (difficulty) filter.difficulty = difficulty;
+    if (type) filter.type = new RegExp(`^${type}$`, 'i');
+if (difficulty) filter.difficulty = new RegExp(`^${difficulty}$`, 'i');
 
     if (cookingTimeCategory) {
       if (cookingTimeCategory === "under10") filter.cookingTime = { $lte: 10 };
