@@ -147,7 +147,10 @@ async function loadRecipeDetail() {
     document.getElementById("postTitle").textContent = recipe.title;
     document.getElementById("postType").textContent = recipe.type;
     document.getElementById("postDifficulty").textContent = recipe.difficulty;
-    document.getElementById("postTime").textContent = `${recipe.cookingTime} min`;
+    document.getElementById("postTime").textContent =
+  typeof recipe.cookingTime === "number" && !isNaN(recipe.cookingTime)
+    ? `${recipe.cookingTime}min`
+    : "Time unknown";
     document.getElementById("postIngredients").textContent = Array.isArray(recipe.ingredients) ? recipe.ingredients.join(", ") : recipe.ingredients;
     document.getElementById("postInstructions").textContent = recipe.instructions;
     document.getElementById("postImage").src = recipe.image ? `/uploads/${recipe.image}` : "assets/default.jpg";
