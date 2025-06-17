@@ -53,7 +53,14 @@ function createRecipeCard(recipe) {
     </div>
     <div class="recipe-info-list">
       <div class="recipe-info-item"><span class="emoji">🍽</span><span>${recipe.type || "Unknown"}</span></div>
-      <div class="recipe-info-item"><span class="emoji">⏱</span><span>${recipe.time ? `${recipe.time} min` : "Time unknown"}</span></div>
+      <div class="recipe-info-item">
+        <span class="emoji">⏱</span>
+        <span>${
+          typeof recipe.cookingTime === "number" && !isNaN(recipe.cookingTime)
+            ? `${recipe.cookingTime} min`
+            : "Time unknown"
+        }</span>
+      </div>
       <div class="recipe-info-item"><span class="emoji">⭐</span><span>${recipe.difficulty || "N/A"}</span></div>
     </div>
   `;
@@ -64,6 +71,7 @@ function createRecipeCard(recipe) {
 
   return card;
 }
+
 
 // 전체 레시피 목록 불러오기
 async function loadRecipes() {
