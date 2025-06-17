@@ -37,7 +37,7 @@ form.addEventListener("submit", async function (e) {
   const formData = new FormData();
   formData.append("title", document.getElementById("title").value);
   formData.append("cookingTime", document.getElementById("time").value);
-  formData.append("content", document.getElementById("instructions").value); // 👈 content는 서버에서 instructions로 저장됨
+  formData.append("instructions", document.getElementById("instructions").value);
 
   const type = document.querySelector("input[name='type']:checked");
   const difficulty = document.querySelector("input[name='difficulty']:checked");
