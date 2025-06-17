@@ -16,6 +16,7 @@ exports.getAllRecipes = async (req, res) => {
     const recipes = await Recipe.find().sort({ createdAt: -1 });
     const formattedRecipes = recipes.map(recipe => ({
       ...recipe.toObject(),
+      cookingTime: recipe.cookingTime,
       imageUrl: recipe.image ? `${BASE_URL}/uploads/${recipe.image}` : null
     }));
     res.json(formattedRecipes);
