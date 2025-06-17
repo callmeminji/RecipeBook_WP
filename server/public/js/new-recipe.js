@@ -9,9 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   if (editMode && editRecipe) {
     const recipe = JSON.parse(editRecipe);
     document.getElementById("title").value = recipe.title || "";
-    document.getElementById("time").value = recipe.cookingTime || "";
-    document.getElementById("instructions").value = recipe.instructions || "";
-    document.getElementById("ingredients").value = (recipe.ingredients || []).join("\n");
+    document.getElementById("time").value = recipe.cookingTime || recipe.time || "";
+    document.getElementById("instructions").value = recipe.instructions || recipe.content || "";
+
+    const ing = recipe.ingredients;
+    document.getElementById("ingredients").value =
+      Array.isArray(ing) ? ing.join("\n") : (typeof ing === "string" ? ing : "");
 
     if (recipe.type) {
       const typeRadio = document.querySelector(`input[name='type'][value='${recipe.type}']`);
@@ -33,7 +36,7 @@ form.addEventListener("submit", async function (e) {
   const formData = new FormData();
   formData.append("title", document.getElementById("title").value);
   formData.append("cookingTime", document.getElementById("time").value);
-  formData.append("instructions", document.getElementById("instructions").value);
+  formData.append("content", document.getElementById("instructions").value); // 👈 변경된 필드명
 
   const type = document.querySelector("input[name='type']:checked");
   const difficulty = document.querySelector("input[name='difficulty']:checked");
@@ -59,17 +62,20 @@ form.addEventListener("submit", async function (e) {
     return;
   }
 
-  // 수정 모드인지 확인
   const editMode = new URLSearchParams(window.location.search).get("edit");
   const editRecipe = localStorage.getItem("editRecipe");
 
   let url = `${BASE_URL}/api/recipes`;
   let method = "POST";
+  let targetId = null;
 
   if (editMode && editRecipe) {
     const recipe = JSON.parse(editRecipe);
-    url = `${BASE_URL}/api/recipes/${recipe._id}`;
-    method = "PUT";
+    if (recipe._id) {
+      url = `${BASE_URL}/api/recipes/${recipe._id}`;
+      method = "PUT";
+      targetId = recipe._id;
+    }
   }
 
   try {
@@ -85,8 +91,10 @@ form.addEventListener("submit", async function (e) {
 
     if (res.ok) {
       alert(editMode ? "Recipe updated!" : "Recipe submitted!");
-      localStorage.removeItem("editRecipe"); // 수정 모드라면 로컬스토리지 초기화
-      window.location.href = `post.html?id=${data.recipeId || JSON.parse(editRecipe)._id}`;
+      localStorage.removeItem("editRecipe");
+
+      const finalId = data.recipeId || (data.recipe && data.recipe._id) || targetId;
+      window.location.href = `post.html?id=${finalId}`;
     } else {
       alert(data.message || "Failed to submit.");
     }

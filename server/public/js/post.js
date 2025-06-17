@@ -63,28 +63,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = sessionStorage.getItem("token");
 
     try {
-      let res;
-      if (!isActive) {
-        res = await fetch(`${BASE_URL}/api/recipes/${currentRecipeId}/bookmark`, {
-          method: "POST",
-          headers: { Authorization: "Bearer " + token }
-        });
-      } else {
-        res = await fetch(`${BASE_URL}/api/recipes/${currentRecipeId}/bookmark`, {
-          method: "DELETE",
-          headers: { Authorization: "Bearer " + token }
-        });
-      }
+      const method = isActive ? "DELETE" : "POST";
+      const res = await fetch(`${BASE_URL}/api/recipes/${currentRecipeId}/bookmark`, {
+        method,
+        headers: { Authorization: "Bearer " + token },
+      });
 
       if (res.ok) {
         const data = await res.json();
         setBookmarkIcon(data.isBookmarked);
         document.getElementById("bookmarkCount").textContent = data.bookmarkCount;
-        if (data.isBookmarked) {
-          bookmark.classList.add("active");
-        } else {
-          bookmark.classList.remove("active");
-        }
+        bookmark.classList.toggle("active", data.isBookmarked);
       } else {
         alert("북마크 처리 실패");
       }
@@ -95,21 +84,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("editBtn").addEventListener("click", () => {
+    const ingredientsText = document.getElementById("postIngredients").textContent;
+    const ingredientsArray = ingredientsText.split(',').map(item => item.trim());
+
     const recipeData = {
+      _id: currentRecipeId,
       title: document.getElementById("postTitle").textContent,
       type: document.getElementById("postType").textContent,
       difficulty: document.getElementById("postDifficulty").textContent,
-      time: parseInt(document.getElementById("postTime").textContent.replace(/\D/g, '')),
-      ingredients: document.getElementById("postIngredients").textContent,
-      instructions: document.getElementById("postInstructions").textContent
+      cookingTime: parseInt(document.getElementById("postTime").textContent.replace(/\D/g, '')),
+      ingredients: ingredientsArray,
+      content: document.getElementById("postInstructions").textContent,
     };
+
     localStorage.setItem("editRecipe", JSON.stringify(recipeData));
     window.location.href = `new-recipe.html?edit=1&id=${currentRecipeId}`;
-  });
-
-  document.getElementById("deleteBtn").addEventListener("click", () => {
-    document.getElementById("deleteModal").style.display = "flex";
-    sessionStorage.setItem("previousPage", document.referrer);
   });
 
   document.getElementById("commentForm").addEventListener("submit", async function (e) {
@@ -159,18 +148,13 @@ async function loadRecipeDetail() {
     document.getElementById("postType").textContent = recipe.type;
     document.getElementById("postDifficulty").textContent = recipe.difficulty;
     document.getElementById("postTime").textContent = `${recipe.cookingTime} min`;
-    document.getElementById("postIngredients").textContent = recipe.ingredients;
+    document.getElementById("postIngredients").textContent = Array.isArray(recipe.ingredients) ? recipe.ingredients.join(", ") : recipe.ingredients;
     document.getElementById("postInstructions").textContent = recipe.instructions;
     document.getElementById("postImage").src = recipe.image ? `/uploads/${recipe.image}` : "assets/default.jpg";
     document.getElementById("bookmarkCount").textContent = recipe.bookmarkCount || "0";
 
-    if (recipe.isBookmarked) {
-      bookmark.classList.add("active");
-      setBookmarkIcon(true);
-    } else {
-      bookmark.classList.remove("active");
-      setBookmarkIcon(false);
-    }
+    setBookmarkIcon(recipe.isBookmarked);
+    bookmark.classList.toggle("active", recipe.isBookmarked);
 
     const currentUser = JSON.parse(sessionStorage.getItem("user"));
     const authorId = typeof recipe.author === "string" ? recipe.author : recipe.author._id;
@@ -188,8 +172,7 @@ async function loadComments() {
   try {
     const res = await fetch(`${BASE_URL}/api/comments/${currentRecipeId}`);
     const data = await res.json();
-    const comments = data.comments || [];
-    renderComments(comments);
+    renderComments(data.comments || []);
   } catch (err) {
     console.error("Failed to load comments:", err);
   }
