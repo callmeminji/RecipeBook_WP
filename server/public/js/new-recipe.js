@@ -35,6 +35,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (diffRadio) diffRadio.checked = true;
     }
   }
+  // 슬라이더 값 실시간 표시
+const timeInput = document.getElementById("time");
+const timeOutput = document.getElementById("timeOutput");
+
+if (timeInput && timeOutput) {
+  timeOutput.textContent = `${timeInput.value} min`;
+
+  timeInput.addEventListener("input", () => {
+    timeOutput.textContent = `${timeInput.value} min`;
+  });
+}
+
+
+
 });
 
 const form = document.getElementById("recipeForm");
