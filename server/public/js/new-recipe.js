@@ -1,6 +1,14 @@
 // API 서버 주소 설정
 const BASE_URL = "https://recipeya.onrender.com";
 
+function goToHome() {
+  window.location.href = "index.html";
+}
+
+function goToAccount() {
+  window.location.href = "account.html";
+}
+
 // 페이지 로드 시 수정 모드인지 확인하고 기존 값 채우기
 document.addEventListener("DOMContentLoaded", () => {
   const editMode = new URLSearchParams(window.location.search).get("edit");

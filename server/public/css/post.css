@@ -1,8 +1,12 @@
 .post-container {
-    max-width: 850px;
-    margin: 2rem auto;
-    padding: 1rem;
-  }
+  width: 100%;
+  max-width: 850px;
+  min-width: 320px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
   
   .post-header {
     display: flex;
@@ -167,12 +171,16 @@
     white-space: pre-wrap; /* 줄바꿈 유지용 */
   }
   
-  .comment-section {
-    max-width: 850px;
-    margin: 4rem auto 5rem;  /* 아래 공간 확보 */
-    padding-top: 3rem 1rem 0 1rem;
-    border-top: 1px solid #ccc;
-  }
+.comment-section {
+  width: 100%;
+  max-width: 850px;
+  min-width: 320px;
+  margin: 4rem auto 5rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  border-top: 1px solid #ccc;
+}
+
 
   .comment-section h3 {
     font-size: 1.6rem;         /* 더 큼직하게 */
