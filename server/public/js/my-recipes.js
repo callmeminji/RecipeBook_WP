@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
         <div class="recipe-info-list">
           <div class="recipe-info-item"><span class="emoji">🍽</span><span>${recipe.type || "Unknown"}</span></div>
-          <div class="recipe-info-item"><span class="emoji">⏱</span><span>${recipe.time ? `${recipe.time} min` : "Time unknown"}</span></div>
+         <span>${recipe.cookingTime ? `${recipe.cookingTime} min` : "Time unknown"}</span>
           <div class="recipe-info-item"><span class="emoji">⭐</span><span>${recipe.difficulty || "N/A"}</span></div>
         </div>
         <button class="edit-button">✏️ 수정</button>
