@@ -1,0 +1,4 @@
+// jest.config.js
+module.exports = {
+  testMatch: ['**/tests/recipe.test.js'], // 오직 recipe.test.js 파일만 실행
+};
