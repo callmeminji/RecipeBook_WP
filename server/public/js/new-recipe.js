@@ -1,6 +1,14 @@
 // API 서버 주소 설정
 const BASE_URL = "https://recipeya.onrender.com";
 
+function goToHome() {
+  window.location.href = "index.html";
+}
+
+function goToAccount() {
+  window.location.href = "account.html";
+}
+
 // 페이지 로드 시 수정 모드인지 확인하고 기존 값 채우기
 document.addEventListener("DOMContentLoaded", () => {
   const editMode = new URLSearchParams(window.location.search).get("edit");
@@ -16,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ingredients").value =
       Array.isArray(ing) ? ing.join("\n") : (typeof ing === "string" ? ing : "");
 
-    // ✅ 라디오 버튼은 소문자 비교로 안전하게 체크
+    // 라디오 버튼은 소문자 비교로 안전하게 체크
     if (recipe.type) {
       const typeRadio = document.querySelector(`input[name='type'][value='${recipe.type.toLowerCase()}']`);
       if (typeRadio) typeRadio.checked = true;
