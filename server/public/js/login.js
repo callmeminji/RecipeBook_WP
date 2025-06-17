@@ -1,3 +1,6 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
 function goToHome() {
   window.location.href = "index.html";
 }
@@ -24,22 +27,22 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("signupPassword").value;
 
   try {
-    const res = await fetch('/api/auth/signup', {
+    const res = await fetch(`${BASE_URL}/api/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, password }),
     });
 
     if (res.status === 409) {
-      showModal("signupExistsModal"); // 이미 존재하는 계정
+      showModal("signupExistsModal");
     } else if (res.ok) {
-      showModal("signupSuccessModal"); // 회원가입 성공
+      showModal("signupSuccessModal");
     } else {
-      alert("Signup failed.");
+      alert("회원가입에 실패했습니다.");
     }
   } catch (err) {
     console.error("Signup error:", err);
-    alert("Something went wrong during signup.");
+    alert("회원가입 중 오류가 발생했습니다.");
   }
 });
 
@@ -50,7 +53,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
   const password = document.getElementById("loginPassword").value;
 
   try {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -63,17 +66,15 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         throw new Error("로그인 응답에 사용자 정보 또는 토큰이 없습니다.");
       }
 
-      // 세션에 저장
       sessionStorage.setItem("user", JSON.stringify(data.user));
       sessionStorage.setItem("token", data.token);
 
-      // 리디렉션 이동
       window.location.href = redirectTo;
     } else {
-      showModal("loginFailedModal"); // 로그인 실패 시 모달
+      showModal("loginFailedModal");
     }
   } catch (err) {
     console.error("Login error:", err);
-    alert("Something went wrong during login.");
+    alert("로그인 중 오류가 발생했습니다.");
   }
 });

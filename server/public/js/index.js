@@ -1,3 +1,6 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
 // 페이지 이동 관련
 function goToNewRecipe() {
   if (!sessionStorage.getItem("user")) {
@@ -62,14 +65,13 @@ function createRecipeCard(recipe) {
   return card;
 }
 
-
 // 전체 레시피 목록 불러오기
 async function loadRecipes() {
   const list = document.getElementById("recipeList");
   list.innerHTML = "";
 
   try {
-    const res = await fetch("/api/recipes");
+    const res = await fetch(`${BASE_URL}/api/recipes`);
     const recipes = await res.json();
 
     recipes.forEach(recipe => {
@@ -94,7 +96,7 @@ async function searchRecipes() {
   }
 
   try {
-    const res = await fetch(`/api/recipes/search?keyword=${encodeURIComponent(keyword)}`);
+    const res = await fetch(`${BASE_URL}/api/recipes/search?keyword=${encodeURIComponent(keyword)}`);
     const recipes = await res.json();
 
     if (recipes.length === 0) {
@@ -124,13 +126,12 @@ async function applyFilter() {
   if (timeCategory) params.append("cookingTimeCategory", timeCategory);
 
   try {
-    const res = await fetch(`/api/recipes/filter?${params.toString()}`);
+    const res = await fetch(`${BASE_URL}/api/recipes/filter?${params.toString()}`);
     const recipes = await res.json();
 
     const list = document.getElementById("recipeList");
     list.innerHTML = "";
 
-    // All 버튼 active 해제
     document.getElementById("allFilterBtn").classList.remove("active");
 
     recipes.forEach(recipe => {
@@ -146,27 +147,22 @@ async function applyFilter() {
 document.addEventListener("DOMContentLoaded", () => {
   loadRecipes();
 
-  // 검색 버튼
   const searchBtn = document.querySelector(".search-button");
   if (searchBtn) {
     searchBtn.addEventListener("click", searchRecipes);
   }
 
-  // 필터 이벤트
   document.getElementById("typeFilter").addEventListener("change", applyFilter);
   document.getElementById("difficultyFilter").addEventListener("change", applyFilter);
   document.getElementById("timeFilter").addEventListener("change", applyFilter);
 
-  // 전체 보기 버튼
   document.getElementById("allFilterBtn").addEventListener("click", (e) => {
     e.preventDefault();
     loadRecipes();
 
-    // All 버튼 active 클래스 추가
     const allBtn = document.getElementById("allFilterBtn");
     allBtn.classList.add("active");
 
-    // select 필터 초기화
     document.getElementById("typeFilter").value = "";
     document.getElementById("difficultyFilter").value = "";
     document.getElementById("timeFilter").value = "";

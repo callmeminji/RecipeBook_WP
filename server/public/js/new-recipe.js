@@ -1,3 +1,6 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
 function goToHome() {
   window.location.href = "index.html";
 }
@@ -12,14 +15,13 @@ document.getElementById("recipeForm").addEventListener("submit", async function 
   const formData = new FormData();
   formData.append("title", document.getElementById("title").value);
   formData.append("cookingTime", document.getElementById("time").value);
-  formData.append("instructions", document.getElementById("instructions").value); // 서버에서 content로 매핑됨
+  formData.append("instructions", document.getElementById("instructions").value);
 
   const type = document.querySelector("input[name='type']:checked");
   const difficulty = document.querySelector("input[name='difficulty']:checked");
   if (type) formData.append("type", type.value);
   if (difficulty) formData.append("difficulty", difficulty.value);
 
-  // 재료 입력 (줄바꿈 기준), 개별로 FormData에 넣기
   const rawIngredients = document.getElementById("ingredients").value
     .split("\n")
     .map(i => i.trim())
@@ -29,7 +31,6 @@ document.getElementById("recipeForm").addEventListener("submit", async function 
     formData.append("ingredients", ing);
   });
 
-  // 이미지 업로드
   const image = document.getElementById("image").files[0];
   if (image) {
     formData.append("image", image);
@@ -42,11 +43,10 @@ document.getElementById("recipeForm").addEventListener("submit", async function 
   }
 
   try {
-    const res = await fetch("/api/recipes", {
+    const res = await fetch(`${BASE_URL}/api/recipes`, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token
-        // Content-Type은 FormData일 경우 자동 설정됨 → 절대 직접 넣지 말 것!
       },
       body: formData
     });
@@ -70,13 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const timeSlider = document.getElementById("time");
   const timeOutput = document.getElementById("timeOutput");
 
-  // 슬라이더 변화 시 "60+" 표시
   timeSlider.addEventListener("input", () => {
     const value = parseInt(timeSlider.value, 10);
     timeOutput.innerText = value === 60 ? "60+ min" : `${value} min`;
   });
 
-  // 수정 모드면 기존 값 적용
   if (editMode && localStorage.getItem("editRecipe")) {
     const recipe = JSON.parse(localStorage.getItem("editRecipe"));
     document.getElementById("title").value = recipe.title;
@@ -89,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
       : recipe.ingredients;
     document.getElementById("instructions").value = recipe.instructions;
   } else {
-    // 기본값 초기 출력
     timeOutput.innerText = `${timeSlider.value} min`;
   }
 });

@@ -1,15 +1,14 @@
-// server.js
-
-// 1. 환경변수 로딩 (가장 먼저 실행)
+// 1. 환경변수 로딩
 const dotenv = require('dotenv');
-dotenv.config(); // .env 파일 자동 로딩
+dotenv.config();
 
 // 2. 핵심 모듈 import
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 
-// 3. 환경 변수 확인 (Render 로그에 표시되도록)
+// 3. 환경 변수 로그 확인
 console.log("✅ Loaded MONGO_URI:", process.env.MONGO_URI ? "OK" : "❌ MISSING");
 console.log("✅ Loaded BASE_URL:", process.env.BASE_URL || "❌ MISSING");
 console.log("✅ Loaded JWT_SECRET:", process.env.JWT_SECRET ? "OK" : "❌ MISSING");
@@ -25,13 +24,16 @@ const userRoutes = require('./routes/user');
 const app = express();
 
 // 6. 미들웨어 설정
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 7. 정적 파일 제공 (HTML, CSS, JS)
+// 7. 정적 파일 제공
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // 8. 라우터 경로 설정
 app.use('/api/comments', commentRoutes);
@@ -48,11 +50,11 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('✅ MongoDB connected'))
 .catch(err => {
   console.error('❌ MongoDB connection error:', err.message);
-  process.exit(1); // 연결 실패 시 서버 종료
+  process.exit(1);
 });
 
 // 10. 서버 실행
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(` Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });

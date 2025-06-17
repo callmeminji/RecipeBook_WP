@@ -1,3 +1,6 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
 function goToHome() {
   window.location.href = "index.html";
 }
@@ -17,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const res = await fetch("/api/users/me/recipes", {
+    const res = await fetch(`${BASE_URL}/api/users/me/recipes`, {
       headers: {
         Authorization: "Bearer " + token,
       },

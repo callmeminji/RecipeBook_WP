@@ -1,3 +1,6 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
 function goToHome() {
   window.location.href = "index.html";
 }
@@ -30,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
-      sessionStorage.clear();  // user + token 모두 제거
+      sessionStorage.clear();
       alert("You have been logged out.");
       window.location.href = "index.html";
     });

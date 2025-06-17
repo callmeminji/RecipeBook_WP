@@ -1,3 +1,6 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
 function goToHome() {
   window.location.href = "index.html";
 }
@@ -17,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const res = await fetch("/api/users/me/bookmarks", {
+    const res = await fetch(`${BASE_URL}/api/users/me/bookmarks`, {
       headers: {
         Authorization: "Bearer " + token
       }
@@ -28,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const data = await res.json();
-    const favoriteRecipes = data.bookmarks || [];  //  서버 응답 구조에 맞게
+    const favoriteRecipes = data.bookmarks || [];
 
     if (favoriteRecipes.length === 0) {
       list.innerHTML = "<p>찜한 레시피가 없습니다.</p>";

@@ -1,3 +1,6 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
 function goToHome() {
   window.location.href = "index.html";
 }
@@ -40,7 +43,6 @@ let currentRecipeId = null;
 
 const bookmark = document.getElementById("bookmarkIcon");
 
-// 하트 이미지 상태에 따라 바꿔주는 함수
 function setBookmarkIcon(isActive) {
   bookmark.src = isActive ? "assets/filledheart.png" : "assets/emptyheart.png";
 }
@@ -50,47 +52,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadRecipeDetail();
   loadComments();
-bookmark.addEventListener("click", async () => {
-  if (!isLoggedIn()) {
-    showLoginPrompt(getCurrentPageURL());
-    return;
-  }
-  const isActive = bookmark.classList.contains("active");
-  const token = sessionStorage.getItem("token");
 
-  try {
-    let res;
-    if (!isActive) {
-      res = await fetch(`/api/recipes/${currentRecipeId}/bookmark`, {
-        method: "POST",
-        headers: { Authorization: "Bearer " + token }
-      });
-    } else {
-      res = await fetch(`/api/recipes/${currentRecipeId}/bookmark`, {
-        method: "DELETE",
-        headers: { Authorization: "Bearer " + token }
-      });
+  bookmark.addEventListener("click", async () => {
+    if (!isLoggedIn()) {
+      showLoginPrompt(getCurrentPageURL());
+      return;
     }
-    if (res.ok) {
-      // 서버에서 최신 북마크 상태 받아와서 바로 반영
-      const data = await res.json();
-      setBookmarkIcon(data.isBookmarked);  // ← 바로 UI 반영
-      document.getElementById("bookmarkCount").textContent = data.bookmarkCount;
-      if (data.isBookmarked) {
-        bookmark.classList.add("active");
+
+    const isActive = bookmark.classList.contains("active");
+    const token = sessionStorage.getItem("token");
+
+    try {
+      let res;
+      if (!isActive) {
+        res = await fetch(`${BASE_URL}/api/recipes/${currentRecipeId}/bookmark`, {
+          method: "POST",
+          headers: { Authorization: "Bearer " + token }
+        });
       } else {
-        bookmark.classList.remove("active");
+        res = await fetch(`${BASE_URL}/api/recipes/${currentRecipeId}/bookmark`, {
+          method: "DELETE",
+          headers: { Authorization: "Bearer " + token }
+        });
       }
-    } else {
-      alert("북마크 처리 실패");
+
+      if (res.ok) {
+        const data = await res.json();
+        setBookmarkIcon(data.isBookmarked);
+        document.getElementById("bookmarkCount").textContent = data.bookmarkCount;
+        if (data.isBookmarked) {
+          bookmark.classList.add("active");
+        } else {
+          bookmark.classList.remove("active");
+        }
+      } else {
+        alert("북마크 처리 실패");
+      }
+    } catch (err) {
+      console.error("Bookmark error:", err);
+      alert("북마크 처리 중 오류 발생");
     }
-  } catch (err) {
-    console.error("Bookmark error:", err);
-    alert("북마크 처리 중 오류 발생");
-  }
-});
-
-
+  });
 
   document.getElementById("editBtn").addEventListener("click", () => {
     const recipeData = {
@@ -123,7 +125,7 @@ bookmark.addEventListener("click", async () => {
 
     if (content) {
       try {
-        const res = await fetch(`/api/comments/${currentRecipeId}`, {
+        const res = await fetch(`${BASE_URL}/api/comments/${currentRecipeId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -149,7 +151,7 @@ async function loadRecipeDetail() {
   try {
     const token = sessionStorage.getItem("token");
     const headers = token ? { Authorization: "Bearer " + token } : {};
-    const res = await fetch(`/api/recipes/${currentRecipeId}`, { headers });
+    const res = await fetch(`${BASE_URL}/api/recipes/${currentRecipeId}`, { headers });
     if (!res.ok) throw new Error("Recipe not found");
     const recipe = await res.json();
 
@@ -162,7 +164,6 @@ async function loadRecipeDetail() {
     document.getElementById("postImage").src = recipe.image ? `/uploads/${recipe.image}` : "assets/default.jpg";
     document.getElementById("bookmarkCount").textContent = recipe.bookmarkCount || "0";
 
-    // 북마크 하트 이미지 상태 동기화
     if (recipe.isBookmarked) {
       bookmark.classList.add("active");
       setBookmarkIcon(true);
@@ -185,7 +186,7 @@ async function loadRecipeDetail() {
 
 async function loadComments() {
   try {
-    const res = await fetch(`/api/comments/${currentRecipeId}`);
+    const res = await fetch(`${BASE_URL}/api/comments/${currentRecipeId}`);
     const data = await res.json();
     const comments = data.comments || [];
     renderComments(comments);
@@ -241,7 +242,7 @@ document.addEventListener("click", function (e) {
     saveBtn.textContent = "Save";
 
     const wrapper = document.createElement("div");
-    wrapper.className = "save-edit-wrapper";  // 이 클래스는 아래 CSS에서 정의함
+    wrapper.className = "save-edit-wrapper";
     wrapper.appendChild(saveBtn);
 
     commentTextEl.after(textarea, wrapper);
@@ -254,7 +255,7 @@ document.addEventListener("click", function (e) {
     const commentTextEl = item.querySelector(".comment-text");
     const actionsEl = item.querySelector(".comment-actions");
 
-    fetch(`/api/comments/${commentId}`, {
+    fetch(`${BASE_URL}/api/comments/${commentId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -289,7 +290,7 @@ document.addEventListener("click", function (e) {
 function confirmCommentDelete() {
   if (!pendingDeleteCommentId) return;
 
-  fetch(`/api/comments/${pendingDeleteCommentId}`, {
+  fetch(`${BASE_URL}/api/comments/${pendingDeleteCommentId}`, {
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + sessionStorage.getItem("token"),
@@ -320,7 +321,7 @@ function closeDeleteModal() {
 }
 
 function confirmDelete() {
-  fetch(`/api/recipes/${currentRecipeId}`, {
+  fetch(`${BASE_URL}/api/recipes/${currentRecipeId}`, {
     method: "DELETE",
     headers: {
       Authorization: "Bearer " + sessionStorage.getItem("token"),
