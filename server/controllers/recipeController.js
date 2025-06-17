@@ -61,13 +61,16 @@ exports.createRecipe = async (req, res) => {
     const { title, instructions, type, difficulty, cookingTime } = req.body;
     const ingredients = normalizeIngredients(req.body.ingredients);
 
-    if (!title || !instructions || !type || !difficulty || !cookingTime || ingredients.length === 0) {
-      return res.status(400).json({ message: 'Missing or invalid required fields' });
-    }
-
     const cookingTimeNumber = Number(cookingTime);
-    if (isNaN(cookingTimeNumber)) {
-      return res.status(400).json({ message: 'Invalid cookingTime format' });
+    if (
+      !title ||
+      !instructions ||
+      !type ||
+      !difficulty ||
+      isNaN(cookingTimeNumber) ||
+      ingredients.length === 0
+    ) {
+      return res.status(400).json({ message: 'Missing or invalid required fields' });
     }
 
     let cookingTimeCategory = '';
