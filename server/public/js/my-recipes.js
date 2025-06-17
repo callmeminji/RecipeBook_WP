@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     recipes.forEach((recipe) => {
       const card = document.createElement("div");
       card.className = "recipe-card";
+
       card.innerHTML = `
         <div class="recipe-image-wrapper">
           <div class="recipe-title-box">${recipe.title}</div>
@@ -50,10 +51,21 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="recipe-info-item"><span class="emoji">⏱</span><span>${recipe.time ? `${recipe.time} min` : "Time unknown"}</span></div>
           <div class="recipe-info-item"><span class="emoji">⭐</span><span>${recipe.difficulty || "N/A"}</span></div>
         </div>
+        <button class="edit-button">✏️ 수정</button>
       `;
-      card.onclick = () => {
+
+      // 수정 버튼 기능 추가
+      card.querySelector(".edit-button").addEventListener("click", (e) => {
+        e.stopPropagation(); // 카드 클릭 이벤트 막기
+        localStorage.setItem("editRecipe", JSON.stringify(recipe));
+        window.location.href = `new-recipe.html?edit=true`;
+      });
+
+      // 카드 클릭 → 상세 페이지로 이동
+      card.addEventListener("click", () => {
         window.location.href = `post.html?id=${recipe._id}`;
-      };
+      });
+
       list.appendChild(card);
     });
   } catch (err) {

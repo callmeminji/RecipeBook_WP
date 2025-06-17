@@ -1,3 +1,32 @@
+// API 서버 주소 설정
+const BASE_URL = "https://recipeya.onrender.com";
+
+// 페이지 로드 시 수정 모드인지 확인하고 기존 값 채우기
+document.addEventListener("DOMContentLoaded", () => {
+  const editMode = new URLSearchParams(window.location.search).get("edit");
+  const editRecipe = localStorage.getItem("editRecipe");
+
+  if (editMode && editRecipe) {
+    const recipe = JSON.parse(editRecipe);
+    document.getElementById("title").value = recipe.title || "";
+    document.getElementById("time").value = recipe.cookingTime || "";
+    document.getElementById("instructions").value = recipe.instructions || "";
+    document.getElementById("ingredients").value = (recipe.ingredients || []).join("\n");
+
+    if (recipe.type) {
+      const typeRadio = document.querySelector(`input[name='type'][value='${recipe.type}']`);
+      if (typeRadio) typeRadio.checked = true;
+    }
+
+    if (recipe.difficulty) {
+      const diffRadio = document.querySelector(`input[name='difficulty'][value='${recipe.difficulty}']`);
+      if (diffRadio) diffRadio.checked = true;
+    }
+  }
+});
+
+const form = document.getElementById("recipeForm");
+
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
@@ -56,6 +85,7 @@ form.addEventListener("submit", async function (e) {
 
     if (res.ok) {
       alert(editMode ? "Recipe updated!" : "Recipe submitted!");
+      localStorage.removeItem("editRecipe"); // 수정 모드라면 로컬스토리지 초기화
       window.location.href = `post.html?id=${data.recipeId || JSON.parse(editRecipe)._id}`;
     } else {
       alert(data.message || "Failed to submit.");
