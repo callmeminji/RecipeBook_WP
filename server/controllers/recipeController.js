@@ -59,6 +59,7 @@ exports.getRecipeById = async (req, res) => {
 exports.createRecipe = async (req, res) => {
   try {
     const { title, instructions, type, difficulty, cookingTime } = req.body;
+    const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
     const ingredients = normalizeIngredients(req.body.ingredients);
 
     const cookingTimeNumber = Number(cookingTime);
@@ -84,7 +85,8 @@ exports.createRecipe = async (req, res) => {
     const recipe = new Recipe({
       title,
       content: instructions,
-      type,
+      type: capitalizedType,
+      // type,
       difficulty,
       cookingTime: cookingTimeNumber,
       cookingTimeCategory,
@@ -221,8 +223,11 @@ exports.filterRecipes = async (req, res) => {
   try {
     const { type, difficulty, cookingTimeCategory } = req.query;
     const filter = {};
-    if (type) filter.type = type;
-    if (difficulty) filter.difficulty = difficulty;
+    if (type) filter.type = { $regex: `^${type}$`, $options: 'i' };
+    // if (type) filter.type = type;
+    if (difficulty) filter.difficulty = { $regex: `^${difficulty}$`, $options: 'i' };
+
+    // if (difficulty) filter.difficulty = difficulty;
 
     if (cookingTimeCategory) {
       if (cookingTimeCategory === "under10") filter.cookingTime = { $lte: 10 };
