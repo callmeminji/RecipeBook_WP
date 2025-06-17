@@ -13,14 +13,6 @@
   margin: 2rem 0 1rem;
 }
 
-.search-bar,
-.filter-bar {
-  max-width: 850px;
-  margin: 0 auto;
-  padding: 1rem 1.5rem;
-}
-
-
 #searchInput {
   flex: 1;
   border: 1px solid #ccc;
@@ -53,7 +45,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
-  /* margin: 0 0 2.5rem; */
+  margin: 0 0 2.5rem;
 }
 
 #allFilterBtn {

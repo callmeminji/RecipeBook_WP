@@ -1,18 +1,18 @@
 .account-container {
-    max-width: 700px;
-    margin: 5rem auto;
+    max-width: 500px;
+    margin: 3rem auto;
     text-align: center;
   }
   
   .profile-icon {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     margin-bottom: 1rem;
   }
   
   #userId {
-    margin-bottom: 1.8rem;
-    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
     color: #444;
   }
   
@@ -21,7 +21,6 @@
     background-color: #883929;
     border: none;
     color: white;
-    font-size: 1.15rem;
     font-weight: bold;
     border-radius: 6px;
     margin-bottom: 2rem;
@@ -39,10 +38,10 @@
     border: none;
     border-radius: 8px;
     font-weight: bold;
-    font-size: 1.15rem;
-    background-color: #f4e2dc;
+    font-size: 1rem;
+    background-color: #f5d4d4;
     cursor: pointer;
-    width: 180px; /* 고정 너비 설정 */   
+    width: 170px; /* 고정 너비 설정 */   
     text-align: center;
   }
   
