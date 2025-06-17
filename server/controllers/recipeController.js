@@ -104,7 +104,7 @@ exports.createRecipe = async (req, res) => {
 // 레시피 수정
 exports.updateRecipe = async (req, res) => {
   try {
-    const { title, content, type, difficulty, cookingTime } = req.body;
+    const { title, instructions, type, difficulty, cookingTime } = req.body;
     const ingredients = normalizeIngredients(req.body.ingredients);
 
     const cookingTimeNumber = Number(cookingTime);
@@ -120,7 +120,7 @@ exports.updateRecipe = async (req, res) => {
 
     const updateFields = {
       title,
-      content,
+      content: instructions,  // 수정된 부분
       type,
       difficulty,
       cookingTime: cookingTimeNumber,
@@ -154,6 +154,7 @@ exports.updateRecipe = async (req, res) => {
     res.status(500).json({ message: 'Failed to update recipe', error: err.message });
   }
 };
+
 
 // 레시피 삭제
 exports.deleteRecipe = async (req, res) => {
