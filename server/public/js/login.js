@@ -37,6 +37,11 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
       showModal("signupExistsModal");
     } else if (res.ok) {
       document.getElementById("signupForm").reset();
+
+      document.getElementById("signupUsername").value = "";
+      document.getElementById("signupEmail").value = "";
+      document.getElementById("signupPassword").value = "";
+
       showModal("signupSuccessModal");
     } else {
       alert("회원가입에 실패했습니다.");
