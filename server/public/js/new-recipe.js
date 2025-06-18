@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const recipe = JSON.parse(editRecipe);
   document.getElementById("title").value = recipe.title || "";
   document.getElementById("time").value = recipe.cookingTime || recipe.time || "";
-  document.getElementById("instructions").value = recipe.instructions || recipe.content || "";
+  document.getElementById("instructions").value = recipe.instructions ?? recipe.content ?? "";
 
   const ing = recipe.ingredients;
   document.getElementById("ingredients").value =
