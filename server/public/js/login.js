@@ -36,6 +36,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
     if (res.status === 409) {
       showModal("signupExistsModal");
     } else if (res.ok) {
+      document.getElementById("signupForm").reset();
       showModal("signupSuccessModal");
     } else {
       alert("회원가입에 실패했습니다.");
